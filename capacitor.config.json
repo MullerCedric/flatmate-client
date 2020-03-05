@@ -1,0 +1,8 @@
+{
+  "appId": "client.le.flatmate",
+  "appName": "Le Flatmate",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "dist",
+  "cordova": {}
+}
