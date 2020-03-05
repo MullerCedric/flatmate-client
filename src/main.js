@@ -1,35 +1,14 @@
 import Vue from "vue";
 import App from "./App.vue";
+
 import Ionic from "@ionic/vue";
 import "@ionic/core/css/core.css";
 import "@ionic/core/css/ionic.bundle.css";
 
-// router
-import { IonicVueRouter } from "@ionic/vue";
-Vue.use(IonicVueRouter);
+import router from "./router";
 
 Vue.config.productionTip = false;
 Vue.use(Ionic);
-
-const router = new IonicVueRouter({
-  // mode: "history",
-  // base: process.env.BASE_URL,
-  routes: [
-    { path: "/", redirect: "/home" },
-    {
-      path: "/home",
-      name: "home",
-      component: () =>
-        import(/* webpackChunkName: "home" */ "@/components/HomePage"),
-    },
-{
-  path: "/new-item",
-  name: "new-item",
-  component: () =>
-    import(/* webpackChunkName: "new-item" */ "@/components/NewItemPage"),
-}
-  ]
-});
 
 new Vue({
   router,
