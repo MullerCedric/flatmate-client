@@ -22,7 +22,7 @@
     import {mapMutations} from 'vuex';
 
     export default {
-        name: "Dashboard",
+        name: "ScDashboard",
         methods: {
             ...mapMutations([
                 'increment',

@@ -1,21 +1,21 @@
-import Dashboard from "../views/Dashboard.vue";
+import ScDashboard from "../views/ScDashboard.vue";
 
 export default [
     {
         path: "/",
         name: "dashboard",
-        component: Dashboard
+        component: ScDashboard
     },
     {
         path: "/log-in",
         name: "log-in",
         component: () =>
-            import(/* webpackChunkName: "log-in" */ "../views/auth/Login.vue")
+            import(/* webpackChunkName: "log-in" */ "../views/auth/ScLogin.vue")
     },
     {
         path: "/register",
         name: "register",
         component: () =>
-            import(/* webpackChunkName: "register" */ "../views/auth/Register.vue")
+            import(/* webpackChunkName: "register" */ "../views/auth/ScRegister.vue")
     }
 ];

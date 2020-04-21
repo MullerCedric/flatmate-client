@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Register</ion-title>
+        <ion-title>Log in</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
@@ -14,17 +14,17 @@
             <input type="password" />
 
             <button type="submit">
-                Register
+                Log In
             </button>
         </form>
-        <span @click="$router.push({ name: 'log-in' })">Log in</span>
+        <span @click="$router.push({ name: 'register' })">Register</span>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
 export default {
-  name: "Register",
+  name: "ScLogin",
 };
 </script>
 
