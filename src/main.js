@@ -6,11 +6,13 @@ import "@ionic/core/css/core.css";
 import "@ionic/core/css/ionic.bundle.css";
 
 import router from "./router";
+import store from './store/store';
 
 Vue.config.productionTip = false;
 Vue.use(Ionic);
 
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount("#app");

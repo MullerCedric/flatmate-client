@@ -6,15 +6,29 @@
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-        <span @click="$router.push({ name: 'log-in' })">Log in</span>
+      <div>
+        <div>Counter : {{ $store.state.count }} !</div>
+        <div>
+          <button @click="increment">Add</button>
+        </div>
+        <br>
+      </div>
+      <span @click="$router.push({ name: 'log-in' })">Log in</span>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
-export default {
-  name: "Dashboard",
-};
+    import {mapMutations} from 'vuex';
+
+    export default {
+        name: "Dashboard",
+        methods: {
+            ...mapMutations([
+                'increment',
+            ]),
+        },
+    };
 </script>
 
 <style scoped>
