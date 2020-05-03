@@ -1,10 +1,10 @@
 import Vue from "vue";
 import routes from './routes';
-import {IonicVueRouter} from "@ionic/vue";
+import VueRouter from "vue-router";
 
-Vue.use(IonicVueRouter);
+Vue.use(VueRouter);
 
-const router = new IonicVueRouter({
+const router = new VueRouter({
     // mode: "history",
     // base: process.env.BASE_URL,
     routes
