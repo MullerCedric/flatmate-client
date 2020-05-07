@@ -1,6 +1,6 @@
 <template>
   <div class="fm-screen">
-    <fm-toolbar v-bind="toolbarProps" :key="$route.path"></fm-toolbar>
+    <fm-toolbar v-bind="toolbarProps"></fm-toolbar>
     <fm-screen-content class="fm-screen__content">
       <slot></slot>
     </fm-screen-content>
@@ -18,16 +18,11 @@
     export default {
         name: "FmScreen",
         components: {FmToolbar, FmTabBar, FmScreenContent},
-        data() {
-            return {
-                toolbarProps: {
-                    title: 'Portefeuille',
-                    type: 'wallet',
-                    showSearch: true,
-                    showMore: true,
-                }
+        props: {
+            toolbarProps: {
+                type: Object,
             }
-        }
+        },
     }
 </script>
 
