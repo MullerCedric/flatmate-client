@@ -52,7 +52,7 @@
     text-align: center;
 
     &__sign, &__currency {
-      font-weight: 500;
+      font-weight: $medium;
     }
 
     &__currency {
@@ -61,7 +61,7 @@
     }
 
     &__amount {
-      font-weight: 700;
+      font-weight: $bold;
     }
 
     &--sm {

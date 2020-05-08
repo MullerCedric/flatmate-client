@@ -29,7 +29,7 @@
 
   body {
     font-family: $mainFont;
-    font-weight: 400;
+    font-weight: $regular;
     font-style: normal;
     line-height: 1.5;
     color: $black;
