@@ -2,17 +2,23 @@
   <svg xmlns="http://www.w3.org/2000/svg"
        :width="width"
        :height="height"
-       viewBox="0 0 24 24"
+       viewBox="0 0 512 512"
        :aria-labelledby="iconName"
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`" :stroke="iconColor" fill="none">
-      <path d="M18.5,6V20.4A1.73,1.73,0,0,1,16.6,22H7.3a1.79,1.79,0,0,1-1.9-1.6V6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <path d="M3,6H21" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"/>
-      <path d="M8,6V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"/>
-      <line x1="9" y1="10.5" x2="9" y2="17.5" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
-      <line x1="12" y1="10.5" x2="12" y2="17.5" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
-      <line x1="15" y1="10.5" x2="15" y2="17.5" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+      <path d='M112,112l20,320c.95,18.49,14.4,32,32,32H348c17.67,0,30.87-13.51,32-32l20-320'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
+      <line x1='80' y1='112' x2='432' y2='112'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;" stroke-miterlimit="10"/>
+      <path d='M192,112V72h0a23.93,23.93,0,0,1,24-24h80a23.93,23.93,0,0,1,24,24h0v40'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
+      <line x1='256' y1='176' x2='256' y2='400'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
+      <line x1='184' y1='176' x2='192' y2='400'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
+      <line x1='328' y1='176' x2='320' y2='400'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
     </g>
   </svg>
 </template>

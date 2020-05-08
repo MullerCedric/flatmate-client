@@ -1,5 +1,5 @@
 import ScDashboard from "../views/ScDashboard";
-import ScWallet from "../views/Wallet/ScWallet";
+import ScCalendar from "../views/Calendar/ScCalendar";
 
 export default [
     {
@@ -16,8 +16,8 @@ export default [
     },
     {
         path: "/",
-        name: "wallet",
-        component: ScWallet
+        name: "calendar",
+        component: ScCalendar
     },
     {
         path: "/dashboard",
@@ -25,15 +25,15 @@ export default [
         component: ScDashboard
     },
     {
-        path: "/calendar",
-        name: "calendar",
-        component: () =>
-            import(/* webpackChunkName: "register" */ "../views/Calendar/ScCalendar.vue")
-    },
-    {
         path: "/notes",
         name: "notes",
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Notes/ScNotes.vue")
+    },
+    {
+        path: "/wallet",
+        name: "wallet",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Wallet/ScWallet.vue")
     },
 ];

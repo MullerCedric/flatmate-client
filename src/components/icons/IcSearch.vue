@@ -7,8 +7,10 @@
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`" :stroke="iconColor" fill="none">
-      <line stroke-width="2" x1="11" y1="11" x2="16" y2="16"/>
-      <circle stroke-width="2" cx="7" cy="7" r="6"/>
+      <line x1="11" y1="11" x2="16" y2="16"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="fill:none;"/>
+      <circle cx="7" cy="7" r="6"
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="fill:none;"/>
     </g>
   </svg>
 </template>

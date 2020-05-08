@@ -2,12 +2,13 @@
   <svg xmlns="http://www.w3.org/2000/svg"
        :width="width"
        :height="height"
-       viewBox="0 0 12 12"
+       viewBox="0 0 512 512"
        :aria-labelledby="iconName"
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`" :stroke="iconColor" fill="none">
-      <path fill="none" stroke-width="1.75" stroke-linecap="round" d="M9,11L3,6l6-5"/>
+      <polyline points='328 112 184 256 328 400'
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
     </g>
   </svg>
 </template>
@@ -22,11 +23,11 @@
             },
             width: {
                 type: [Number, String],
-                default: 12
+                default: 24
             },
             height: {
                 type: [Number, String],
-                default: 12
+                default: 24
             },
             iconColor: {
                 type: String,

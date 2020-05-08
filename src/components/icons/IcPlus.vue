@@ -2,13 +2,15 @@
   <svg xmlns="http://www.w3.org/2000/svg"
        :width="width"
        :height="height"
-       viewBox="0 0 16 16"
+       viewBox="0 0 512 512"
        :aria-labelledby="iconName"
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
-    <g :id="`ic-${iconName}`" :stroke="iconColor" fill="none">
-      <line x1="8" y1="16" x2="8" stroke-linecap="round" stroke-width="3"/>
-      <line y1="8" x2="16" y2="8" stroke-linecap="round" stroke-width="3"/>
+    <g :id="`ic-${iconName}`" :stroke="iconColor">
+      <line x1='256' y1='112' x2='256' y2='400'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="40" style="fill:none;"/>
+      <line x1='400' y1='256' x2='112' y2='256'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="40" style="fill:none;"/>
     </g>
   </svg>
 </template>
@@ -23,11 +25,11 @@
             },
             width: {
                 type: [Number, String],
-                default: 16
+                default: 24
             },
             height: {
                 type: [Number, String],
-                default: 16
+                default: 24
             },
             iconColor: {
                 type: String,

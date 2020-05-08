@@ -18,4 +18,8 @@ body {
   section + section {
     margin-top: 1.5rem;
   }
+
+  svg {
+    line-height: 1;
+  }
 }

@@ -2,32 +2,30 @@
   <svg xmlns="http://www.w3.org/2000/svg"
        :width="width"
        :height="height"
-       viewBox="0 0 24 24"
+       viewBox="0 0 512 512"
        :aria-labelledby="iconName"
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`">
-      <path d="M3,0H16c2,0,3,1,3,2.5V3H3.5V21S0,20.9,0,21V3.27A3.28,3.28,0,0,1,3,0Z" :fill="iconColor"
-            :class="{ 'active--main-fill': isActive }"/>
-      <rect x="3.46" y="2.97" width="15" height="20.8" :stroke="iconColor" fill="none"
-            :class="{ 'active--main-stroke': isActive, 'active--light-fill': isActive }"/>
-      <g id="lines" :stroke="iconColor" fill="none">
-        <line x1="6.5" y1="8.5" x2="15.5" y2="8.5"
-              :class="{ 'active--main-stroke': isActive }"/>
-        <line x1="6.5" y1="11.5" x2="14.5" y2="11.5"
-              :class="{ 'active--main-stroke': isActive }"/>
-        <line x1="6.5" y1="14.5" x2="12.5" y2="14.5"
-              :class="{ 'active--main-stroke': isActive }"/>
-        <line x1="6.5" y1="17.97" x2="15.5" y2="17.97"
-              :class="{ 'active--main-stroke': isActive }"/>
+      <g :class="{ 'hide': isActive }">
+        <path d='M416,221.25V416a48,48,0,0,1-48,48H144a48,48,0,0,1-48-48V96a48,48,0,0,1,48-48h98.75a32,32,0,0,1,22.62,9.37L406.63,198.63A32,32,0,0,1,416,221.25Z'
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"
+              class="colored"/>
+        <path d='M256,56V176a32,32,0,0,0,32,32H408'
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"
+              class="colored"/>
+        <line x1='176' y1='288' x2='336' y2='288'
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"
+              class="colored"/>
+        <line x1='176' y1='368' x2='336' y2='368'
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"
+              class="colored"/>
       </g>
-      <g id="pen">
-        <path d="M21,18.67h0V4.47h3v14.2l-1.5,2.8Z" :stroke="iconColor" fill="none"
-              :class="{ 'active--main-stroke': isActive, 'active--light-fill': isActive }"/>
-        <path d="M24,19.47H21l1.5,2C22.56,21.47,24,19.47,24,19.47Z" :fill="iconColor"
-              :class="{ 'active--main-fill': isActive }"/>
-        <path d="M21,5h3" :stroke="iconColor" fill="none" stroke-width="2"
-              :class="{ 'active--main-stroke': isActive }"/>
+      <g :class="{ 'hide': !isActive}">
+        <path d='M428,224H288a48,48,0,0,1-48-48V36a4,4,0,0,0-4-4H144A64,64,0,0,0,80,96V416a64,64,0,0,0,64,64H368a64,64,0,0,0,64-64V228A4,4,0,0,0,428,224ZM336,384H176a16,16,0,0,1,0-32H336a16,16,0,0,1,0,32Zm0-80H176a16,16,0,0,1,0-32H336a16,16,0,0,1,0,32Z'
+              class="colored--active" style="stroke: none;"/>
+        <path d='M419.22,188.59,275.41,44.78A2,2,0,0,0,272,46.19V176a16,16,0,0,0,16,16H417.81A2,2,0,0,0,419.22,188.59Z'
+              class="colored--active" style="stroke: none;"/>
       </g>
     </g>
   </svg>
@@ -49,10 +47,6 @@
                 type: [Number, String],
                 default: 24
             },
-            iconColor: {
-                type: String,
-                default: 'currentColor'
-            },
             isActive: {
                 type: Boolean,
                 default: false,
@@ -70,21 +64,17 @@
     margin-bottom: -2px;
   }
 
-  .active {
-    &--main-stroke {
+  .hide {
+    opacity: 0;
+  }
+
+  .colored {
+    stroke: $black;
+    fill: $black;
+
+    &--active {
       stroke: $main;
-    }
-
-    &--main-fill {
       fill: $main;
-    }
-
-    &--light-stroke {
-      stroke: $lightMain;
-    }
-
-    &--light-fill {
-      fill: $lightMain;
     }
   }
 </style>

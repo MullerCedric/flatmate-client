@@ -2,13 +2,15 @@
   <svg xmlns="http://www.w3.org/2000/svg"
        :width="width"
        :height="height"
-       viewBox="0 0 24 24"
+       viewBox="0 0 512 512"
        :aria-labelledby="iconName"
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`" :stroke="iconColor" fill="none">
-      <path d="M21,19H3l2.5-4.5v-6a6.76,6.76,0,0,1,1.3-3.9,6.43,6.43,0,0,1,3.3-2.3l.4-.1-.1-.4v-.2a1.5,1.5,0,0,1,3,0v.2l-.1.4.4.1A6.43,6.43,0,0,1,17,4.57a6.12,6.12,0,0,1,1.3,3.9v6Z" stroke-width="1.75"/>
-      <path d="M12,24a3.1,3.1,0,0,1-3-2.5h6A2.93,2.93,0,0,1,12,24Z" stroke-width="1.25"/>
+      <path d='M427.68,351.43C402,320,383.87,304,383.87,217.35,383.87,138,343.35,109.73,310,96c-4.43-1.82-8.6-6-9.95-10.55C294.2,65.54,277.8,48,256,48S217.79,65.55,212,85.47c-1.35,4.6-5.52,8.71-9.95,10.53-33.39,13.75-73.87,41.92-73.87,121.35C128.13,304,110,320,84.32,351.43,73.68,364.45,83,384,101.61,384H410.49C429,384,438.26,364.39,427.68,351.43Z'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
+      <path d='M320,384v16a64,64,0,0,1-128,0V384'
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
     </g>
   </svg>
 </template>

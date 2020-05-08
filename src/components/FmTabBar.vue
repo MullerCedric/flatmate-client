@@ -21,7 +21,7 @@
       </router-link>
       <div class="fm-tab-bar__create" @click="showCreateMenu = !showCreateMenu"
            :class="{ 'fm-tab-bar__create--active': showCreateMenu }">
-        <ic-plus icon-color="#EFEFEF"></ic-plus>
+        <ic-plus icon-color="#FFFFFF"></ic-plus>
       </div>
       <router-link class="fm-tab-bar__link"
                    :class="{ 'fm-tab-bar__link--hidden': showCreateMenu }"
@@ -70,8 +70,9 @@
   @import "../assets/scss/settings";
 
   .fm-tab-bar {
-    background-color: $lighterGrey;
-    border-top: 1px solid $lightGrey;
+    line-height: 1;
+    background-color: $white;
+    border-top: 1px solid $lighterGrey;
     border-radius: 1.5rem 1.5rem 0 0;
     padding: 0 .5rem;
 
@@ -92,19 +93,19 @@
     &__create {
       align-self: flex-start;
       padding: .75rem;
-      background-color: $darkGrey;
+      background-color: $black;
       border-radius: 100%;
       position: relative;
-      box-shadow: 0 0 0 1px $black, 0 0 0 .5rem $white;
+      box-shadow: 0 0 .25rem $shadow, 0 0 0 .5rem $lighterGrey;
       top: -1.5rem;
       transition: transform .3s ease-in-out,
-      padding .3s ease-in-out,
-      box-shadow .3s ease-in-out,
-      top .3s ease-in-out;
+      padding .3s cubic-bezier(.5,-0.1,.7,1.5),
+      box-shadow .3s cubic-bezier(.5,-0.1,.7,1.5),
+      top .3s cubic-bezier(.5,-0.1,.7,1.5);
 
       &--active {
         transform: rotate(-45deg) scale(.75);
-        padding: .5rem;
+        padding: .25rem;
         box-shadow: 0 0 0 1px $black, 0 0 0 .1rem transparent;
         top: .5rem;
       }
@@ -119,22 +120,9 @@
     color: $darkGrey;
 
     &__icon {
-      margin: 1rem .5rem .375rem;
-    }
-
-    &:after {
-      display: block;
-      content: '';
-      width: 100%;
-      height: .25rem;
-      border-radius: .25rem .25rem 0 0;
-      background-color: transparent;
-    }
-
-    &--active {
-      &:after {
-        background-color: $main;
-      }
+      margin: .25rem;
+      padding: .75rem .25rem;
+      box-sizing: content-box;
     }
   }
 </style>

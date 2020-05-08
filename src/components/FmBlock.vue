@@ -20,7 +20,8 @@
   @import "../assets/scss/settings";
 
   .fm-block {
-    box-shadow: 0 .05rem .3125rem $shadow;
+    background-color: $white;
+    box-shadow: 0 .05rem .5rem $shadow;
     margin: .3125rem .3125rem 1rem;
     padding: .75rem;
     border-radius: .3125rem;

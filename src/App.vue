@@ -28,7 +28,6 @@
   }
 
   body {
-    background-color: $white;
     font-family: $mainFont;
     font-weight: 400;
     font-style: normal;
@@ -45,6 +44,11 @@
     &:focus {
       outline: none;
     }
+  }
+
+  [id="app"] {
+    height: 100%;
+    background-color: $lighterGrey;
   }
 
   ion-navbar.toolbar.toolbar-ios.statusbar-padding,

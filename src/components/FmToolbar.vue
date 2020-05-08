@@ -2,7 +2,7 @@
   <div v-if="showToolbar" class="fm-toolbar">
     <div class="fm-toolbar__left">
       <div v-if="showBack" class="fm-toolbar__back" @click="$router.back()">
-        <ic-back :icon-color="iconColors"></ic-back>
+        <ic-back></ic-back>
       </div>
       <div class="fm-toolbar__avatar">
 
@@ -13,16 +13,16 @@
     </div>
     <div class="fm-toolbar__right">
       <div v-if="showSearch" class="fm-toolbar__search">
-        <ic-search :icon-color="iconColors"></ic-search>
+        <ic-search></ic-search>
       </div>
       <div v-if="showBell" class="fm-toolbar__bell">
-        <ic-bell :icon-color="iconColors"></ic-bell>
+        <ic-bell></ic-bell>
       </div>
       <div v-if="showSettings" class="fm-toolbar__settings">
-        <ic-settings :icon-color="iconColors"></ic-settings>
+        <ic-settings></ic-settings>
       </div>
       <div v-if="showMore" class="fm-toolbar__more">
-        <ic-more :icon-color="iconColors"></ic-more>
+        <ic-more></ic-more>
       </div>
     </div>
   </div>
@@ -72,11 +72,6 @@
                 default: false,
             },
         },
-        data() {
-            return {
-                iconColors: '#707070',
-            }
-        },
     }
 </script>
 
@@ -84,6 +79,7 @@
   @import "../assets/scss/_settings.scss";
 
   .fm-toolbar {
+    line-height: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -100,8 +96,19 @@
       }
     }
 
+    &__left {
+      & > :first-child {
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+
     &__right {
       justify-content: flex-end;
+      & > :last-child {
+        margin-right: 0;
+        padding-right: 0;
+      }
     }
 
     &__avatar {
@@ -110,10 +117,10 @@
       overflow: hidden;
       text-align: center;
       padding: 0;
-      margin-right: .5em;
+      margin: .5rem;
       border-radius: 100%;
       box-shadow: 0 0 .15em $shadow;
-      background-color: $lightGrey;
+      background-color: $grey;
 
       & img {
         max-width: 100%;
