@@ -127,9 +127,41 @@
                     ),
                 };
             },
+            gapBetweenDays() {
+                let gap,
+                    today = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()),
+                    selected = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate());
+                gap = Math.floor((selected.getTime() - today.getTime()) / (1000 * 3600 * 24));
+
+                switch (gap) {
+                    case -2: {
+                        return 'avant-hier';
+                    }
+                    case -1: {
+                        return 'hier';
+                    }
+                    case 0: {
+                        return 'aujourd\'hui';
+                    }
+                    case 1: {
+                        return 'demain';
+                    }
+                    case 2: {
+                        return 'après-demain';
+                    }
+                    default: {
+                        if (gap < 0) return `il y a ${Math.abs(gap)} jours`;
+                        return `dans ${gap} jours`;
+                    }
+                }
+            },
         },
         created() {
             this.setCurrentDate();
+            this.emitData();
+        },
+        updated() {
+            this.emitData();
         },
         methods: {
             selectDate(day) {
@@ -179,6 +211,13 @@
                     this.selectedDate.getFullYear() === this.today.getFullYear()
                 );
             },
+            emitData() {
+                this.$emit('calendarChange', {
+                    visibleDates: this.visibleDates,
+                    selectedDate: this.selectedDate,
+                    gapBetweenDays: this.gapBetweenDays,
+                });
+            }
         },
     }
 </script>

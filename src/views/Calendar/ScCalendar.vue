@@ -1,6 +1,9 @@
 <template>
   <fm-screen :toolbarProps="toolbarProps">
-    <fm-calendar></fm-calendar>
+    <fm-calendar @calendarChange="calendarChange"></fm-calendar>
+    <section>
+      <h2>Prévu {{ calendarData.gapBetweenDays }}</h2>
+    </section>
   </fm-screen>
 </template>
 
@@ -17,9 +20,15 @@
                     title: 'Calendrier',
                     type: 'calendar',
                     showMore: true,
-                }
+                },
+                calendarData: {},
             }
         },
+        methods: {
+            calendarChange(event) {
+                this.calendarData = event;
+            },
+        }
     }
 </script>
 
