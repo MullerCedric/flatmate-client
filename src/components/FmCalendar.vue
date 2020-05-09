@@ -65,6 +65,12 @@
             }
         },
         computed: {
+            prevMonth() {
+                return this.getPrevMonth(this.selectedDate);
+            },
+            nextMonth() {
+                return this.getNextMonth(this.selectedDate);
+            },
             daysInSelectedMonth() {
                 return new Date(
                     this.selectedDate.getFullYear(),
@@ -72,26 +78,54 @@
                     .getDate()
             },
             daysInPrevMonth() {
-                return new Date(
-                    (this.getPrevMonth(this.selectedDate)).getFullYear(),
-                    this.selectedDate.getMonth(), 0
-                ).getDate();
+                return this.prevMonth.getDate();
             },
             daysInNextMonth() {
-                return new Date(
-                    (this.getNextMonth(this.selectedDate)).getFullYear(),
-                    this.selectedDate.getMonth(), 0
-                ).getDate();
+                return this.nextMonth.getDate();
+            },
+            firstDayPos() {
+                let firstDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 1).getDay();
+                if (firstDay === 0) firstDay = 7;
+                return firstDay;
             },
             visibleDaysFromNext() {
                 return 36 - (this.daysInSelectedMonth + this.firstDayPos) >= 0 ?
                     36 - (this.daysInSelectedMonth + this.firstDayPos) :
                     7 + (36 - (this.daysInSelectedMonth + this.firstDayPos));
             },
-            firstDayPos() {
-                let firstDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 1).getDay();
-                if (firstDay === 0) firstDay = 7;
-                return firstDay;
+            visibleDates() {
+                let fromYear, fromMonth, fromDate, toYear, toMonth, toDate;
+                if (this.firstDayPos === 1) {
+                    fromYear = this.selectedDate.getFullYear();
+                    fromMonth = this.selectedDate.getMonth();
+                    fromDate = 1;
+                } else {
+                    fromYear = this.prevMonth.getFullYear();
+                    fromMonth = this.prevMonth.getMonth();
+                    fromDate = (this.daysInPrevMonth + 2) - this.firstDayPos;
+                }
+
+                if (this.visibleDaysFromNext === 0) {
+                    toYear = this.selectedDate.getFullYear();
+                    toMonth = this.selectedDate.getMonth();
+                    toDate = this.daysInSelectedMonth;
+                } else {
+                    toYear = this.nextMonth.getFullYear();
+                    toMonth = this.nextMonth.getMonth();
+                    toDate = this.visibleDaysFromNext;
+                }
+                return {
+                    from: new Date(
+                        fromYear,
+                        fromMonth,
+                        fromDate
+                    ),
+                    to: new Date(
+                        toYear,
+                        toMonth,
+                        toDate
+                    ),
+                };
             },
         },
         created() {
@@ -117,24 +151,26 @@
                 this.today = new Date();
             },
             setPrevMonth() {
-                if (this.daysInPrevMonth < this.selectedDate.getDate()) {
-                    this.selectedDate.setDate(this.daysInPrevMonth);
-                }
                 this.selectedDate = this.getPrevMonth(this.selectedDate);
             },
             setNextMonth() {
-                if (this.daysInNextMonth < this.selectedDate.getDate()) {
-                    this.selectedDate.setDate(this.daysInNextMonth);
-                }
                 this.selectedDate = this.getNextMonth(this.selectedDate);
             },
             getPrevMonth(oldDate) {
                 let newDate = new Date(oldDate.getTime());
-                return new Date(newDate.setMonth(newDate.getMonth() - 1));
+                newDate.setDate(1);
+                newDate.setMonth(newDate.getMonth() - 1);
+                return new Date(
+                    newDate.getFullYear(), (newDate.getMonth() + 1), 0
+                );
             },
             getNextMonth(oldDate) {
                 let newDate = new Date(oldDate.getTime());
-                return new Date(newDate.setMonth(newDate.getMonth() + 1));
+                newDate.setDate(1);
+                newDate.setMonth(newDate.getMonth() + 1);
+                return new Date(
+                    newDate.getFullYear(), (newDate.getMonth() + 1), 0
+                );
             },
             isToday(n) {
                 return (
