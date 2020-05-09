@@ -83,7 +83,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .5em 1em;
+    padding: .5rem 1.5rem;
 
     &__left, &__right {
       display: flex;
@@ -91,7 +91,7 @@
       flex-wrap: wrap;
 
       & > * {
-        padding: .8em .5em .5em;
+        padding: .8rem .5rem .5rem;
         margin: 0;
       }
     }

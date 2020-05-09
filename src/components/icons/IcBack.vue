@@ -8,7 +8,7 @@
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`" :stroke="iconColor" fill="none">
       <polyline points='328 112 184 256 328 400'
-                stroke-linecap="round" stroke-linejoin="round" stroke-width="32" style="fill:none;"/>
+                stroke-linecap="round" stroke-linejoin="round" :stroke-width="strokeWidth" style="fill:none;"/>
     </g>
   </svg>
 </template>
@@ -32,7 +32,11 @@
             iconColor: {
                 type: String,
                 default: 'currentColor'
-            }
+            },
+            strokeWidth: {
+                type: Number,
+                default: 32,
+            },
         }
     }
 </script>

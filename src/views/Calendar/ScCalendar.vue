@@ -1,15 +1,16 @@
 <template>
   <fm-screen :toolbarProps="toolbarProps">
-    <p>Soon</p>
+    <fm-calendar></fm-calendar>
   </fm-screen>
 </template>
 
 <script>
     import FmScreen from "../../components/FmScreen";
+    import FmCalendar from "../../components/FmCalendar";
 
     export default {
         name: "ScCalendar",
-        components: {FmScreen},
+        components: {FmCalendar, FmScreen},
         data() {
             return {
                 toolbarProps: {
