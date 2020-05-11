@@ -13,7 +13,6 @@
 </script>
 
 <style lang="scss">
-  @import "assets/scss/_fonts.scss";
   @import "assets/scss/_settings.scss";
   @import "assets/scss/_reset.scss";
   @import "assets/scss/_base.scss";
@@ -28,7 +27,6 @@
   }
 
   body {
-    font-family: $mainFont;
     font-weight: $regular;
     font-style: normal;
     line-height: 1.5;
@@ -49,6 +47,7 @@
   [id="app"] {
     height: 100%;
     background-color: $lighterGrey;
+    font-family: $mainFont;
   }
 
   ion-navbar.toolbar.toolbar-ios.statusbar-padding,

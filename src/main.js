@@ -8,6 +8,8 @@ import "@ionic/core/css/ionic.bundle.css";
 import router from "./router";
 import store from './store/store';
 
+import (/* webpackPreload: true */ 'typeface-maven-pro/index.css');
+
 Vue.config.productionTip = false;
 Vue.use(Ionic);
 
