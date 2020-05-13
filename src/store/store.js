@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import calendarStore from './Calendar/store';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -11,5 +13,8 @@ export default new Vuex.Store({
         increment(state) {
             state.count++
         }
+    },
+    modules: {
+        calendarStore
     }
 })

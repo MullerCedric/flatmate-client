@@ -16,13 +16,18 @@
         </div>
       </div>
     </div>
-    <div class="fm-calendar__dates">
+    <div class="fm-calendar__weekdays">
       <div v-for="day in weekDays" :key="day">{{ day }}</div>
+    </div>
+    <div class="fm-calendar__dates">
 
       <div v-for="(n, index) in (firstDayPos - 1)"
            :key="'prev'+index"
            @click="selectPrevDate((daysInPrevMonth + 1) - firstDayPos + n)"
-           class="fm-calendar__date fm-calendar__date--blurred">
+           class="fm-calendar__date fm-calendar__date--blurred"
+           :class="{
+               'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n))
+      }">
         {{ (daysInPrevMonth + 1) - firstDayPos + n }}
       </div>
 
@@ -32,6 +37,7 @@
            class="fm-calendar__date" :class="{
             'fm-calendar__date--selected' : n === selectedDate.getDate(),
             'fm-calendar__date--today' : isToday(n),
+            'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n, firstDayPos - 1))
         }">
         {{ n }}
       </div>
@@ -39,7 +45,10 @@
       <div v-for="(n, index) in (visibleDaysFromNext)"
            :key="'next'+index"
            @click="selectNextDate(n)"
-           class="fm-calendar__date fm-calendar__date--blurred">
+           class="fm-calendar__date fm-calendar__date--blurred"
+           :class="{
+               'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n, daysInSelectedMonth + firstDayPos - 1))
+      }">
         {{ n }}
       </div>
     </div>
@@ -52,6 +61,12 @@
     export default {
         name: "FmCalendar",
         components: {IcBack},
+        props: {
+            events: {
+                type: Object,
+                default: () => {},
+            }
+        },
         data() {
             return {
                 weekDays: [
@@ -119,12 +134,12 @@
                         fromYear,
                         fromMonth,
                         fromDate
-                    ),
+                    ).getTime(),
                     to: new Date(
                         toYear,
                         toMonth,
                         toDate
-                    ),
+                    ).getTime(),
                 };
             },
             gapBetweenDays() {
@@ -158,10 +173,10 @@
         },
         created() {
             this.setCurrentDate();
-            this.emitData();
+            this.emitSelected();
         },
         updated() {
-            this.emitData();
+            this.emitSelected();
         },
         methods: {
             selectDate(day) {
@@ -181,12 +196,15 @@
             setCurrentDate() {
                 this.selectedDate = new Date();
                 this.today = new Date();
+                this.emitVisible();
             },
             setPrevMonth() {
                 this.selectedDate = this.getPrevMonth(this.selectedDate);
+                this.emitVisible();
             },
             setNextMonth() {
                 this.selectedDate = this.getNextMonth(this.selectedDate);
+                this.emitVisible();
             },
             getPrevMonth(oldDate) {
                 let newDate = new Date(oldDate.getTime());
@@ -211,12 +229,24 @@
                     this.selectedDate.getFullYear() === this.today.getFullYear()
                 );
             },
-            emitData() {
-                this.$emit('calendarChange', {
-                    visibleDates: this.visibleDates,
-                    selectedDate: this.selectedDate,
+            getTimestampForTheDay(n, offsetInDays = 0) {
+                const oneDay = 86400000;
+                const offsetInTimestamp = offsetInDays * oneDay;
+                const nthDayTimestamp = (n - 1) * oneDay;
+                return this.visibleDates.from + offsetInTimestamp + nthDayTimestamp;
+            },
+            hasEvents(timestamp) {
+                if (!this.events.hasOwnProperty(timestamp)) return false;
+                return !!this.events[timestamp].length;
+            },
+            emitSelected() {
+                this.$emit('selectedDateChange', {
+                    selectedDate: new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate()),
                     gapBetweenDays: this.gapBetweenDays,
                 });
+            },
+            emitVisible() {
+                this.$emit('visibleDatesChange', this.visibleDates);
             }
         },
     }
@@ -228,13 +258,21 @@
   .fm-calendar {
     background-color: $white;
     padding: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     border-radius: 1rem;
 
     &__heading {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 1rem;
+
+      & > * {
+        font-size: 1.25rem;
+        font-weight: $bold;
+        color: $black;
+        margin: 0;
+      }
     }
 
     &__nav {
@@ -259,7 +297,7 @@
       transform: rotate(180deg);
     }
 
-    &__dates {
+    &__dates, &__weekdays {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
       text-align: center;
@@ -268,13 +306,27 @@
 
     &__date {
       width: auto;
-      padding: .25rem;
+      padding: .3125rem .3125rem .25rem;
       font-weight: $bold;
-      border-radius: .75rem;
+      border-radius: .625rem;
+      position: relative;
 
-      &:nth-child(7n+13), &:nth-child(7n+14) {
+      &:after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: .3125rem;
+        height: .3125rem;
+        border-radius: 100%;
+        background-color: $darkGrey;
+        top: .3125rem;
+        right: .25rem;
+        opacity: 0;
+      }
+
+      &:nth-child(7n+6), &:nth-child(7n+7) {
         &:not(.fm-calendar__date--today):not(.fm-calendar__date--selected):not(.fm-calendar__date--blurred) {
-          opacity: .5;
+          opacity: .63;
         }
       }
 
@@ -288,13 +340,21 @@
         color: $white;
         opacity: 1;
 
+        &:after {
+          background-color: $white;
+        }
+
         &.fm-calendar__date--today {
           background-color: $main;
         }
       }
 
       &--blurred {
-        opacity: .25;
+        opacity: .23;
+      }
+
+      &--has-event:after {
+        opacity: 1;
       }
     }
   }
