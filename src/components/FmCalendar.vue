@@ -301,7 +301,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
       text-align: center;
-      gap: .75rem .5rem;
+      gap: .75rem 3%;
     }
 
     &__date {
@@ -320,7 +320,7 @@
         border-radius: 100%;
         background-color: $darkGrey;
         top: .3125rem;
-        right: .25rem;
+        left: 75%;
         opacity: 0;
       }
 
