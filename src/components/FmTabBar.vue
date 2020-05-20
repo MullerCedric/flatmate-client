@@ -7,7 +7,8 @@
                    v-slot="{ href, route, navigate, isActive, isExactActive }"
       >
         <a :href="href" @click="navigate" class="tab" :class="{ 'tab--active': isExactActive }">
-          <ic-home class="tab__icon" :is-active="isExactActive"></ic-home>
+          <ic-home class="tab__icon" :is-active="isExactActive">
+          </ic-home>
         </a>
       </router-link>
       <router-link class="fm-tab-bar__link"
@@ -16,20 +17,28 @@
                    v-slot="{ href, route, navigate, isActive, isExactActive }"
       >
         <a :href="href" @click="navigate" class="tab" :class="{ 'tab--active': isExactActive }">
-          <ic-calendar class="tab__icon" :is-active="isExactActive"></ic-calendar>
+          <ic-calendar class="tab__icon" :is-active="isExactActive">
+          </ic-calendar>
         </a>
       </router-link>
-      <div class="fm-tab-bar__create" @click="showCreateMenu = !showCreateMenu"
+      <div v-if="!createLink" class="fm-tab-bar__create" @click="showCreateMenu = !showCreateMenu"
            :class="{ 'fm-tab-bar__create--active': showCreateMenu }">
-        <ic-plus icon-color="#FFFFFF"></ic-plus>
+        <ic-plus icon-color="#FFFFFF">
+        </ic-plus>
       </div>
+      <router-link v-if="createLink" tag="div" class="fm-tab-bar__create" :to="createLink"
+                   :class="{ 'fm-tab-bar__create--active': showCreateMenu }">
+        <ic-plus icon-color="#FFFFFF">
+        </ic-plus>
+      </router-link>
       <router-link class="fm-tab-bar__link"
                    :class="{ 'fm-tab-bar__link--hidden': showCreateMenu }"
                    :to="{name: 'notes'}"
                    v-slot="{ href, route, navigate, isActive, isExactActive }"
       >
         <a :href="href" @click="navigate" class="tab" :class="{ 'tab--active': isExactActive }">
-          <ic-notes class="tab__icon" :is-active="isExactActive"></ic-notes>
+          <ic-notes class="tab__icon" :is-active="isExactActive">
+          </ic-notes>
         </a>
       </router-link>
       <router-link class="fm-tab-bar__link"
@@ -38,12 +47,14 @@
                    v-slot="{ href, route, navigate, isActive, isExactActive }"
       >
         <a :href="href" @click="navigate" class="tab" :class="{ 'tab--active': isExactActive }">
-          <ic-wallet class="tab__icon" :is-active="isExactActive"></ic-wallet>
+          <ic-wallet class="tab__icon" :is-active="isExactActive">
+          </ic-wallet>
         </a>
       </router-link>
     </div>
-    <div class="fm-tab-bar__content" v-if="showCreateMenu">
-      <slot></slot>
+    <div class="fm-tab-bar__content" :class="{ 'fm-tab-bar__content--active': showCreateMenu }">
+      <slot>
+      </slot>
     </div>
   </div>
 </template>
@@ -58,6 +69,11 @@
     export default {
         name: "FmTabBar",
         components: {IcWallet, IcNotes, IcPlus, IcHome, IcCalendar},
+        props: {
+            createLink: {
+                type: Object,
+            }
+        },
         data() {
             return {
                 showCreateMenu: false,
@@ -98,21 +114,29 @@
       position: relative;
       box-shadow: 0 0 .25rem $shadow, 0 0 0 .5rem $lighterGrey;
       top: -1.5rem;
-      transition: transform .3s ease-in-out,
-      padding .3s cubic-bezier(.5,-0.1,.7,1.5),
-      box-shadow .3s cubic-bezier(.5,-0.1,.7,1.5),
-      top .3s cubic-bezier(.5,-0.1,.7,1.5);
+      transition: transform .2s,
+      padding .2s,
+      box-shadow .2s,
+      top .2s;
 
       &--active {
         transform: rotate(-45deg) scale(.75);
         padding: .25rem;
-        box-shadow: 0 0 0 1px $black, 0 0 0 .1rem transparent;
+        box-shadow: 0 0 0 1px $black, 0 0 0 .1rem $white;
         top: .5rem;
       }
     }
 
     &__content {
-      padding: .75rem 1.125rem 1.5rem;
+      overflow: hidden;
+      padding: 0 1.125rem;
+      max-height: 0;
+      transition: padding .3s;
+
+      &--active {
+        max-height: 100%;
+        padding: .75rem 1.125rem 1.5rem;
+      }
     }
   }
 

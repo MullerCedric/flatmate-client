@@ -28,16 +28,24 @@
       harum hic iusto necessitatibus quibusdam ratione recusandae repudiandae sequi soluta voluptatem? Aliquam, dicta,
       eos!
     </div>
+
+    <template #tab>
+      <fm-tab-bar>
+      </fm-tab-bar>
+    </template>
   </fm-screen>
 </template>
 
 <script>
+    import * as types from "../store/types";
     import {mapMutations} from 'vuex';
+
     import FmScreen from "../components/FmScreen";
+    import FmTabBar from "../components/FmTabBar";
 
     export default {
         name: "ScDashboard",
-        components: {FmScreen},
+        components: {FmTabBar, FmScreen},
         data() {
             return {
                 toolbarProps: {
@@ -47,6 +55,9 @@
                     showSettings: true,
                 }
             }
+        },
+        mounted() {
+            this.$store.dispatch(types.HYDRATE_APP);
         },
         methods: {
             ...mapMutations([

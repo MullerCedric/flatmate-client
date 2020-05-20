@@ -5,4 +5,7 @@ export default {
         if (!state.calendarEventsData.hasOwnProperty(payload)) return {};
         return state.calendarEventsData[payload];
     },
+    [types.GET_EVENTS_CATS]: state => {
+        return state.categories;
+    },
 };

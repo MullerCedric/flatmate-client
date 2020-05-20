@@ -35,10 +35,9 @@
                 return hours + 'h' + minutes; //TODO handle events for more than 1 day
             },
             category_color() {
-                let cat = this.event.categories;
-                if (!cat.length) return '#4a4750';
-                cat.sort((a, b) => a.weight - b.weight);
-                return cat[0].color;
+                let cat = this.event.category;
+                if (!cat) return '#4a4750';
+                return cat.color;
             },
         },
         methods: {

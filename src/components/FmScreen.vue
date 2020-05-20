@@ -4,24 +4,22 @@
     <fm-screen-content class="fm-screen__content">
       <slot></slot>
     </fm-screen-content>
-    <fm-tab-bar>
-      <slot name="create-menu"></slot>
-    </fm-tab-bar>
+    <slot name="tab">
+    </slot>
   </div>
 </template>
 
 <script>
     import FmScreenContent from "./FmScreenContent";
-    import FmTabBar from "./FmTabBar";
     import FmToolbar from "./FmToolbar";
 
     export default {
         name: "FmScreen",
-        components: {FmToolbar, FmTabBar, FmScreenContent},
+        components: {FmToolbar, FmScreenContent},
         props: {
             toolbarProps: {
                 type: Object,
-            }
+            },
         },
     }
 </script>

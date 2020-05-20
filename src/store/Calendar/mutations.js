@@ -39,4 +39,11 @@ export default {
             Vue.set(state.calendarEventsData[payload.limits.from], i, events);
         }
     },
+    [types.SET_EVENTS_CATS]: (state, payload) => {
+        Vue.set(state, 'categories', payload);
+    },
+    [types.SET_NEW_EVENT]: (state, payload) => {
+        window.console.log(payload, state);
+
+    },
 };

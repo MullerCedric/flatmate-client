@@ -4,8 +4,7 @@
       <div v-if="showBack" class="fm-toolbar__back" @click="$router.back()">
         <ic-back></ic-back>
       </div>
-      <div class="fm-toolbar__avatar">
-
+      <div v-if="showAvatar" class="fm-toolbar__avatar">
       </div>
       <h1 v-if="showTitle" class="fm-toolbar__title">
         {{ title }}
@@ -46,6 +45,10 @@
             showBack: {
                 type: Boolean,
                 default: false,
+            },
+            showAvatar: {
+                type: Boolean,
+                default: true,
             },
             showTitle: {
                 type: Boolean,

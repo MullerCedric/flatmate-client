@@ -9,6 +9,11 @@
                      :events="eventsForSelectedDay" class="event-list">
       </fm-event-list>
     </div>
+
+    <template #tab>
+      <fm-tab-bar :create-link="{name: 'calendarCreate', query: { selectedDate: selectedIsoString } }">
+      </fm-tab-bar>
+    </template>
   </fm-screen>
 </template>
 
@@ -16,12 +21,13 @@
     import * as types from "../../store/types";
 
     import FmScreen from "../../components/FmScreen";
+    import FmTabBar from "../../components/FmTabBar";
     import FmCalendar from "../../components/FmCalendar";
     import FmEventList from "../../components/FmEventList";
 
     export default {
         name: "ScCalendar",
-        components: {FmEventList, FmCalendar, FmScreen},
+        components: {FmTabBar, FmEventList, FmCalendar, FmScreen},
         data() {
             return {
                 toolbarProps: {
@@ -31,6 +37,7 @@
                 },
                 calendarSelectedData: {},
                 calendarVisibleDates: {},
+                selectedIsoString: '',
             }
         },
         computed: {
@@ -42,6 +49,12 @@
                 return this.calendarEventsData[this.calendarSelectedData.selectedDate.getTime()] || [];
             },
         },
+        mounted() {
+            this.$store.dispatch(types.HYDRATE_APP);
+        },
+        updated() {
+            this.updateSelectedIso();
+        },
         methods: {
             calendarSelectedChange(event) {
                 this.calendarSelectedData = event;
@@ -49,6 +62,16 @@
             calendarVisibleChange(event) {
                 this.calendarVisibleDates = event;
                 this.$store.dispatch(types.FETCH_AND_ASSOCIATE_EVENTS, this.calendarVisibleDates);
+            },
+            updateSelectedIso() {
+                let newDate = !this.calendarSelectedData.selectedDate ?
+                    new Date() :
+                    new Date(this.calendarSelectedData.selectedDate.getTime());
+                const tzOffset = newDate.getTimezoneOffset() / 60;
+                newDate.setHours(9 - tzOffset);
+                newDate.setMinutes(0);
+                newDate.setSeconds(0);
+                this.selectedIsoString = newDate.toISOString().slice(0, 16);
             },
         }
     }
