@@ -10,9 +10,9 @@ export default {
             let events = [];
 
             payload.data[0].forEach(ev => {
-                const evd = new Date(ev.start_date);
-                evd.setHours(0, 0, 0, 0);
-                if (i === evd.getTime()) {
+                const evSd = new Date(ev.start_date);
+                evSd.setHours(0, 0, 0, 0);
+                if (i === evSd.getTime()) {
                     ev.start_date = new Date(ev.start_date);
                     if (ev.end_date) ev.end_date = new Date(ev.end_date);
                     events.push(ev);
@@ -43,7 +43,34 @@ export default {
         Vue.set(state, 'categories', payload);
     },
     [types.SET_NEW_EVENT]: (state, payload) => {
-        window.console.log(payload, state);
+        let ev = {...payload};
+        let evSd = new Date(payload.start_date), evEd = false;
+        ev.start_date = new Date(payload.start_date);
+        evSd.setHours(0, 0, 0, 0);
+        if (payload.end_date) {
+            evEd = new Date(payload.end_date);
+            ev.end_date = new Date(payload.end_date);
+            evEd.setHours(0, 0, 0, 0);
+        }
 
+        for (const month in state.calendarEventsData) {
+            if (!state.calendarEventsData.hasOwnProperty(month)) continue;
+            for (const day in state.calendarEventsData[month]) {
+                if (!state.calendarEventsData[month].hasOwnProperty(day)) continue;
+                if (!payload.interval) {
+                    // One-off event
+                    if (parseInt(day, 10) === evSd.getTime()) {
+                        state.calendarEventsData[month][day].push(ev);
+                    }
+                } else {
+                    // Recurring event
+                    if (evSd <= parseInt(day, 10) && ((evEd && evEd >= parseInt(day, 10)) || !evEd)) {
+                        if ((parseInt(day, 10) - evSd.getTime()) % payload.interval === 0) {
+                            state.calendarEventsData[month][day].push(ev);
+                        }
+                    }
+                }
+            }
+        }
     },
 };

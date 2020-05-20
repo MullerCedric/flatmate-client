@@ -68,9 +68,7 @@
                     new Date() :
                     new Date(this.calendarSelectedData.selectedDate.getTime());
                 const tzOffset = newDate.getTimezoneOffset() / 60;
-                newDate.setHours(9 - tzOffset);
-                newDate.setMinutes(0);
-                newDate.setSeconds(0);
+                newDate.setHours(9 - tzOffset, 0, 0);
                 this.selectedIsoString = newDate.toISOString().slice(0, 16);
             },
         }

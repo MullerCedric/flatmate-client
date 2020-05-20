@@ -65,6 +65,7 @@ export default {
         //Treating data and simulating relationships
         let newEvent = {};
         newEvent.id = Math.floor(Math.random() * 100);
+        newEvent.label = formData.label;
         newEvent.flat_id = formData.shared ? formData.flat_id : null;
         newEvent.category = db.eventsCategories.find(el => el.id === formData.category) || null;
         newEvent.confirm = formData.confirm ? formData.confirmType : null;
@@ -79,9 +80,9 @@ export default {
                 )
             );
         });
-        if (newEvent.recurring) {
+        if (formData.recurring) {
             newEvent.interval = formData.interval * 86400000;
-            newEvent.end_date = new Date(formData.end_date).getTime();
+            newEvent.end_date = formData.end_date ? new Date(formData.end_date).getTime() : null;
         } else {
             newEvent.interval = null;
             newEvent.end_date = null;
