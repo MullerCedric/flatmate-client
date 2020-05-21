@@ -4,7 +4,7 @@
       <div v-if="showBack" class="fm-toolbar__back" @click="$router.back()">
         <ic-back></ic-back>
       </div>
-      <div v-if="showAvatar" class="fm-toolbar__avatar">
+      <div v-if="showAvatar" @click.stop="toggleMenu" class="fm-toolbar__avatar">
       </div>
       <h1 v-if="showTitle" class="fm-toolbar__title">
         {{ title }}
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+    import * as types from '../store/types';
+
     import IcSearch from "./icons/IcSearch";
     import IcBack from "./icons/IcBack";
     import IcBell from "./icons/IcBell";
@@ -75,6 +77,11 @@
                 default: false,
             },
         },
+        methods: {
+            toggleMenu() {
+                this.$store.commit(types.TOGGLE_SIDE_MENU);
+            },
+        },
     }
 </script>
 
@@ -108,6 +115,7 @@
 
     &__right {
       justify-content: flex-end;
+
       & > :last-child {
         margin-right: 0;
         padding-right: 0;

@@ -17,7 +17,7 @@ export default {
                 resolve({
                     data: db.flats.find((flat) => flat.id === flatId)
                 });
-            }, Math.floor(Math.random() * 3600));
+            }, Math.floor(Math.random() * 600));
         });
         fetchingFlat.then(resp => commit(types.SET_FLAT, resp.data))
             .catch(error => {
@@ -30,7 +30,7 @@ export default {
                 resolve({
                     data: db.notifications
                 });
-            }, Math.floor(Math.random() * 3600));
+            }, Math.floor(Math.random() * 600));
         });
         fetchingNotifications.then(resp => commit(types.SET_NOTIFICATIONS, resp.data))
             .catch(error => {

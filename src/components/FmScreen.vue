@@ -1,5 +1,5 @@
 <template>
-  <div class="fm-screen">
+  <div class="fm-screen" @click="closeMenu">
     <fm-toolbar v-bind="toolbarProps"></fm-toolbar>
     <fm-screen-content class="fm-screen__content">
       <slot></slot>
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+    import * as types from "../store/types";
+
     import FmScreenContent from "./FmScreenContent";
     import FmToolbar from "./FmToolbar";
 
@@ -20,6 +22,11 @@
             toolbarProps: {
                 type: Object,
             },
+        },
+        methods: {
+            closeMenu() {
+                this.$store.commit(types.CLOSE_SIDE_MENU);
+            }
         },
     }
 </script>

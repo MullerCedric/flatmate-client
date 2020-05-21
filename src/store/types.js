@@ -9,6 +9,13 @@
 /*
  * App
  */
+// Getters
+export const GET_SIDE_MENU_STATE = 'App/GetSideMenuState';
+
+// Mutations
+export const TOGGLE_SIDE_MENU = 'App/ToggleSideMenu';
+export const CLOSE_SIDE_MENU = 'App/CloseSideMenu';
+
 // Actions
 export const HYDRATE_APP = 'App/HydrateAppData';
 
@@ -19,16 +26,33 @@ export const HYDRATE_APP = 'App/HydrateAppData';
 // Getters
 export const GET_USER = 'User/GetCurrentUser';
 
+/*
+ * Discussions & messages
+ */
+// Getters
+export const GET_DISCUSSIONS = 'Discussions/GetDiscussionsWithLastMessageAndParticipants';
+
+// Mutations
+export const SET_DISCUSSIONS = 'Discussions/SetDiscussionsWithLastMessageAndParticipants';
+
+// Actions
+export const FETCH_DISCUSSIONS = 'Discussions/FetchDiscussionsWithLastMessageAndParticipants';
+
 
 /*
  * Flat
  */
 // Getters
+export const GET_FLATS = 'Flat/GetFlatsWithUsers';
 export const GET_FLAT = 'Flat/GetFlatWithUsers';
 export const GET_FLAT_USERS = 'Flat/GetFlatUsers';
 
 // Mutations
 export const SET_FLAT = 'Flat/SetFlatWithUsers';
+export const SET_FLATS = 'Flat/SetFlatsWithUsers';
+
+// Actions
+export const FETCH_FLATS = 'Flat/FetchFlatsWithUsers';
 
 
 /*

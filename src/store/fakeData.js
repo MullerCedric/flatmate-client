@@ -50,12 +50,11 @@ export const eventsCategories = [
 
 export const transactionsCategories = [];
 
-export const discussions = []; // With Messages
-
-export const flats = [
+export const discussions = [
     {
         id: 1,
-        name: null,
+        label: null,
+        locked_at: null,
         participants: [
             {
                 id: 1,
@@ -75,11 +74,280 @@ export const flats = [
                 email: 'sarah@gmail.com',
                 avatar: null,
             },
-        ]
+        ],
+        messages: [
+            {
+                id: 89751,
+                from: {
+                        id: 1,
+                        name: 'Emma',
+                        email: 'emma@gmail.com',
+                        avatar: '*',
+                    },
+                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+            },
+            {
+                id: 89752,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Suspendisse lorem purus, pellentesque aliquet',
+            },
+            {
+                id: 89756,
+                from: {
+                        id: 2,
+                        name: 'Marie',
+                        email: 'marie@gmail.com',
+                        avatar: '*',
+                    },
+                content: 'Pellentesque id ante quis dui malesuada elementum. Proin imperdiet consectetur efficitur. Ut tincidunt, metus ac lobortis sodales, lacus metus mollis magna, nec varius turpis nibh id sapien',
+            },
+            {
+                id: 89765,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'uspendisse non hendrerit ipsum',
+            },
+            {
+                id: 89768,
+                from: {
+                    id: 3,
+                    name: 'Sarah',
+                    email: 'sarah@gmail.com',
+                    avatar: null,
+                },
+                content: 'Nulla sed pellentesque dui, eu tristique lectus. Sed tincidunt libero cursus pulvinar luctus. Aliquam nec urna eget est vehicula fringilla eget eget nisi',
+            },
+            {
+                id: 89769,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Donec neque metus, fringilla sed congue ut, semper feugiat sapien',
+            },
+            {
+                id: 89773,
+                from: {
+                    id: 3,
+                    name: 'Sarah',
+                    email: 'sarah@gmail.com',
+                    avatar: null,
+                },
+                content: 'Mauris nec lacinia magna, vitae aliquet lectus. Donec ante augue, tincidunt vitae mi a, egestas tempus mi',
+            },
+        ],
     },
     {
         id: 2,
-        name: null,
+        label: 'Liste des courses',
+        locked_at: null,
+        participants: [
+            {
+                id: 1,
+                name: 'Emma',
+                email: 'emma@gmail.com',
+                avatar: '*',
+            },
+            {
+                id: 2,
+                name: 'Marie',
+                email: 'marie@gmail.com',
+                avatar: '*',
+            },
+            {
+                id: 3,
+                name: 'Sarah',
+                email: 'sarah@gmail.com',
+                avatar: null,
+            },
+        ],
+        messages: [
+            {
+                id: 89751,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+            },
+            {
+                id: 89752,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Suspendisse lorem purus, pellentesque aliquet',
+            },
+            {
+                id: 89756,
+                from: {
+                    id: 2,
+                    name: 'Marie',
+                    email: 'marie@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Pellentesque id ante quis dui malesuada elementum. Proin imperdiet consectetur efficitur. Ut tincidunt, metus ac lobortis sodales, lacus metus mollis magna, nec varius turpis nibh id sapien',
+            },
+            {
+                id: 89765,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'uspendisse non hendrerit ipsum',
+            },
+            {
+                id: 89768,
+                from: {
+                    id: 3,
+                    name: 'Sarah',
+                    email: 'sarah@gmail.com',
+                    avatar: null,
+                },
+                content: 'Nulla sed pellentesque dui, eu tristique lectus. Sed tincidunt libero cursus pulvinar luctus. Aliquam nec urna eget est vehicula fringilla eget eget nisi',
+            },
+            {
+                id: 89769,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Donec neque metus, fringilla sed congue ut, semper feugiat sapien',
+            },
+            {
+                id: 89773,
+                from: {
+                    id: 3,
+                    name: 'Sarah',
+                    email: 'sarah@gmail.com',
+                    avatar: null,
+                },
+                content: 'Mauris nec lacinia magna, vitae aliquet lectus. Donec ante augue, tincidunt vitae mi a, egestas tempus mi',
+            },
+        ],
+    },
+    {
+        id: 3,
+        label: null,
+        locked_at: null,
+        participants: [
+            {
+                id: 1,
+                name: 'Emma',
+                email: 'emma@gmail.com',
+                avatar: '*',
+            },
+            {
+                id: 2,
+                name: 'Marie',
+                email: 'marie@gmail.com',
+                avatar: '*',
+            },
+        ],
+        messages: [
+            {
+                id: 89751,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+            },
+            {
+                id: 89752,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Suspendisse lorem purus, pellentesque aliquet',
+            },
+            {
+                id: 89756,
+                from: {
+                    id: 2,
+                    name: 'Marie',
+                    email: 'marie@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Pellentesque id ante quis dui malesuada elementum. Proin imperdiet consectetur efficitur. Ut tincidunt, metus ac lobortis sodales, lacus metus mollis magna, nec varius turpis nibh id sapien',
+            },
+            {
+                id: 89765,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'uspendisse non hendrerit ipsum',
+            },
+            {
+                id: 89769,
+                from: {
+                    id: 1,
+                    name: 'Emma',
+                    email: 'emma@gmail.com',
+                    avatar: '*',
+                },
+                content: 'Donec neque metus, fringilla sed congue ut, semper feugiat sapien',
+            },
+        ],
+    },
+]; // With Messages & participants
+
+export const flats = [
+    {
+        id: 1,
+        name: 'Emma, Marie et Sarah',
+        avatar: '*',
+        participants: [
+            {
+                id: 1,
+                name: 'Emma',
+                email: 'emma@gmail.com',
+                avatar: '*',
+            },
+            {
+                id: 2,
+                name: 'Marie',
+                email: 'marie@gmail.com',
+                avatar: '*',
+            },
+            {
+                id: 3,
+                name: 'Sarah',
+                email: 'sarah@gmail.com',
+                avatar: null,
+            },
+        ],
+    },
+    {
+        id: 2,
+        name: 'Alcoloc',
+        avatar: '*',
         participants: [
             {
                 id: 1,

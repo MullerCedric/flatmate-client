@@ -1,6 +1,9 @@
 import * as types from '../types';
 
 export default {
+    [types.GET_FLATS]: state => {
+        return state.flats;
+    },
     [types.GET_FLAT]: state => {
         return state.flat;
     },

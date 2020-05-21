@@ -1,14 +1,26 @@
 <template>
   <div id="app">
     <ion-app>
-      <router-view :key="$route.path"></router-view>
+      <fm-side-menu :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
+      </fm-side-menu>
+      <router-view :key="$route.path" :class="['fm-view', {'fm-view--aside': sideMenuIsVisible}]"></router-view>
     </ion-app>
   </div>
 </template>
 
 <script>
+    import * as types from './store/types';
+
+    import FmSideMenu from "./components/FmSideMenu";
+
     export default {
-        name: "app"
+        name: "app",
+        components: {FmSideMenu},
+        computed: {
+            sideMenuIsVisible() {
+                return this.$store.getters[types.GET_SIDE_MENU_STATE] || false;
+            }
+        }
     };
 </script>
 
@@ -48,6 +60,31 @@
     height: 100%;
     background-color: $lighterGrey;
     font-family: $mainFont;
+  }
+
+  .fm-view {
+    overflow-x: hidden;
+    transform: translateX(0);
+    transition: transform .3s ease-in-out;
+
+    &--aside {
+      transform: translateX(85%);
+    }
+  }
+
+  .fm-side-menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 83%;
+    z-index: 11;
+    transform: translateX(-100%);
+    transition: transform .3s ease-in-out;
+
+    &--visible {
+      transform: translateX(0);
+    }
   }
 
   ion-navbar.toolbar.toolbar-ios.statusbar-padding,
