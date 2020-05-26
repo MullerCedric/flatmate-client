@@ -1,12 +1,8 @@
 <template>
   <div class="fm-side-menu-flats">
-    <div v-for="flat in flats" :key="flat.id"
-         :class="['fm-side-menu-flats__flat', { 'fm-side-menu-flats__flat--current': flat.id === currFlatId }]">
-      <div class="fm-side-menu-flats__avatar"></div>
-      <div class="fm-side-menu-flats__flat-content">
-        {{ flat.name }}
-      </div>
-    </div>
+    <fm-side-menu-flat v-for="flat in flats" :key="flat.id" :flat="flat"
+                       :class="['fm-side-menu-flats__flat', { 'fm-side-menu-flats__flat--current': flat.id === currFlatId }]">
+    </fm-side-menu-flat>
     <div class="fm-side-menu-flats__floating-buttons">
       <div class="fm-side-menu-flats__floating-button fm-side-menu-flats__floating-button--main">
         <ic-plus></ic-plus>
@@ -22,10 +18,11 @@
     import * as types from '../store/types';
     import IcPlus from "./icons/IcPlus";
     import IcSearch from "./icons/IcSearch";
+    import FmSideMenuFlat from "./FmSideMenuFlat";
 
     export default {
         name: "FmSideMenuFlats",
-        components: {IcSearch, IcPlus},
+        components: {FmSideMenuFlat, IcSearch, IcPlus},
         computed: {
             flats() {
                 return this.$store.getters[types.GET_FLATS];
@@ -47,8 +44,6 @@
     &__flat {
       padding: .5rem 1.5rem;
       margin-bottom: .5rem;
-      display: flex;
-      align-items: center;
       position: relative;
 
       &:after {
@@ -63,36 +58,12 @@
         background-color: transparent;
       }
 
-      &-content {
-        flex: 1;
-        font-weight: $bold;
-      }
-
       &--current {
         background-color: $lightMain;
 
         &:after {
           background-color: $main;
         }
-      }
-    }
-
-    &__avatar {
-      width: 2.5em;
-      height: 2.5em;
-      overflow: hidden;
-      text-align: center;
-      padding: 0;
-      margin: .5rem .5rem .5rem 0;
-      border-radius: 100%;
-      box-shadow: 0 0 .15em $shadow;
-      background-color: $grey;
-
-      & img {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        border: none;
       }
     }
 

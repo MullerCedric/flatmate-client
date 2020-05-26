@@ -1,16 +1,13 @@
 import * as types from '../types';
-import * as db from '../fakeData';
 
 export default {
-    [types.FETCH_DISCUSSIONS]({commit, state}) {
-        if (state.discussions.length) return;
+    [types.FETCH_DISCUSSIONS]({commit, state, rootState}) {
+        if (state.discussions.length) return Promise.resolve();
 
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({
-                    data: db.discussions
-                });
-            }, Math.floor(Math.random() * 600));
+        const api_token = rootState.userStore.user.api_token;
+
+        return new window.axios.get('/discussions', {
+            params: {api_token, with: 'participants,messages'}
         })
             .then(resp => commit(types.SET_DISCUSSIONS, resp.data))
             .catch(error => {

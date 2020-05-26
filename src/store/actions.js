@@ -5,19 +5,16 @@ export default {
     [types.HYDRATE_APP]({commit, rootState}) {
         if (!rootState.userStore.user) {
             window.console.error('You must be logged in!');
-            return;
+            return Promise.reject('You must be logged in!');
         }
-        if (rootState.flatStore.flat.hasOwnProperty('id')) return;
+        if (rootState.flatStore.flat.hasOwnProperty('id')) return Promise.resolve();
 
+        const api_token = rootState.userStore.user.api_token;
         const flatId = rootState.userStore.user.viewingFlat;
 
         // Fetching current flat info with members
-        const fetchingFlat = new Promise(resolve => {
-            setTimeout(() => {
-                resolve({
-                    data: db.flats.find((flat) => flat.id === flatId)
-                });
-            }, Math.floor(Math.random() * 600));
+        const fetchingFlat = window.axios.get('/flats/' + flatId, {
+            params: {api_token, with: 'participants,creator'}
         });
         fetchingFlat.then(resp => commit(types.SET_FLAT, resp.data))
             .catch(error => {

@@ -108,7 +108,6 @@
 
                 formData: {
                     label: '',
-                    flat_id: 1,
                     start_date: '',
                     shared: false,
                     participants: [],

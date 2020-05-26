@@ -6,7 +6,7 @@ export default {
         Vue.set(state.calendarEventsData, payload.limits.from, {});
         if (!payload.data.length) return;
 
-        for (let i = payload.limits.from; i < payload.limits.to; i = i + 86400000) {
+        for (let i = payload.limits.from; i <= payload.limits.to; i = i + 86400000) {
             let events = [];
 
             payload.data[0].forEach(ev => {

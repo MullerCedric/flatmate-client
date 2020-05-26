@@ -25,7 +25,9 @@
         },
         methods: {
             closeMenu() {
-                this.$store.commit(types.CLOSE_SIDE_MENU);
+                if (this.$store.state.sideMenuIsVisible) {
+                    this.$store.commit(types.CLOSE_SIDE_MENU);
+                }
             }
         },
     }

@@ -1,16 +1,12 @@
 import * as types from '../types';
-import * as db from '../fakeData';
 
 export default {
-    [types.FETCH_FLATS]({commit, state}) {
-        if (state.flats.length) return;
+    [types.FETCH_FLATS]({commit, state, rootState}) {
+        if (state.flats.length) return Promise.resolve();
+        const api_token = rootState.userStore.user.api_token;
 
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({
-                    data: db.flats
-                });
-            }, Math.floor(Math.random() * 600));
+        return window.axios.get('/flats', {
+            params: {api_token, with: 'participants,creator'}
         })
             .then(resp => commit(types.SET_FLATS, resp.data))
             .catch(error => {
