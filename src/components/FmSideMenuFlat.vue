@@ -1,6 +1,7 @@
 <template>
   <div class="fm-side-menu-flat">
-    <div class="fm-side-menu-flat__avatar"></div>
+    <fm-avatar class="fm-side-menu-flat__avatar">
+    </fm-avatar>
     <div class="fm-side-menu-flat__content">
       {{ label }}
     </div>
@@ -8,8 +9,10 @@
 </template>
 
 <script>
+    import FmAvatar from "./FmAvatar";
     export default {
         name: "FmSideMenuFlat",
+        components: {FmAvatar},
         props: {
             flat: {
                 type: Object,
@@ -37,22 +40,7 @@
     }
 
     &__avatar {
-      width: 2.5em;
-      height: 2.5em;
-      overflow: hidden;
-      text-align: center;
-      padding: 0;
       margin: .5rem .5rem .5rem 0;
-      border-radius: 100%;
-      box-shadow: 0 0 .15em $shadow;
-      background-color: $grey;
-
-      & img {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        border: none;
-      }
     }
   }
 </style>

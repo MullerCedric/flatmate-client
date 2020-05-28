@@ -7,4 +7,7 @@ export default {
     [types.CLOSE_SIDE_MENU]: (state) => {
         state.sideMenuIsVisible = false;
     },
+    [types.OPEN_SIDE_MENU]: (state) => {
+        state.sideMenuIsVisible = true;
+    },
 };

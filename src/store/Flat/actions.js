@@ -11,6 +11,7 @@ export default {
             .then(resp => commit(types.SET_FLATS, resp.data))
             .catch(error => {
                 window.console.error(error);
+                window.console.error(error.response.data);
             });
     },
 };

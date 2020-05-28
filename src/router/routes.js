@@ -46,4 +46,11 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Wallet/ScWallet.vue")
     },
+
+    {
+        path: "/discussions/:id",
+        name: "discussionsShow",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Discussions/ScDiscussionsShow.vue")
+    },
 ];

@@ -19,6 +19,7 @@ export default {
         fetchingFlat.then(resp => commit(types.SET_FLAT, resp.data))
             .catch(error => {
                 window.console.error(error);
+                window.console.error(error.response.data);
             });
 
         // Fetching user notifications (all flats)
@@ -32,6 +33,7 @@ export default {
         fetchingNotifications.then(resp => commit(types.SET_NOTIFICATIONS, resp.data))
             .catch(error => {
                 window.console.error(error);
+                window.console.error(error.response.data);
             });
 
         // Fetching user new messages for the current flat

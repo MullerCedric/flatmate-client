@@ -15,6 +15,7 @@ export const GET_SIDE_MENU_STATE = 'App/GetSideMenuState';
 // Mutations
 export const TOGGLE_SIDE_MENU = 'App/ToggleSideMenu';
 export const CLOSE_SIDE_MENU = 'App/CloseSideMenu';
+export const OPEN_SIDE_MENU = 'App/OpenSideMenu';
 
 // Actions
 export const HYDRATE_APP = 'App/HydrateAppData';
@@ -31,12 +32,15 @@ export const GET_USER = 'User/GetCurrentUser';
  */
 // Getters
 export const GET_DISCUSSIONS = 'Discussions/GetDiscussionsWithLastMessageAndParticipants';
+export const GET_DISCUSSION = 'Discussions/GetDiscussionWithMessages';
 
 // Mutations
 export const SET_DISCUSSIONS = 'Discussions/SetDiscussionsWithLastMessageAndParticipants';
+export const SET_MESSAGES = 'Discussions/SetMessagesForDiscussion';
 
 // Actions
 export const FETCH_DISCUSSIONS = 'Discussions/FetchDiscussionsWithLastMessageAndParticipants';
+export const FETCH_MESSAGES = 'Discussions/FetchMessagesForDiscussion';
 
 
 /*

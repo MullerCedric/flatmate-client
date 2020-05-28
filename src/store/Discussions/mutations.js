@@ -5,4 +5,29 @@ export default {
     [types.SET_DISCUSSIONS]: (state, payload) => {
         Vue.set(state, 'discussions', payload);
     },
+    [types.SET_MESSAGES]: (state, payload) => {
+        const dI = state.discussions.findIndex(x => {
+            return (x.id === payload.id);
+        });
+        let discussions = [...state.discussions];
+        if (discussions[dI]) {
+            if (!discussions[dI].messages) discussions[dI].messages = [];
+            discussions[dI].messages.push(...payload.messages);
+            let uniqueMsg = [];
+            discussions[dI].messages.forEach(msg => {
+                const existingId = uniqueMsg.findIndex(x => {
+                    return (x.id === msg.id);
+                });
+                if (existingId >= 0) {
+                    uniqueMsg[existingId] = msg;
+                } else {
+                    uniqueMsg.push(msg);
+                }
+            });
+            discussions[dI].messages = uniqueMsg;
+        } else {
+            discussions.push(payload)
+        }
+        Vue.set(state, 'discussions', discussions);
+    },
 };

@@ -1,26 +1,28 @@
 <template>
   <div v-if="showToolbar" class="fm-toolbar">
     <div class="fm-toolbar__left">
-      <div v-if="showBack" class="fm-toolbar__back" @click="$router.back()">
+      <div v-if="showBack" class="fm-toolbar__back" @click.stop="handleBack">
         <ic-back></ic-back>
       </div>
-      <div v-if="showAvatar" @click.stop="toggleMenu" class="fm-toolbar__avatar">
+      <div @click.stop="handleAvatar">
+        <fm-avatar v-if="showAvatar" class="fm-toolbar__avatar">
+        </fm-avatar>
       </div>
-      <h1 v-if="showTitle" class="fm-toolbar__title">
+      <h1 v-if="showTitle" class="fm-toolbar__title" @click.stop="handleTitle">
         {{ title }}
       </h1>
     </div>
     <div class="fm-toolbar__right">
-      <div v-if="showSearch" class="fm-toolbar__search">
+      <div v-if="showSearch" class="fm-toolbar__search" @click.stop="handleSearch">
         <ic-search></ic-search>
       </div>
-      <div v-if="showBell" class="fm-toolbar__bell">
+      <div v-if="showBell" class="fm-toolbar__bell" @click.stop="handleBell">
         <ic-bell></ic-bell>
       </div>
-      <div v-if="showSettings" class="fm-toolbar__settings">
+      <div v-if="showSettings" class="fm-toolbar__settings" @click.stop="handleSettings">
         <ic-settings></ic-settings>
       </div>
-      <div v-if="showMore" class="fm-toolbar__more">
+      <div v-if="showMore" class="fm-toolbar__more" @click.stop="handleMore">
         <ic-more></ic-more>
       </div>
     </div>
@@ -35,10 +37,11 @@
     import IcBell from "./icons/IcBell";
     import IcSettings from "./icons/IcSettings";
     import IcMore from "./icons/IcMore";
+    import FmAvatar from "./FmAvatar";
 
     export default {
         name: "FmToolbar",
-        components: {IcMore, IcSettings, IcBell, IcBack, IcSearch},
+        components: {FmAvatar, IcMore, IcSettings, IcBell, IcBack, IcSearch},
         props: {
             showToolbar: {
                 type: Boolean,
@@ -80,6 +83,29 @@
         methods: {
             toggleMenu() {
                 this.$store.commit(types.TOGGLE_SIDE_MENU);
+            },
+            handleBack() {
+                this.$emit('back-clicked');
+                this.$router.back();
+            },
+            handleAvatar() {
+                this.$emit('avatar-clicked');
+                this.toggleMenu();
+            },
+            handleTitle() {
+                this.$emit('title-clicked');
+            },
+            handleSearch() {
+                this.$emit('search-clicked');
+            },
+            handleBell() {
+                this.$emit('bell-clicked');
+            },
+            handleSettings() {
+                this.$emit('settings-clicked');
+            },
+            handleMore() {
+                this.$emit('more-clicked');
             },
         },
     }
@@ -123,22 +149,7 @@
     }
 
     &__avatar {
-      width: 2.5em;
-      height: 2.5em;
-      overflow: hidden;
-      text-align: center;
-      padding: 0;
-      margin: .5rem;
-      border-radius: 100%;
-      box-shadow: 0 0 .15em $shadow;
-      background-color: $grey;
-
-      & img {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        border: none;
-      }
+      margin: 0;
     }
   }
 </style>

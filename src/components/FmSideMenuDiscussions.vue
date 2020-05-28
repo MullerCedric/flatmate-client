@@ -1,12 +1,15 @@
 <template>
   <div class="fm-side-menu-discussions">
-    <div v-for="discussion in discussions" :key="discussion.id"
-         class="fm-side-menu-discussions__discussion">
-      <div class="fm-side-menu-discussions__avatar"></div>
-      <div class="fm-side-menu-discussions__discussion-content">
-        <div class="fm-side-menu-discussions__discussion-label">{{ formatLabel(discussion) }}</div>
-        <div class="fm-side-menu-discussions__discussion-message">{{ formatLastMessage(discussion.messages) }}</div>
-      </div>
+    <div v-for="discussion in discussions" :key="discussion.id" @click="closeMenu">
+      <router-link tag="div" class="fm-side-menu-discussions__discussion"
+                   :to="{ name: 'discussionsShow', params: { id: discussion.id } }">
+        <fm-avatar class="fm-side-menu-discussions__avatar">
+        </fm-avatar>
+        <div class="fm-side-menu-discussions__discussion-content">
+          <div class="fm-side-menu-discussions__discussion-label">{{ formatLabel(discussion) }}</div>
+          <div class="fm-side-menu-discussions__discussion-message">{{ formatLatestMessage(discussion.latestMessage) }}</div>
+        </div>
+      </router-link>
     </div>
     <div class="fm-side-menu-discussions__floating-buttons">
       <div class="fm-side-menu-discussions__floating-button fm-side-menu-discussions__floating-button--main">
@@ -20,10 +23,11 @@
 <script>
     import IcPlus from "./icons/IcPlus";
     import * as types from "../store/types";
+    import FmAvatar from "./FmAvatar";
 
     export default {
         name: "FmSideMenuDiscussions",
-        components: {IcPlus},
+        components: {FmAvatar, IcPlus},
         computed: {
             discussions() {
                 return this.$store.getters[types.GET_DISCUSSIONS];
@@ -38,16 +42,21 @@
                     return user.name;
                 }).join(', ');
             },
-            formatLastMessage(messages) {
-                const lastMessage = messages[messages.length - 1], limit = 23;
+            formatLatestMessage(message) {
+                // const limit = 23;
                 let displayMsg = '';
-                if (lastMessage.from.id === 1) {
-                    displayMsg = 'Vous: ' + lastMessage.content;
+                if (message.from.id === 1) {
+                    displayMsg = 'Vous: ' + message.content;
                 } else {
-                    displayMsg = lastMessage.from.name + ': ' + lastMessage.content;
+                    displayMsg = message.from.name + ': ' + message.content;
                 }
 
-                return displayMsg.length > limit ? displayMsg.substring(0, limit) + '...' : displayMsg;
+                return displayMsg;
+
+                // return displayMsg.length > limit ? displayMsg.substring(0, limit) + '...' : displayMsg;
+            },
+            closeMenu() {
+                this.$store.commit(types.CLOSE_SIDE_MENU);
             },
         }
     }
@@ -66,30 +75,22 @@
 
       &-content {
         flex: 1;
+        overflow: hidden;
       }
 
       &-label {
         font-weight: $bold;
       }
+
+      &-message {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
 
     &__avatar {
-      width: 2.5em;
-      height: 2.5em;
-      overflow: hidden;
-      text-align: center;
-      padding: 0;
       margin: .5rem .5rem .5rem 0;
-      border-radius: 100%;
-      box-shadow: 0 0 .15em $shadow;
-      background-color: $grey;
-
-      & img {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        border: none;
-      }
     }
 
     &__floating-buttons {

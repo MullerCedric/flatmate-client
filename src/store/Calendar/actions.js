@@ -31,12 +31,17 @@ export default {
         return Promise.all([
             oneOffEvents,
             recurringEvents
-        ]).then((resp) => {
-            commit(types.ORDER_CALENDAR, {
-                data: [resp[0].data, resp[1].data],
-                limits
+        ])
+            .then((resp) => {
+                commit(types.ORDER_CALENDAR, {
+                    data: [resp[0].data, resp[1].data],
+                    limits
+                })
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
             });
-        });
     },
     [types.FETCH_EVENTS_CATS]({commit, state, rootState}) {
         if (state.categories.length) return Promise.resolve();
@@ -50,7 +55,8 @@ export default {
             })
             .catch(error => {
                 window.console.error(error);
-            })
+                window.console.error(error.response.data);
+            });
     },
     [types.SAVE_EVENT]({commit, rootState}, formData) {
         const api_token = rootState.userStore.user.api_token;
@@ -80,6 +86,7 @@ export default {
             })
             .catch(error => {
                 window.console.error(error);
+                window.console.error(error.response.data);
             })
     },
 };

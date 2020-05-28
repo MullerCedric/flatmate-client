@@ -51,7 +51,8 @@
         <input v-if="inputType === 'checkbox'" :type="inputType" :id="el.id" :value="el.id" v-model="arrValue"
                @change="$emit('change-value', arrValue)" :disabled="isDisabled"/>
         <label :for="el.id" class="fm-fi__inputs-label">
-          <div v-if="el.hasOwnProperty('avatar')" class="fm-fi__inputs-avatar"></div>
+          <fm-avatar v-if="el.hasOwnProperty('avatar')" class="fm-fi__inputs-avatar" size="s">
+          </fm-avatar>
           {{ el.label }}
           <div v-if="inputType === 'checkbox'" class="fm-fi__checkbox-box"
                :style="el.color && !isDisabled && arrValue.indexOf(el.id) !== -1 ? 'background-color: ' + el.color: ''"
@@ -67,10 +68,11 @@
     import FmFormLabel from "./FmFormLabel";
     import FmFormInputTag from "./FmFormInputTag";
     import FmFormInputToggle from "./FmFormInputToggle";
+    import FmAvatar from "../FmAvatar";
 
     export default {
         name: "FmFormInput",
-        components: {FmFormInputToggle, FmFormInputTag, FmFormLabel},
+        components: {FmAvatar, FmFormInputToggle, FmFormInputTag, FmFormLabel},
         props: {
             label: {
                 type: String,
@@ -277,22 +279,8 @@
       }
 
       &-avatar {
-        width: 2em;
-        height: 2em;
-        overflow: hidden;
-        text-align: center;
-        padding: 0;
-        margin-right: .5rem;
+        margin: 0 .5rem 0 0;
         border-radius: 100%;
-        box-shadow: 0 0 .15em $shadow;
-        background-color: $grey;
-
-        & img {
-          max-width: 100%;
-          margin: 0;
-          padding: 0;
-          border: none;
-        }
       }
 
       &-label {
