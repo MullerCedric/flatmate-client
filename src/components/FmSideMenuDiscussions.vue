@@ -6,15 +6,22 @@
         <fm-avatar class="fm-side-menu-discussions__avatar">
         </fm-avatar>
         <div class="fm-side-menu-discussions__discussion-content">
-          <div class="fm-side-menu-discussions__discussion-label">{{ formatLabel(discussion) }}</div>
-          <div class="fm-side-menu-discussions__discussion-message">{{ formatLatestMessage(discussion.latestMessage) }}</div>
+          <div class="fm-side-menu-discussions__discussion-label">
+            {{ formatLabel(discussion) }}
+          </div>
+          <div class="fm-side-menu-discussions__discussion-message">
+            {{ formatLatestMessage(discussion.latestMessage) }}
+          </div>
         </div>
       </router-link>
     </div>
     <div class="fm-side-menu-discussions__floating-buttons">
-      <div class="fm-side-menu-discussions__floating-button fm-side-menu-discussions__floating-button--main">
-        <ic-plus>
-        </ic-plus>
+      <div class="fm-side-menu-discussions__floating-button fm-side-menu-discussions__floating-button--main"
+           @click="closeMenu">
+        <router-link :to="{name: 'discussionsCreate'}" tag="div">
+          <ic-plus>
+          </ic-plus>
+        </router-link>
       </div>
     </div>
   </div>
@@ -45,15 +52,13 @@
             formatLatestMessage(message) {
                 // const limit = 23;
                 let displayMsg = '';
+                if (!message.from_id) return message.content;
                 if (message.from.id === 1) {
                     displayMsg = 'Vous: ' + message.content;
                 } else {
                     displayMsg = message.from.name + ': ' + message.content;
                 }
-
                 return displayMsg;
-
-                // return displayMsg.length > limit ? displayMsg.substring(0, limit) + '...' : displayMsg;
             },
             closeMenu() {
                 this.$store.commit(types.CLOSE_SIDE_MENU);

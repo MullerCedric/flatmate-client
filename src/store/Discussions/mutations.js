@@ -39,4 +39,9 @@ export default {
         discussions[dI].messages.unshift(payload);
         Vue.set(state, 'discussions', discussions);
     },
+    [types.SET_NEW_DISCUSSION]: (state, payload) => {
+        let discussions = [...state.discussions];
+        discussions.push(payload);
+        Vue.set(state, 'discussions', discussions);
+    },
 };

@@ -49,4 +49,25 @@ export default {
                 window.console.error(error.response.data);
             })
     },
+    [types.SAVE_DISCUSSION]({commit, rootState}, formData) {
+        const api_token = rootState.userStore.user.api_token;
+        const flat_id = rootState.userStore.user.viewingFlat;
+
+        return new Promise((resolve, reject) => {
+            window.axios.post('/discussions', {...formData, flat_id}, {
+                params: {api_token},
+            })
+                .then((resp) => {
+                    commit(types.SET_NEW_DISCUSSION, resp.data);
+                    window.console.log('response', resp.data);
+                    resolve(resp);
+                })
+                .catch(error => {
+                    window.console.error(error);
+                    window.console.error(error.response.data);
+                    reject();
+                })
+        });
+
+    },
 };

@@ -48,9 +48,15 @@ export default [
     },
 
     {
-        path: "/discussions/:id",
+        path: "/discussions/:id(\\d+)",
         name: "discussionsShow",
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Discussions/ScDiscussionsShow.vue")
+    },
+    {
+        path: "/discussions/create",
+        name: "discussionsCreate",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Discussions/ScDiscussionsCreate.vue")
     },
 ];

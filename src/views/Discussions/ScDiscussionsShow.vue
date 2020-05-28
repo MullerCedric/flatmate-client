@@ -7,15 +7,15 @@
     </div>
     <div v-if="hasMessages" class="fm-discussions__messages">
       <fm-message v-for="(message, index) in messages" :key="message.id" :message="message" :user-id="userId"
-                  :prev-user-id="messages[index - 1] ? messages[index - 1].from.id : 0"
-                  :next-user-id="messages[index + 1] ? messages[index + 1].from.id : 0">
+                  :prev-user-id="messages[index - 1] ? messages[index - 1].from_id : 0"
+                  :next-user-id="messages[index + 1] ? messages[index + 1].from_id : 0">
       </fm-message>
     </div>
 
     <template #tab>
       <fm-bottom-bar>
         <input type="text" placeholder="Écrivez un message" class="fm-discussions__input"
-               v-model="message" :disabled="isSending">
+               v-model="message" :disabled="isSending" required>
         <div class="fm-discussions__send" @click="sendMessage">
           <component :is="isSending ? 'ic-loading' : 'ic-paper-plane'">
           </component>
@@ -40,7 +40,7 @@
             return {
                 toolbarProps: {
                     title: 'Discussion',
-                    type: 'discussion',
+                    type: 'discussions',
                     showBack: true,
                     showAvatar: false,
                     showSearch: true,
@@ -68,19 +68,21 @@
             },
         },
         mounted() {
-            this.container = window.document.querySelector(".fm-screen__content");
-            this.$store.dispatch(types.FETCH_MESSAGES, {
-                id: this.$route.params.id, offset: 0, limit: this.loadingLimit
-            })
-                .then(() => {
-                    this.$nextTick(() => {
-                        this.isLoading = false;
-                        this.scrollToEnd();
-                        this.container.onscroll = () => {
-                            this.lazyload()
-                        }
+            this.$store.dispatch(types.HYDRATE_APP).then(() => {
+                this.container = window.document.querySelector(".fm-screen__content");
+                this.$store.dispatch(types.FETCH_MESSAGES, {
+                    id: this.$route.params.id, offset: 0, limit: this.loadingLimit
+                })
+                    .then(() => {
+                        this.$nextTick(() => {
+                            this.isLoading = false;
+                            this.scrollToEnd();
+                            this.container.onscroll = () => {
+                                this.lazyload()
+                            }
+                        });
                     });
-                });
+            });
         },
         updated() {
             this.toolbarProps.title = this.discussion.label || this.discussion.participants.map((user) => {
@@ -115,6 +117,8 @@
                 this.$store.commit(types.OPEN_SIDE_MENU);
             },
             sendMessage() {
+                if (!this.message.trim()) return;
+
                 this.isSending = true;
                 this.$store.dispatch(types.SAVE_MESSAGE, {message: this.message, discussionId: this.discussion.id})
                     .then(() => {
@@ -139,6 +143,7 @@
     &__messages {
       display: flex;
       flex-direction: column;
+      margin-bottom: -1rem;
     }
 
     &__input {

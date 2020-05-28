@@ -37,11 +37,13 @@ export const GET_DISCUSSION = 'Discussions/GetDiscussionWithMessages';
 // Mutations
 export const SET_DISCUSSIONS = 'Discussions/SetDiscussionsWithLastMessageAndParticipants';
 export const SET_MESSAGES = 'Discussions/SetMessagesForDiscussion';
+export const SET_NEW_DISCUSSION = 'Discussions/SetNewDiscussion';
 export const SET_NEW_MESSAGE = 'Discussions/SetNewMessageForDiscussion';
 
 // Actions
 export const FETCH_DISCUSSIONS = 'Discussions/FetchDiscussionsWithLastMessageAndParticipants';
 export const FETCH_MESSAGES = 'Discussions/FetchMessagesForDiscussion';
+export const SAVE_DISCUSSION = 'Discussions/SaveNewDiscussion';
 export const SAVE_MESSAGE = 'Discussions/SaveMessageForDiscussion';
 
 

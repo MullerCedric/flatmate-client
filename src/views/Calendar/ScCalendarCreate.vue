@@ -142,11 +142,13 @@
             },
         },
         mounted() {
-            this.$store.dispatch(types.HYDRATE_APP);
-            this.$store.dispatch(types.FETCH_EVENTS_CATS);
+            this.$store.dispatch(types.HYDRATE_APP).then(() => {
+                this.$store.dispatch(types.FETCH_EVENTS_CATS);
+            });
         },
         methods: {
             sendForm() {
+                if (this.isSending) return;
                 this.isSending = true;
                 this.$store.dispatch(types.SAVE_EVENT, this.formData)
                     .then(() => {

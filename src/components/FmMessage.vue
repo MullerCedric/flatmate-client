@@ -1,20 +1,25 @@
 <template>
   <div :class="['fm-message',
-    {'fm-message--mine': message.from.id === userId},
-    {'fm-message--new': prevUserId !== message.from.id},
-    {'fm-message--last': nextUserId !== message.from.id},
+    {'fm-message--mine': message.from && message.from.id === userId},
+    {'fm-message--new': message.from && prevUserId !== message.from.id},
+    {'fm-message--last': message.from && nextUserId !== message.from.id},
+    {'fm-message--log': !message.from_id},
   ]">
-    <div v-if="prevUserId !== message.from.id && message.from.id !== userId"
-         class="fm-message__name">
-      {{ message.from.name }}
+    <div v-if="message.from_id">
+      <div v-if="prevUserId !== message.from.id && message.from.id !== userId"
+           class="fm-message__name">
+        {{ message.from.name }}
+      </div>
+      <fm-avatar v-if="nextUserId !== message.from.id && message.from.id !== userId"
+                 size="s" class="fm-message__avatar">
+      </fm-avatar>
+      <div class="fm-message__content">
+        {{ message.content }}
+      </div>
     </div>
-    <fm-avatar v-if="nextUserId !== message.from.id && message.from.id !== userId"
-               size="s" class="fm-message__avatar">
-    </fm-avatar>
-    <div class="fm-message__content">
-      {{ message.content }}
+    <div v-if="!message.from_id">
+      ** {{ message.content }} **
     </div>
-
   </div>
 </template>
 
@@ -51,7 +56,7 @@
   .fm-message {
     position: relative;
     max-width: 25rem;
-    width: calc(85% - 2.5rem);
+    width: calc(90% - 2.5rem);
     margin: 0 0 0 1.75rem;
 
     &__name {
