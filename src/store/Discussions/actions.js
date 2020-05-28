@@ -30,4 +30,23 @@ export default {
                 window.console.error(error.response.data);
             });
     },
+    [types.SAVE_MESSAGE]({commit, rootState}, payload) {
+        const api_token = rootState.userStore.user.api_token;
+
+        const message = {
+            message: payload.message,
+            type: payload.type || 'message',
+        }, discussionId = payload.discussionId;
+
+        return window.axios.post('/discussions/' + discussionId, message, {
+            params: {api_token},
+        })
+            .then((resp) => {
+                commit(types.SET_NEW_MESSAGE, resp.data);
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            })
+    },
 };

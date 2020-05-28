@@ -14,8 +14,12 @@
 
     <template #tab>
       <fm-bottom-bar>
-        <input type="text">
-        <button>&gt;</button>
+        <input type="text" placeholder="Écrivez un message" class="fm-discussions__input"
+               v-model="message" :disabled="isSending">
+        <div class="fm-discussions__send" @click="sendMessage">
+          <component :is="isSending ? 'ic-loading' : 'ic-paper-plane'">
+          </component>
+        </div>
       </fm-bottom-bar>
     </template>
   </fm-screen>
@@ -27,10 +31,11 @@
     import IcLoading from "../../components/icons/IcLoading";
     import * as types from "../../store/types";
     import FmMessage from "../../components/FmMessage";
+    import IcPaperPlane from "../../components/icons/IcPaperPlane";
 
     export default {
         name: "ScDiscussionsShow",
-        components: {FmMessage, IcLoading, FmBottomBar, FmScreen},
+        components: {IcPaperPlane, FmMessage, IcLoading, FmBottomBar, FmScreen},
         data() {
             return {
                 toolbarProps: {
@@ -42,8 +47,10 @@
                     showMore: true,
                     container: null,
                 },
-                isLoading: true,
                 loadingLimit: 15,
+                isLoading: true,
+                isSending: false,
+                message: '',
             }
         },
         computed: {
@@ -107,13 +114,53 @@
             handleBack() {
                 this.$store.commit(types.OPEN_SIDE_MENU);
             },
+            sendMessage() {
+                this.isSending = true;
+                this.$store.dispatch(types.SAVE_MESSAGE, {message: this.message, discussionId: this.discussion.id})
+                    .then(() => {
+                        this.message = '';
+                        this.isSending = false;
+                        this.scrollToEnd();
+                    });
+            },
         },
     }
 </script>
 
 <style lang="scss" scoped>
-  .fm-discussions__messages {
-    display: flex;
-    flex-direction: column;
+  @import "../../assets/scss/settings";
+
+  ::placeholder {
+    color: $black;
+    opacity: .5;
+  }
+
+  .fm-discussions {
+    &__messages {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__input {
+      flex: 1;
+      border: none;
+      box-shadow: none;
+      background-color: $lighterGrey;
+      border-radius: .625rem;
+      padding: .5rem;
+      font-weight: $medium;
+      margin: .5rem .25rem;
+      align-self: center;
+
+      &:disabled {
+        background-color: $lightGrey;
+      }
+    }
+
+    &__send {
+      flex-shrink: 0;
+      padding: .5rem;
+      align-self: center;
+    }
   }
 </style>

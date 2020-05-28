@@ -30,4 +30,13 @@ export default {
         }
         Vue.set(state, 'discussions', discussions);
     },
+    [types.SET_NEW_MESSAGE]: (state, payload) => {
+        const dI = state.discussions.findIndex(x => {
+            return (x.id === payload.discussion_id);
+        });
+        let discussions = [...state.discussions];
+
+        discussions[dI].messages.unshift(payload);
+        Vue.set(state, 'discussions', discussions);
+    },
 };

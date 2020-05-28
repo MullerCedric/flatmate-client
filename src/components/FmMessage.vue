@@ -4,8 +4,9 @@
     {'fm-message--new': prevUserId !== message.from.id},
     {'fm-message--last': nextUserId !== message.from.id},
   ]">
-    <div v-if="prevUserId !== message.from.id && message.from.id !== userId">
-      <strong>{{ message.from.name }}</strong>
+    <div v-if="prevUserId !== message.from.id && message.from.id !== userId"
+         class="fm-message__name">
+      {{ message.from.name }}
     </div>
     <fm-avatar v-if="nextUserId !== message.from.id && message.from.id !== userId"
                size="s" class="fm-message__avatar">
@@ -52,6 +53,10 @@
     max-width: 25rem;
     width: calc(85% - 2.5rem);
     margin: 0 0 0 1.75rem;
+
+    &__name {
+      font-weight: $medium;
+    }
 
     &__avatar {
       position: absolute;
