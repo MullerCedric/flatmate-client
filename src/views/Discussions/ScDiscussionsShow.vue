@@ -7,6 +7,8 @@
     </div>
     <div v-if="hasMessages" class="fm-discussions__messages">
       <fm-message v-for="(message, index) in messages" :key="message.id" :message="message" :user-id="userId"
+                  @select-message="toggleSelection" :showing-info-for-message="showingInfoForMessage"
+                  :nb-participants="nbParticipants"
                   :prev-user-id="messages[index - 1] ? messages[index - 1].from_id : 0"
                   :next-user-id="messages[index + 1] ? messages[index + 1].from_id : 0">
       </fm-message>
@@ -48,9 +50,11 @@
                     container: null,
                 },
                 loadingLimit: 15,
-                isLoading: true,
+                isLoading: false,
                 isSending: false,
                 message: '',
+                showingInfoForMessage: 0,
+                hadMessages: false,
             }
         },
         computed: {
@@ -66,28 +70,31 @@
             userId() {
                 return this.$store.getters[types.GET_USER].id;
             },
+            nbParticipants() {
+                if (!this.discussion) return 1;
+                return this.discussion.participants ? this.discussion.participants.length : 1;
+            },
         },
         mounted() {
             this.$store.dispatch(types.HYDRATE_APP).then(() => {
                 this.container = window.document.querySelector(".fm-screen__content");
-                this.$store.dispatch(types.FETCH_MESSAGES, {
-                    id: this.$route.params.id, offset: 0, limit: this.loadingLimit
-                })
-                    .then(() => {
-                        this.$nextTick(() => {
-                            this.isLoading = false;
-                            this.scrollToEnd();
-                            this.container.onscroll = () => {
-                                this.lazyload()
-                            }
-                        });
-                    });
+                this.hadMessages = this.hasMessages;
+
+                if (this.hadMessages) {
+                    this.scrollToEnd();
+                }
+                this.lazyload();
+
+                this.container.onscroll = () => {
+                    this.lazyload()
+                }
             });
         },
         updated() {
-            this.toolbarProps.title = this.discussion.label || this.discussion.participants.map((user) => {
-                return user.name;
-            }).join(', ');
+            this.toolbarProps.title = this.discussion && this.discussion.label ?
+                this.discussion.label : this.discussion.participants.map((user) => {
+                    return user.name;
+                }).join(', ');
         },
         methods: {
             scrollToEnd() {
@@ -97,19 +104,26 @@
                 this.container.scrollTop = 0;
             },
             lazyload() {
-                if (this.container.scrollTop <= 0 && !this.isLoading) {
+                if ((!this.hadMessages || this.container.scrollTop <= 0) && !this.isLoading) {
                     this.isLoading = true;
                     this.$store.dispatch(types.FETCH_MESSAGES, {
                         id: this.$route.params.id,
-                        offset: this.discussion.messages.length,
+                        offset: this.hadMessages ? this.discussion.messages.length : 0,
                         limit: this.loadingLimit
                     })
                         .then(() => {
+                            this.container.scrollTop = 1;
                             this.isLoading = false;
-                            this.scrollToEnd();
-                            this.$nextTick(() => {
+                            if (this.hadMessages) {
                                 this.container.scrollTop = 1;
-                            })
+                                this.$nextTick(() => {
+                                    this.hadMessages = this.hasMessages;
+                                    this.container.scrollTop = 1;
+                                });
+                            } else {
+                                this.scrollToEnd();
+                                this.hadMessages = this.hasMessages;
+                            }
                         });
                 }
             },
@@ -126,6 +140,9 @@
                         this.isSending = false;
                         this.scrollToEnd();
                     });
+            },
+            toggleSelection(id) {
+                this.showingInfoForMessage = this.showingInfoForMessage === id ? 0 : id;
             },
         },
     }

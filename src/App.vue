@@ -68,7 +68,7 @@
     transition: transform .3s ease-in-out;
 
     &--aside {
-      transform: translateX(85%);
+      transform: translateX(87%);
     }
   }
 
@@ -77,7 +77,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 83%;
+    width: 85%;
     z-index: 11;
     transform: translateX(-100%);
     transition: transform .3s ease-in-out;

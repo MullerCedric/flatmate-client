@@ -10,6 +10,11 @@
             {{ formatLabel(discussion) }}
           </div>
           <div class="fm-side-menu-discussions__discussion-message">
+            <ic-msg-status v-if="discussion.latestMessage.from_id === userId"
+                           :user-id="userId"
+                           :nb-participants="discussion.participants.length"
+                           :read-by="discussion.latestMessage.read_by">
+            </ic-msg-status>
             {{ formatLatestMessage(discussion.latestMessage) }}
           </div>
         </div>
@@ -31,13 +36,17 @@
     import IcPlus from "./icons/IcPlus";
     import * as types from "../store/types";
     import FmAvatar from "./FmAvatar";
+    import IcMsgStatus from "./icons/IcMsgStatus";
 
     export default {
         name: "FmSideMenuDiscussions",
-        components: {FmAvatar, IcPlus},
+        components: {IcMsgStatus, FmAvatar, IcPlus},
         computed: {
             discussions() {
                 return this.$store.getters[types.GET_DISCUSSIONS];
+            },
+            userId() {
+                return this.$store.getters[types.GET_USER].id;
             },
         },
         mounted() {
@@ -50,10 +59,9 @@
                 }).join(', ');
             },
             formatLatestMessage(message) {
-                // const limit = 23;
                 let displayMsg = '';
                 if (!message.from_id) return message.content;
-                if (message.from.id === 1) {
+                if (message.from.id === this.userId) {
                     displayMsg = 'Vous: ' + message.content;
                 } else {
                     displayMsg = message.from.name + ': ' + message.content;

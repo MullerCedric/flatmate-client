@@ -4,17 +4,35 @@
     {'fm-message--new': message.from && prevUserId !== message.from.id},
     {'fm-message--last': message.from && nextUserId !== message.from.id},
     {'fm-message--log': !message.from_id},
+    {'fm-message--unrolled': isInfoShowed},
   ]">
     <div v-if="message.from_id">
-      <div v-if="prevUserId !== message.from.id && message.from.id !== userId"
+      <div v-if="prevUserId !== message.from.id && !isFromUser"
            class="fm-message__name">
         {{ message.from.name }}
       </div>
-      <fm-avatar v-if="nextUserId !== message.from.id && message.from.id !== userId"
+      <fm-avatar v-if="nextUserId !== message.from.id && !isFromUser"
                  size="s" class="fm-message__avatar">
       </fm-avatar>
-      <div class="fm-message__content">
+      <div v-if="isInfoShowed" class="fm-message__info">
+        {{ msgTime(message.created_at) }}
+        <ic-msg-status class="fm-message__status" v-if="isFromUser" :user-id="userId"
+                       :nb-participants="nbParticipants" :read-by="readBy">
+        </ic-msg-status>
+      </div>
+      <div class="fm-message__content" @click="$emit('select-message', message.id)">
         {{ message.content }}
+      </div>
+      <div v-if="isInfoShowed" class="fm-message__info">
+        <span v-if="readBy.length <= 1">
+          Non lu
+        </span>
+        <span v-if="readBy.length > 1">
+          Vu par
+        </span>
+        <fm-avatar size="xs" v-for="user in readBy" :key="user.id" :title="user.name"
+                   :class="['fm-message__readby', {'fm-message__readby--me': user.id === userId}]">
+        </fm-avatar>
       </div>
     </div>
     <div v-if="!message.from_id">
@@ -24,11 +42,16 @@
 </template>
 
 <script>
+    import moment from 'moment';
+
+    moment.locale('fr');
+
     import FmAvatar from "./FmAvatar";
+    import IcMsgStatus from "./icons/IcMsgStatus";
 
     export default {
         name: "FmMessage",
-        components: {FmAvatar},
+        components: {IcMsgStatus, FmAvatar},
         props: {
             message: {
                 type: Object,
@@ -46,7 +69,31 @@
                 type: Number,
                 default: 0,
             },
+            showingInfoForMessage: {
+                type: Number,
+                default: 0,
+            },
+            nbParticipants: {
+                type: Number,
+                default: 1,
+            },
         },
+        computed: {
+            readBy() {
+                return this.message.read_by ? this.message.read_by : [];
+            },
+            isInfoShowed() {
+                return this.showingInfoForMessage === this.message.id;
+            },
+            isFromUser() {
+                return this.message.from_id === this.userId;
+            },
+        },
+        methods: {
+            msgTime(msgDatetime) {
+                return moment(msgDatetime).calendar();
+            },
+        }
     }
 </script>
 
@@ -69,6 +116,12 @@
       left: -2.625rem;
     }
 
+    &__info {
+      font-size: .875rem;
+      display: flex;
+      align-items: center;
+    }
+
     &__content {
       display: inline-block;
       background-color: $white;
@@ -79,6 +132,14 @@
 
     &:nth-child(n + 2) {
       margin-top: .25rem;
+    }
+
+    &--unrolled {
+      margin-bottom: .5rem;
+
+      &:nth-child(n + 2) {
+        margin-top: .75rem;
+      }
     }
 
     &--new {
@@ -121,6 +182,19 @@
         color: $white;
         border-color: transparent;
         border-radius: .75rem .25rem .25rem .75rem;
+      }
+
+      & .fm-message__info {
+        justify-content: flex-end;
+      }
+    }
+
+    &__readby {
+      display: inline-block;
+      vertical-align: middle;
+
+      &--me {
+        display: none;
       }
     }
   }
