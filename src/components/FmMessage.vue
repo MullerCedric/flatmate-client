@@ -25,7 +25,12 @@
       </div>
       <div v-if="isInfoShowed" class="fm-message__info">
         <span v-if="readBy.length <= 1">
-          Non lu
+          <span v-if="nbParticipants === 1">
+            Vous seul voyez ce message
+          </span>
+          <span v-else>
+            Non lu
+          </span>
         </span>
         <span v-if="readBy.length > 1">
           Vu par

@@ -106,6 +106,7 @@
             lazyload() {
                 if ((!this.hadMessages || this.container.scrollTop <= 0) && !this.isLoading) {
                     this.isLoading = true;
+                    const previousHeight = this.container.scrollHeight;
                     this.$store.dispatch(types.FETCH_MESSAGES, {
                         id: this.$route.params.id,
                         offset: this.hadMessages ? this.discussion.messages.length : 0,
@@ -118,7 +119,8 @@
                                 this.container.scrollTop = 1;
                                 this.$nextTick(() => {
                                     this.hadMessages = this.hasMessages;
-                                    this.container.scrollTop = 1;
+                                    const newHeight = this.container.scrollHeight, scrollTo = newHeight - previousHeight;
+                                    this.container.scrollTop = scrollTo >= 1 ? scrollTo : 1;
                                 });
                             } else {
                                 this.scrollToEnd();
