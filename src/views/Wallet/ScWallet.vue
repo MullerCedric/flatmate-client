@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import * as types from "../../store/types";
+    //import * as types from "../../store/types";
 
     import FmScreen from "../../components/FmScreen";
     import FmTabBar from "../../components/FmTabBar";
@@ -34,9 +34,6 @@
                     showMore: true,
                 },
             }
-        },
-        mounted() {
-            this.$store.dispatch(types.HYDRATE_APP);
         },
     };
 </script>

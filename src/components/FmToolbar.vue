@@ -80,6 +80,47 @@
                 default: false,
             },
         },
+        data() {
+            return {
+                visibleMenu: 'settings',
+                menus: {
+                    settings: {
+                        header: 'Paramètres',
+                        buttons: [
+                            {
+                                text: 'Profil',
+                                handler: () => {
+                                    this.$router.push({name: 'settingsProfile'});
+                                },
+                            },
+                            {
+                                text: 'Notifications',
+                                handler: () => {
+                                    this.$router.push({name: 'settingsNotifications'});
+                                },
+                            },
+                            {
+                                text: 'Mentions légales',
+                                handler: () => {
+                                    this.$router.push({name: 'legalNotice'});
+                                },
+                            },
+                            {
+                                text: 'Déconnexion',
+                                role: 'destructive',
+                                handler: () => {
+                                    this.$store.dispatch(types.DISCONNECT).then(() => {
+                                        this.$router.push({name: 'log-in'});
+                                    }).catch(e => {
+                                        window.console.log(e);
+                                    });
+                                },
+                            },
+                        ],
+                    },
+                }
+            };
+        },
         methods: {
             toggleMenu() {
                 this.$store.commit(types.TOGGLE_SIDE_MENU);
@@ -102,10 +143,17 @@
                 this.$emit('bell-clicked');
             },
             handleSettings() {
+                this.visibleMenu = 'settings';
+                this.presentActionSheet();
                 this.$emit('settings-clicked');
             },
             handleMore() {
                 this.$emit('more-clicked');
+            },
+            presentActionSheet() {
+                return this.$ionic.actionSheetController
+                    .create(this.menus[this.visibleMenu])
+                    .then(a => a.present())
             },
         },
     }

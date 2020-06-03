@@ -1,8 +1,10 @@
 import * as types from '../types';
-import Vue from "vue";
 
 export default {
+    [types.RESET_NOTIFICATIONS]: (state) => {
+        state.notifications = [];
+    },
     [types.SET_NOTIFICATIONS]: (state, payload) => {
-        Vue.set(state, 'notifications', payload);
+        state.notifications = [...payload];
     },
 };

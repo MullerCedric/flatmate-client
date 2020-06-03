@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <ion-app>
-      <fm-side-menu :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
+      <fm-side-menu v-if="isConnected" :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
       </fm-side-menu>
       <router-view :key="$route.path" :class="['fm-view', {'fm-view--aside': sideMenuIsVisible}]"></router-view>
     </ion-app>
@@ -19,7 +19,10 @@
         computed: {
             sideMenuIsVisible() {
                 return this.$store.getters[types.GET_SIDE_MENU_STATE] || false;
-            }
+            },
+            isConnected() {
+                return !!this.$store.getters[types.GET_USER].api_token;
+            },
         }
     };
 </script>

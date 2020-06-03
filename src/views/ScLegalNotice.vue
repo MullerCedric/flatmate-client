@@ -1,13 +1,11 @@
 <template>
   <fm-screen :toolbarProps="toolbarProps">
+    <h2>Mentions légales</h2>
     <div>
-      <div>Counter : {{ $store.state.count }} !</div>
-      <div>
-        <button @click="increment">Add</button>
-      </div>
-      <br>
+      <p>
+        Prochainement...
+      </p>
     </div>
-    <span @click="$router.push({ name: 'log-in' })">Log in</span>
     <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus ex inventore mollitia odio perspiciatis!
       Alias architecto asperiores commodi eos, ex ipsa modi mollitia, non provident quasi ratione repellendus sapiente,
       sunt?
@@ -28,39 +26,28 @@
       harum hic iusto necessitatibus quibusdam ratione recusandae repudiandae sequi soluta voluptatem? Aliquam, dicta,
       eos!
     </div>
-
-    <template #tab>
-      <fm-tab-bar>
-      </fm-tab-bar>
-    </template>
   </fm-screen>
 </template>
 
 <script>
     //import * as types from "../store/types";
-    import {mapMutations} from 'vuex';
 
     import FmScreen from "../components/FmScreen";
-    import FmTabBar from "../components/FmTabBar";
 
     export default {
-        name: "ScDashboard",
-        components: {FmTabBar, FmScreen},
+        name: "ScLegalNotice",
+        components: {FmScreen},
         data() {
             return {
                 toolbarProps: {
-                    title: 'Dashboard',
-                    type: 'dash',
-                    showBell: true,
-                    showSettings: true,
+                    title: 'Mentions légales',
+                    type: 'settings',
+                    showBack: true,
+                    showAvatar: false,
                 }
             }
         },
-        methods: {
-            ...mapMutations([
-                'increment',
-            ]),
-        },
+        methods: {},
     };
 </script>
 

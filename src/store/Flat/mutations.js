@@ -1,11 +1,14 @@
 import * as types from '../types';
-import Vue from "vue";
 
 export default {
+    [types.RESET_FLATS]: (state) => {
+        state.flat = {};
+        state.flats = [];
+    },
     [types.SET_FLAT]: (state, payload) => {
-        Vue.set(state, 'flat', payload);
+        state.flat = {...payload};
     },
     [types.SET_FLATS]: (state, payload) => {
-        Vue.set(state, 'flats', payload);
+        state.flats = [...payload];
     },
 };

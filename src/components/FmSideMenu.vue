@@ -1,5 +1,5 @@
 <template>
-  <div class="fm-side-menu">
+  <div class="fm-side-menu" v-if="userApi">
     <header class="fm-side-menu__header">
       <div class="fm-side-menu__header-left">
         <div @click="handleBackButton">
@@ -43,8 +43,13 @@
                         screen: 'fm-side-menu-flats',
                     },
                 ],
-                view: 0
+                view: 0,
             };
+        },
+        computed: {
+            userApi() {
+                return this.$store.state.userStore.user.api_token || localStorage.getItem('userApiToken');
+            }
         },
         methods: {
             handleBackButton() {

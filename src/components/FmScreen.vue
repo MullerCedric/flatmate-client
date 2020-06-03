@@ -1,9 +1,10 @@
 <template>
   <div class="fm-screen" @click="closeMenu">
-    <fm-toolbar v-bind="toolbarProps" @back-clicked="handleBack" @avatar-clicked="handleAvatar" @title-clicked="handleTitle"
-                @search-clicked="handleSearch" @bell-clicked="handleBell" @settings-clicked="handleSettings" @more-clicked="handleMore">
+    <fm-toolbar v-if="toolbarProps" v-bind="toolbarProps" @back-clicked="handleBack" @avatar-clicked="handleAvatar"
+                @title-clicked="handleTitle" @search-clicked="handleSearch"
+                @bell-clicked="handleBell" @settings-clicked="handleSettings" @more-clicked="handleMore">
     </fm-toolbar>
-    <fm-screen-content class="fm-screen__content">
+    <fm-screen-content :class="['fm-screen__content', contentPos ? 'fm-screen__content--' + contentPos : '']">
       <slot></slot>
     </fm-screen-content>
     <slot name="tab">
@@ -23,6 +24,17 @@
         props: {
             toolbarProps: {
                 type: Object,
+            },
+            contentPos: {
+                type: String,
+                default: 'flex-start',
+                validator: (val) => {
+                    return [
+                        'flex-start',
+                        'flex-end',
+                        'center'
+                    ].indexOf(val) !== -1;
+                }
             },
         },
         methods: {
@@ -56,7 +68,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .fm-screen {
     height: 100%;
     display: flex;
@@ -65,5 +77,19 @@
 
   .fm-screen__content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    &--flex-start {
+      justify-content: flex-start;
+    }
+
+    &--flex-end {
+      justify-content: flex-end;
+    }
+
+    &--center {
+      justify-content: center;
+    }
   }
 </style>

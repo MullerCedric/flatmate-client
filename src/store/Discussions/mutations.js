@@ -1,9 +1,11 @@
 import * as types from '../types';
-import Vue from "vue";
 
 export default {
+    [types.RESET_DISCUSSIONS]: (state) => {
+        state.discussions = [];
+    },
     [types.SET_DISCUSSIONS]: (state, payload) => {
-        Vue.set(state, 'discussions', payload);
+        state.discussions = [...payload];
     },
     [types.SET_MESSAGES]: (state, payload) => {
         const dI = state.discussions.findIndex(x => {
@@ -28,7 +30,7 @@ export default {
         } else {
             discussions.push(payload)
         }
-        Vue.set(state, 'discussions', discussions);
+        state.discussions = [...discussions];
     },
     [types.SET_NEW_MESSAGE]: (state, payload) => {
         const dI = state.discussions.findIndex(x => {
@@ -37,11 +39,11 @@ export default {
         let discussions = [...state.discussions];
 
         discussions[dI].messages.unshift(payload);
-        Vue.set(state, 'discussions', discussions);
+        state.discussions = [...discussions];
     },
     [types.SET_NEW_DISCUSSION]: (state, payload) => {
         let discussions = [...state.discussions];
         discussions.push(payload);
-        Vue.set(state, 'discussions', discussions);
+        state.discussions = [...discussions];
     },
 };

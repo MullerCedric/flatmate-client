@@ -49,9 +49,6 @@
                 return this.calendarEventsData[this.calendarSelectedData.selectedDate.getTime()] || [];
             },
         },
-        mounted() {
-            this.$store.dispatch(types.HYDRATE_APP);
-        },
         updated() {
             this.updateSelectedIso();
         },

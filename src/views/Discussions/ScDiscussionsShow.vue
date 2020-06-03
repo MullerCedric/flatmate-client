@@ -76,19 +76,17 @@
             },
         },
         mounted() {
-            this.$store.dispatch(types.HYDRATE_APP).then(() => {
-                this.container = window.document.querySelector(".fm-screen__content");
-                this.hadMessages = this.hasMessages;
+            this.container = window.document.querySelector(".fm-screen__content");
+            this.hadMessages = this.hasMessages;
 
-                if (this.hadMessages) {
-                    this.scrollToEnd();
-                }
-                this.lazyload();
+            if (this.hadMessages) {
+                this.scrollToEnd();
+            }
+            this.lazyload();
 
-                this.container.onscroll = () => {
-                    this.lazyload()
-                }
-            });
+            this.container.onscroll = () => {
+                this.lazyload()
+            }
         },
         updated() {
             this.toolbarProps.title = this.discussion && this.discussion.label ?
@@ -119,7 +117,8 @@
                                 this.container.scrollTop = 1;
                                 this.$nextTick(() => {
                                     this.hadMessages = this.hasMessages;
-                                    const newHeight = this.container.scrollHeight, scrollTo = newHeight - previousHeight;
+                                    const newHeight = this.container.scrollHeight,
+                                        scrollTo = newHeight - previousHeight;
                                     this.container.scrollTop = scrollTo >= 1 ? scrollTo : 1;
                                 });
                             } else {

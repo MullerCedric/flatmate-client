@@ -2,15 +2,38 @@ import * as types from './types';
 import * as db from './fakeData';
 
 export default {
+    [types.DISCONNECT]: ({commit}) => {
+        return new Promise(resolve => {
+            commit(types.RESET_APP);
+            commit(types.RESET_USER);
+            commit(types.RESET_DISCUSSIONS);
+            commit(types.RESET_FLATS);
+            commit(types.RESET_NOTIFICATIONS);
+            commit(types.RESET_CALENDAR);
+            if (localStorage.getItem('userApiToken')) {
+                localStorage.removeItem('userApiToken');
+            }
+            if (localStorage.getItem('userViewingFlat')) {
+                localStorage.removeItem('userViewingFlat');
+            }
+            resolve();
+        }).then(() => {
+            window.console.log('store ok');
+        }).catch(e => {
+            window.console.log('store pas ok');
+            window.console.log(e);
+        });
+    },
     [types.HYDRATE_APP]({commit, rootState}) {
-        if (!rootState.userStore.user) {
+        window.console.log('Hydrating');
+        if (!rootState.userStore.user && !localStorage.getItem('userApiToken')) {
             window.console.error('You must be logged in!');
             return Promise.reject('You must be logged in!');
         }
         if (rootState.flatStore.flat.hasOwnProperty('id')) return Promise.resolve();
 
-        const api_token = rootState.userStore.user.api_token;
-        const flatId = rootState.userStore.user.viewingFlat;
+        const api_token = rootState.userStore.user.api_token || localStorage.getItem('userApiToken');
+        const flatId = rootState.userStore.user.viewingFlat || localStorage.getItem('userViewingFlat');
 
         // Fetching current flat info with members
         const fetchingFlat = window.axios.get('/flats/' + flatId, {

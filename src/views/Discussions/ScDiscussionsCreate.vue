@@ -66,9 +66,6 @@
                 }) : [];
             },
         },
-        mounted() {
-            this.$store.dispatch(types.HYDRATE_APP);
-        },
         methods: {
             sendForm() {
                 if (!this.formData.participants.length || this.isSending) return;

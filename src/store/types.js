@@ -13,6 +13,8 @@
 export const GET_SIDE_MENU_STATE = 'App/GetSideMenuState';
 
 // Mutations
+export const DISCONNECT = 'App/DisconnectByResettingStoreAndLocalStorage';
+export const RESET_APP = 'App/Reset';
 export const TOGGLE_SIDE_MENU = 'App/ToggleSideMenu';
 export const CLOSE_SIDE_MENU = 'App/CloseSideMenu';
 export const OPEN_SIDE_MENU = 'App/OpenSideMenu';
@@ -27,6 +29,13 @@ export const HYDRATE_APP = 'App/HydrateAppData';
 // Getters
 export const GET_USER = 'User/GetCurrentUser';
 
+// Mutations
+export const RESET_USER = 'User/Reset';
+export const SET_USER = 'User/SetUser';
+
+// Actions
+export const CONNECT = 'User/Connect';
+
 /*
  * Discussions & messages
  */
@@ -35,6 +44,7 @@ export const GET_DISCUSSIONS = 'Discussions/GetDiscussionsWithLastMessageAndPart
 export const GET_DISCUSSION = 'Discussions/GetDiscussionWithMessages';
 
 // Mutations
+export const RESET_DISCUSSIONS = 'Discussions/Reset';
 export const SET_DISCUSSIONS = 'Discussions/SetDiscussionsWithLastMessageAndParticipants';
 export const SET_MESSAGES = 'Discussions/SetMessagesForDiscussion';
 export const SET_NEW_DISCUSSION = 'Discussions/SetNewDiscussion';
@@ -56,6 +66,7 @@ export const GET_FLAT = 'Flat/GetFlatWithUsers';
 export const GET_FLAT_USERS = 'Flat/GetFlatUsers';
 
 // Mutations
+export const RESET_FLATS = 'Flat/Reset';
 export const SET_FLAT = 'Flat/SetFlatWithUsers';
 export const SET_FLATS = 'Flat/SetFlatsWithUsers';
 
@@ -67,6 +78,7 @@ export const FETCH_FLATS = 'Flat/FetchFlatsWithUsers';
  * Notifications
  */
 // Mutations
+export const RESET_NOTIFICATIONS = 'Notifications/Reset';
 export const SET_NOTIFICATIONS = 'Notifications/SetNotifications';
 
 
@@ -78,6 +90,7 @@ export const GET_EVENTS_FOR_TMSTPM = 'Calendar/getEventsForTimestamp';
 export const GET_EVENTS_CATS = 'Calendar/getEventsCategories';
 
 // Mutations
+export const RESET_CALENDAR = 'Calendar/Reset';
 export const ORDER_CALENDAR = 'Calendar/OrderCalendar';
 export const SET_EVENTS_CATS = 'Calendar/SetEventsCategories';
 export const SET_NEW_EVENT = 'Calendar/SetNewEvent';

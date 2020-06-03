@@ -3,8 +3,10 @@ import * as types from '../types';
 export default {
     [types.FETCH_DISCUSSIONS]({commit, state, rootState}) {
         if (state.discussions.length) return Promise.resolve();
+        window.console.log('Fetching discussions');
 
         const api_token = rootState.userStore.user.api_token;
+        if (!api_token) return Promise.reject('You must be logged in!');
 
         return window.axios.get('/discussions', {
             params: {api_token, with: 'participants'}

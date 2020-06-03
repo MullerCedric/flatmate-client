@@ -1,10 +1,16 @@
 import * as types from '../types';
-import Vue from "vue";
 
 export default {
+    [types.RESET_CALENDAR]: (state, payload) => {
+        state = payload;
+    },
     [types.ORDER_CALENDAR]: (state, payload) => {
-        Vue.set(state.calendarEventsData, payload.limits.from, {});
-        if (!payload.data.length) return;
+        let limitedEvents = {};
+        limitedEvents[payload.limits.from] = {};
+        if (!payload.data.length) {
+            state.calendarEventsData = {...state.calendarEventsData, ...limitedEvents};
+            return;
+        }
 
         for (let i = payload.limits.from; i <= payload.limits.to; i = i + 86400000) {
             let events = [];
@@ -36,11 +42,12 @@ export default {
                 }
             });
 
-            Vue.set(state.calendarEventsData[payload.limits.from], i, events);
+            limitedEvents[payload.limits.from][i] = events;
         }
+        state.calendarEventsData = {...state.calendarEventsData, ...limitedEvents};
     },
     [types.SET_EVENTS_CATS]: (state, payload) => {
-        Vue.set(state, 'categories', payload);
+        state.categories = [...payload];
     },
     [types.SET_NEW_EVENT]: (state, payload) => {
         let ev = {...payload};
@@ -60,13 +67,17 @@ export default {
                 if (!payload.interval) {
                     // One-off event
                     if (parseInt(day, 10) === evSd.getTime()) {
-                        state.calendarEventsData[month][day].push(ev);
+                        let limitedEvents = {...state.calendarEventsData};
+                        limitedEvents[month][day].push(ev);
+                        state.calendarEventsData = {...limitedEvents};
                     }
                 } else {
                     // Recurring event
                     if (evSd <= parseInt(day, 10) && ((evEd && evEd >= parseInt(day, 10)) || !evEd)) {
                         if ((parseInt(day, 10) - evSd.getTime()) % payload.interval === 0) {
-                            state.calendarEventsData[month][day].push(ev);
+                            let limitedEvents = {...state.calendarEventsData};
+                            limitedEvents[month][day].push(ev);
+                            state.calendarEventsData = {...limitedEvents};
                         }
                     }
                 }
