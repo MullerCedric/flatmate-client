@@ -9,14 +9,9 @@
           <div class="fm-side-menu-discussions__discussion-label">
             {{ formatLabel(discussion) }}
           </div>
-          <div class="fm-side-menu-discussions__discussion-message">
-            <ic-msg-status v-if="discussion.latestMessage.from_id === userId"
-                           :user-id="userId"
-                           :nb-participants="discussion.participants.length"
-                           :read-by="discussion.latestMessage.read_by">
-            </ic-msg-status>
-            {{ formatLatestMessage(discussion.latestMessage) }}
-          </div>
+          <fm-side-menu-discussions-latest-message :message="discussion.latestMessage" :user-id="userId"
+                                                   :nb-participants="discussion.participants.length">
+          </fm-side-menu-discussions-latest-message>
         </div>
       </router-link>
     </div>
@@ -33,14 +28,15 @@
 </template>
 
 <script>
-    import IcPlus from "./icons/IcPlus";
     import * as types from "../store/types";
+
+    import IcPlus from "./icons/IcPlus";
     import FmAvatar from "./FmAvatar";
-    import IcMsgStatus from "./icons/IcMsgStatus";
+    import FmSideMenuDiscussionsLatestMessage from "./FmSideMenuDiscussionsLatestMessage";
 
     export default {
         name: "FmSideMenuDiscussions",
-        components: {IcMsgStatus, FmAvatar, IcPlus},
+        components: {FmSideMenuDiscussionsLatestMessage, FmAvatar, IcPlus},
         computed: {
             discussions() {
                 return this.$store.getters[types.GET_DISCUSSIONS];
@@ -57,16 +53,6 @@
                 return discussion.label || discussion.participants.map((user) => {
                     return user.name;
                 }).join(', ');
-            },
-            formatLatestMessage(message) {
-                let displayMsg = '';
-                if (!message.from_id) return message.content;
-                if (message.from.id === this.userId) {
-                    displayMsg = 'Vous: ' + message.content;
-                } else {
-                    displayMsg = message.from.name + ': ' + message.content;
-                }
-                return displayMsg;
             },
             closeMenu() {
                 this.$store.commit(types.CLOSE_SIDE_MENU);
@@ -93,10 +79,6 @@
 
       &-label {
         font-weight: $bold;
-      }
-
-      &-message {
-        overflow: hidden;
       }
     }
 
