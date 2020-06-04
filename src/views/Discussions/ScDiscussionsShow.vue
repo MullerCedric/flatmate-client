@@ -28,6 +28,8 @@
 </template>
 
 <script>
+    import Echo from 'laravel-echo';
+
     import FmScreen from "../../components/FmScreen";
     import FmBottomBar from "../../components/FmBottomBar";
     import IcLoading from "../../components/icons/IcLoading";
@@ -86,7 +88,35 @@
 
             this.container.onscroll = () => {
                 this.lazyload()
-            }
+            };
+
+            const EchoVue = new Echo({
+                broadcaster: 'pusher',
+                key: '1364c0804863ac3396da',
+                cluster: 'eu',
+                encrypted: true,
+                authEndpoint: process.env.VUE_APP_BROADCAST_BASE + '?api_token=' + this.$store.getters[types.GET_USER].api_token,
+            });
+            EchoVue
+                .join('chatroom')
+                .here(users => {
+                    window.console.log(users.length + ' online users');
+                })
+                .joining(user => {
+                    window.console.log(user.name + ' is now online');
+                })
+                .leaving(user => {
+                    window.console.log(user.name + ' is now offline');
+                })
+                .listen('.message.created', e => {
+                    if (e.message.discussion_id === parseInt(this.$route.params.id, 10)
+                        && e.message.from_id !== this.userId) {
+                        this.$store.commit(types.SET_NEW_MESSAGE, e.message);
+                        this.$nextTick(() => {
+                            this.scrollToEnd();
+                        })
+                    }
+                });
         },
         updated() {
             this.toolbarProps.title = this.discussion && this.discussion.label ?
