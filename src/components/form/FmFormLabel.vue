@@ -62,7 +62,7 @@
             if (this.$slots.tips) {
                 const icon = window.document.querySelector('.fm-fi__i-icon--' + this.fiName);
                 if (icon) {
-                    this.arrowPos = Math.round(icon.getBoundingClientRect().left - 13);
+                    this.arrowPos = Math.round(icon.getBoundingClientRect().left - 18);
                 }
             }
         }

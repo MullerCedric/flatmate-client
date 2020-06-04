@@ -56,6 +56,10 @@
 </template>
 
 <script>
+    import moment from 'moment';
+
+    moment.locale('fr');
+
     import IcBack from "./icons/IcBack";
 
     export default {
@@ -64,7 +68,9 @@
         props: {
             events: {
                 type: Object,
-                default: () => {},
+                default: () => {
+                    return {};
+                },
             }
         },
         data() {

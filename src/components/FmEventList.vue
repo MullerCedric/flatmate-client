@@ -46,6 +46,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 4rem;
     margin: 0 0 -1.5rem 0;
 
     &__list {

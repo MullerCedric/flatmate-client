@@ -52,10 +52,9 @@
   @import "../assets/scss/settings";
 
   .fm-event-item {
-    padding: .25rem;
-    margin-bottom: .25rem;
-    border-bottom: 1px solid lightgrey;
+    margin-bottom: .5rem;
     display: flex;
+    align-items: stretch;
 
     &:last-child {
       border: none;
@@ -63,29 +62,33 @@
 
     &__time {
       font-size: .875rem;
-      flex-basis: 3.5rem;
+      font-weight: $medium;
+      width: 3rem;
+      flex-basis: 3rem;
       flex-shrink: 0;
-      text-align: right;
-
-      &-start {
-        font-weight: $medium;
-      }
+      align-self: center;
+      line-height: 1.25;
+      margin: .375rem;
 
       &-end {
-        opacity: .9;
+        opacity: .6;
       }
     }
 
     &__cat-line {
       width: .1875rem;
       height: 100%;
-      margin: 0 .5rem;
+      margin: 0 .5rem 0 0;
       flex-shrink: 0;
     }
 
     &__label {
       font-weight: $medium;
       flex-shrink: 1;
+      align-self: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 </style>
