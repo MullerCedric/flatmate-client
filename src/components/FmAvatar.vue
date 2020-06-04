@@ -1,5 +1,6 @@
 <template>
   <div :class="['fm-avatar', 'fm-avatar--' + size]">
+    <img :src="urlSrc" alt="avatar">
   </div>
 </template>
 
@@ -18,6 +19,15 @@
             },
             imgUrl: {
                 type: String,
+            },
+            userName: {
+                type: String,
+                default: 'undefined',
+            },
+        },
+        computed: {
+            urlSrc() {
+                return this.imgUrl || 'https://api.adorable.io/avatars/160/' + encodeURI(this.userName) + '.png';
             }
         },
     }

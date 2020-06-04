@@ -2,9 +2,8 @@
   <fm-screen :toolbarProps="toolbarProps">
     <form @submit.prevent>
       <div class="fm-settings__avatar">
-        <fm-avatar size="xl">
+        <fm-avatar size="xl" :user-name="userName">
         </fm-avatar>
-        <input type="file">
         <fm-form-input label="Avatar" fi-name="avatar" :disabled="isSending" input-type="file">
         </fm-form-input>
       </div>
@@ -32,6 +31,7 @@
     import FmAvatar from "../components/FmAvatar";
     import FmFormGroup from "../components/form/FmFormGroup";
     import FmFormInput from "../components/form/FmFormInput";
+    import * as types from "../store/types";
 
     export default {
         name: "ScSettingsProfile",
@@ -51,7 +51,11 @@
                 isSending: false,
             }
         },
-        computed: {},
+        computed: {
+            userName() {
+                return this.$store.getters[types.GET_USER].name;
+            },
+        },
         methods: {}
     }
 </script>

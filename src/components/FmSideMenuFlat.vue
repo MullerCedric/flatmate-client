@@ -1,6 +1,6 @@
 <template>
   <div class="fm-side-menu-flat">
-    <fm-avatar class="fm-side-menu-flat__avatar">
+    <fm-avatar class="fm-side-menu-flat__avatar" :user-name="flat.label || 'discu' + flat.id">
     </fm-avatar>
     <div class="fm-side-menu-flat__content">
       {{ label }}

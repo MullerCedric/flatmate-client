@@ -5,7 +5,7 @@
         <ic-back></ic-back>
       </div>
       <div @click.stop="handleAvatar">
-        <fm-avatar v-if="showAvatar" class="fm-toolbar__avatar">
+        <fm-avatar v-if="showAvatar" class="fm-toolbar__avatar" :user-name="userName">
         </fm-avatar>
       </div>
       <h1 v-if="showTitle" class="fm-toolbar__title" @click.stop="handleTitle">
@@ -120,6 +120,11 @@
                     },
                 }
             };
+        },
+        computed: {
+            userName() {
+                return this.$store.getters[types.GET_USER].name;
+            },
         },
         methods: {
             toggleMenu() {

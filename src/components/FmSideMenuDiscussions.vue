@@ -3,7 +3,7 @@
     <div v-for="discussion in discussions" :key="discussion.id" @click="closeMenu">
       <router-link tag="div" class="fm-side-menu-discussions__discussion"
                    :to="{ name: 'discussionsShow', params: { id: discussion.id } }">
-        <fm-avatar class="fm-side-menu-discussions__avatar">
+        <fm-avatar class="fm-side-menu-discussions__avatar" :user-name="discussion.label || 'discu' + discussion.id">
         </fm-avatar>
         <div class="fm-side-menu-discussions__discussion-content">
           <div class="fm-side-menu-discussions__discussion-label">

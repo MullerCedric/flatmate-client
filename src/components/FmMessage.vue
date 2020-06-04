@@ -11,7 +11,7 @@
            class="fm-message__name">
         {{ message.from.name }}
       </div>
-      <fm-avatar v-if="nextUserId !== message.from.id && !isFromUser"
+      <fm-avatar v-if="nextUserId !== message.from.id && !isFromUser" :user-name="message.from.name"
                  size="s" class="fm-message__avatar">
       </fm-avatar>
       <div v-if="isInfoShowed" class="fm-message__info">
@@ -35,7 +35,7 @@
         <span v-if="readBy.length > 1">
           Vu par
         </span>
-        <fm-avatar size="xs" v-for="user in readBy" :key="user.id" :title="user.name"
+        <fm-avatar size="xs" v-for="user in readBy" :key="user.id" :title="user.name" :user-name="user.name"
                    :class="['fm-message__readby', {'fm-message__readby--me': user.id === userId}]">
         </fm-avatar>
       </div>
