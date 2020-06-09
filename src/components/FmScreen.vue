@@ -1,5 +1,5 @@
 <template>
-  <div class="fm-screen" @click="closeMenu">
+  <div class="fm-screen" @click="handleScreen">
     <fm-toolbar v-if="toolbarProps" v-bind="toolbarProps" @back-clicked="handleBack" @avatar-clicked="handleAvatar"
                 @title-clicked="handleTitle" @search-clicked="handleSearch"
                 @bell-clicked="handleBell" @settings-clicked="handleSettings" @more-clicked="handleMore">
@@ -38,10 +38,9 @@
             },
         },
         methods: {
-            closeMenu() {
-                if (this.$store.state.sideMenuIsVisible) {
-                    this.$store.commit(types.CLOSE_SIDE_MENU);
-                }
+            handleScreen() {
+                this.closeMenu();
+                this.$emit('screen-clicked');
             },
             handleBack() {
                 this.$emit('back-clicked');
@@ -63,6 +62,11 @@
             },
             handleMore() {
                 this.$emit('more-clicked');
+            },
+            closeMenu() {
+                if (this.$store.state.sideMenuIsVisible) {
+                    this.$store.commit(types.CLOSE_SIDE_MENU);
+                }
             },
         },
     }

@@ -3,7 +3,7 @@
     <h2 class="fm-event-list__title">{{ title }}</h2>
     <div class="fm-event-list__list" :class="{ 'fm-event-list__list--empty': !events.length }">
       <p v-if="!events.length">Aucun événement prévu</p>
-      <fm-event-item v-for="event in sortedEvents" :key="event.id" :event="event">
+      <fm-event-item v-for="event in sortedEvents" :key="event.id" :event="event" :selected-iso-string="selectedIsoString">
       </fm-event-item>
     </div>
   </section>
@@ -22,7 +22,11 @@
             events: {
                 type: Array,
                 default: () => [],
-            }
+            },
+            selectedIsoString: {
+                type: String,
+                required: true,
+            },
         },
         computed: {
             title() {

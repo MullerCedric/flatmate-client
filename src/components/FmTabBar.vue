@@ -13,7 +13,7 @@
       </router-link>
       <router-link class="fm-tab-bar__link"
                    :class="{ 'fm-tab-bar__link--hidden': showCreateMenu }"
-                   :to="{name: 'calendar'}"
+                   :to="{name: 'eventsCalendar'}"
                    v-slot="{ href, route, navigate, isActive, isExactActive }"
       >
         <a :href="href" @click="navigate" class="tab" :class="{ 'tab--active': isExactActive }">

@@ -49,10 +49,10 @@
 <script>
     import moment from 'moment';
 
-    moment.locale('fr');
-
     import FmAvatar from "./FmAvatar";
     import IcMsgStatus from "./icons/IcMsgStatus";
+
+    moment.locale('fr');
 
     export default {
         name: "FmMessage",

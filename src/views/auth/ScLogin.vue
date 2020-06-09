@@ -44,7 +44,7 @@
                 this.$store.dispatch(types.CONNECT, this.formData)
                     .then(() => {
                         this.isSending = false;
-                        this.$router.push({name: 'calendar'});
+                        this.$router.push({name: 'eventsCalendar'});
                     });
             },
         },

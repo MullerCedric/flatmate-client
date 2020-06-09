@@ -93,7 +93,7 @@
     import IcCheckmark from "../../components/icons/IcCheckmark";
 
     export default {
-        name: "ScCalendarCreate",
+        name: "ScEventsCreate",
         components: {IcCheckmark, IcLoading, FmBottomBar, FmFormGroup, FmFormInput, FmScreen},
         data() {
             return {
@@ -101,7 +101,7 @@
                     showBack: true,
                     showAvatar: false,
                     title: 'Ajouter un événement',
-                    type: 'calendar',
+                    type: 'events',
                     showMore: true,
                 },
                 selectedDate: this.$route.query.selectedDate,
@@ -151,7 +151,7 @@
                 this.$store.dispatch(types.SAVE_EVENT, this.formData)
                     .then(() => {
                         this.isSending = false;
-                        this.$router.push({name: 'calendar'});
+                        this.$router.push({name: 'eventsCalendar'});
                     });
             }
         },

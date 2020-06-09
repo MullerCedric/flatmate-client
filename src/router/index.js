@@ -14,7 +14,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     const apiToken = store.state.userStore.user.api_token || localStorage.getItem('userApiToken');
-    window.console.info('Navigating to ' + to.name + '...');
+    window.console.info('Navigating to ' + to.name + ' from ' + from.name + '...');
 
     if (to.meta.isForAuth) {
         window.console.info('Auth IS required');
@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
         window.console.info('Auth IS NOT required');
         if (apiToken) {
             window.console.warn('Route réservée aux invités');
-            next({name: 'calendar'});
+            next({name: 'eventsCalendar'});
         } else {
             window.console.info('Navigation done');
             next();

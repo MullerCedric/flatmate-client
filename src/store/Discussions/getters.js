@@ -5,8 +5,8 @@ export default {
         return state.discussions;
     },
     [types.GET_DISCUSSION]: state => id => {
-        return state.discussions.filter(x => {
+        return state.discussions.find(x => {
             return (x.id === parseInt(id));
-        })[0];
+        });
     },
 };

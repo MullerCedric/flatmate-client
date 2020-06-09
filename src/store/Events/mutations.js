@@ -1,7 +1,7 @@
 import * as types from '../types';
 
 export default {
-    [types.RESET_CALENDAR]: (state, payload) => {
+    [types.RESET_EVENTS]: (state, payload) => {
         state = payload;
     },
     [types.ORDER_CALENDAR]: (state, payload) => {

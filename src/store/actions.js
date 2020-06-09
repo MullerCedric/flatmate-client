@@ -9,7 +9,7 @@ export default {
             commit(types.RESET_DISCUSSIONS);
             commit(types.RESET_FLATS);
             commit(types.RESET_NOTIFICATIONS);
-            commit(types.RESET_CALENDAR);
+            commit(types.RESET_EVENTS);
             if (localStorage.getItem('userApiToken')) {
                 localStorage.removeItem('userApiToken');
             }

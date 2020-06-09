@@ -29,11 +29,11 @@
 
 <script>
     import Echo from 'laravel-echo';
+    import * as types from "../../store/types";
 
     import FmScreen from "../../components/FmScreen";
     import FmBottomBar from "../../components/FmBottomBar";
     import IcLoading from "../../components/icons/IcLoading";
-    import * as types from "../../store/types";
     import FmMessage from "../../components/FmMessage";
     import IcPaperPlane from "../../components/icons/IcPaperPlane";
 
@@ -119,10 +119,12 @@
                 });
         },
         updated() {
-            this.toolbarProps.title = this.discussion && this.discussion.label ?
-                this.discussion.label : this.discussion.participants.map((user) => {
-                    return user.name;
-                }).join(', ');
+            if (this.discussion) {
+                this.toolbarProps.title = this.discussion.label ?
+                    this.discussion.label : this.discussion.participants.map((user) => {
+                        return user.name;
+                    }).join(', ');
+            }
         },
         methods: {
             scrollToEnd() {

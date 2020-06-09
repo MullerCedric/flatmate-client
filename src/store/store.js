@@ -8,7 +8,7 @@ import actions from './actions';
 
 import userStore from './User/store';
 import discussionsStore from './Discussions/store';
-import calendarStore from './Calendar/store';
+import eventsStore from './Events/store';
 import flatStore from './Flat/store';
 import notificationsStore from './Notifications/store';
 
@@ -30,7 +30,7 @@ export default new Vuex.Store({
     modules: {
         userStore,
         discussionsStore,
-        calendarStore,
+        eventsStore,
         flatStore,
         notificationsStore,
     }

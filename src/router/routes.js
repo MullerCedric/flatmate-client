@@ -1,5 +1,5 @@
 import ScDashboard from "../views/ScDashboard";
-import ScCalendar from "../views/Calendar/ScCalendar";
+import ScEventsCalendar from "../views/Events/ScEventsCalendar";
 
 export default [
     {
@@ -23,17 +23,26 @@ export default [
 
     {
         path: "/",
-        name: "calendar",
-        component: ScCalendar,
+        name: "eventsCalendar",
+        component: ScEventsCalendar,
         meta: {
             isForAuth: true,
         },
     },
     {
-        path: "/calendar/create",
-        name: "calendarCreate",
+        path: "/events/create",
+        name: "eventsCreate",
         component: () =>
-            import(/* webpackChunkName: "register" */ "../views/Calendar/ScCalendarCreate.vue"),
+            import(/* webpackChunkName: "register" */ "../views/Events/ScEventsCreate.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
+    {
+        path: "/events/:id(\\d+)",
+        name: "eventsShow",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Events/ScEventsShow.vue"),
         meta: {
             isForAuth: true,
         },

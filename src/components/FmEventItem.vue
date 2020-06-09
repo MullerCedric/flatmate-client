@@ -1,5 +1,6 @@
 <template>
-  <div class="fm-event-item">
+  <router-link tag="div" class="fm-event-item"
+               :to="{name: 'eventsShow', params: { id: event.id }, query: { selectedDate: selectedIsoString }}">
     <div class="fm-event-item__time">
       <div class="fm-event-item__time-start">{{ start_time }}</div>
       <div v-if="event.duration" class="fm-event-item__time-end">{{ end_time }}</div>
@@ -8,7 +9,7 @@
     <div class="fm-event-item__label">
       {{ event.label }}
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -18,7 +19,11 @@
             event: {
                 type: Object,
                 required: true,
-            }
+            },
+            selectedIsoString: {
+                type: String,
+                required: true,
+            },
         },
         computed: {
             start_time() {

@@ -83,19 +83,20 @@ export const SET_NOTIFICATIONS = 'Notifications/SetNotifications';
 
 
 /*
- * Calendar
+ * Events
  */
 // Getters
-export const GET_EVENTS_FOR_TMSTPM = 'Calendar/getEventsForTimestamp';
-export const GET_EVENTS_CATS = 'Calendar/getEventsCategories';
+export const GET_EVENT = 'Events/getEvent'; // Get event for given ID
+export const GET_EVENTS_FOR_TMSTPM = 'Events/getEventsForTimestamp'; // Get all events for that day
+export const GET_EVENTS_CATS = 'Events/getEventsCategories';
 
 // Mutations
-export const RESET_CALENDAR = 'Calendar/Reset';
-export const ORDER_CALENDAR = 'Calendar/OrderCalendar';
-export const SET_EVENTS_CATS = 'Calendar/SetEventsCategories';
-export const SET_NEW_EVENT = 'Calendar/SetNewEvent';
+export const RESET_EVENTS = 'Events/Reset';
+export const ORDER_CALENDAR = 'Events/OrderEventsForCalendar';
+export const SET_EVENTS_CATS = 'Events/SetEventsCategories';
+export const SET_NEW_EVENT = 'Events/SetNewEvent';
 
 // Actions
-export const FETCH_AND_ASSOCIATE_EVENTS = 'Calendar/fetchAndAssociateEvents';
-export const FETCH_EVENTS_CATS = 'Calendar/fetchEventsCategories';
-export const SAVE_EVENT = 'Calendar/SaveEvent';
+export const FETCH_AND_ASSOCIATE_EVENTS = 'Events/fetchAndAssociateEvents';
+export const FETCH_EVENTS_CATS = 'Events/fetchEventsCategories';
+export const SAVE_EVENT = 'Events/SaveEvent';

@@ -5,13 +5,13 @@
                    @visibleDatesChange="calendarVisibleChange"
                    :events="calendarEventsData" class="calendar">
       </fm-calendar>
-      <fm-event-list :gap="calendarSelectedData.gapBetweenDays"
+      <fm-event-list :gap="calendarSelectedData.gapBetweenDays" :selected-iso-string="selectedIsoString"
                      :events="eventsForSelectedDay" class="event-list">
       </fm-event-list>
     </div>
 
     <template #tab>
-      <fm-tab-bar :create-link="{name: 'calendarCreate', query: { selectedDate: selectedIsoString } }">
+      <fm-tab-bar :create-link="{name: 'eventsCreate', query: { selectedDate: selectedIsoString } }">
       </fm-tab-bar>
     </template>
   </fm-screen>
@@ -26,7 +26,7 @@
     import FmEventList from "../../components/FmEventList";
 
     export default {
-        name: "ScCalendar",
+        name: "ScEventsCalendar",
         components: {FmTabBar, FmEventList, FmCalendar, FmScreen},
         data() {
             return {
