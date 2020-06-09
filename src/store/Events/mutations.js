@@ -84,4 +84,15 @@ export default {
             }
         }
     },
+    [types.REMOVE_EVENT]: (state, id) => {
+        let limitedEvents = {...state.calendarEventsData};
+        for (const month in state.calendarEventsData) {
+            for (const day in state.calendarEventsData[month]) {
+                limitedEvents[month][day] = state.calendarEventsData[month][day].filter(event => {
+                    return event.id !== parseInt(id, 10);
+                });
+            }
+        }
+        state.calendarEventsData = {...limitedEvents};
+    }
 };

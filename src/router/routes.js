@@ -47,6 +47,15 @@ export default [
             isForAuth: true,
         },
     },
+    {
+        path: "/events/:id(\\d+)/edit",
+        name: "eventsEdit",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Events/ScEventsCreate.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
 
     {
         path: "/dashboard",

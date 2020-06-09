@@ -59,17 +59,21 @@ export default {
             });
     },
     [types.SAVE_EVENT]({commit, rootState}, formData) {
-        const api_token = rootState.userStore.user.api_token;
+        const currUser = rootState.userStore.user;
+        const api_token = currUser.api_token;
         const flat_id = rootState.userStore.user.viewingFlat;
 
         //Formatting data
         let newEvent = {};
+        if (formData.id) {
+            newEvent.id = formData.id;
+        }
         newEvent.label = formData.label;
         newEvent.flat_id = formData.shared ? flat_id : null;
         newEvent.category_id = formData.category || null;
         newEvent.confirm = formData.confirm ? formData.confirmType : null;
         newEvent.start_date = new Date(formData.start_date).toISOString();
-        newEvent.participants = formData.participants;
+        newEvent.participants = formData.shared ? formData.participants : [currUser.id];
         if (formData.recurring) {
             newEvent.interval = formData.interval * 86400000;
             newEvent.end_date = formData.end_date ? new Date(formData.end_date).toISOString() : null;
@@ -82,6 +86,9 @@ export default {
             params: {api_token},
         })
             .then((resp) => {
+                if (formData.id) {
+                    commit(types.REMOVE_EVENT, resp.data.id);
+                }
                 commit(types.SET_NEW_EVENT, resp.data);
             })
             .catch(error => {

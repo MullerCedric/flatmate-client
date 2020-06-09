@@ -16,13 +16,19 @@
 
     <fm-form-input-tag v-if="inputType === 'taglist'" :tags.sync="arrValue">
     </fm-form-input-tag>
-    <input v-if="['select', 'textarea', 'radio', 'checkbox', 'toggle'].indexOf(inputType) === -1"
-           :placeholder="placeholder" @input="$emit('change-value', value)"
-           @keyup.enter.exact="addNewTag" @blur="addNewTag" @keyup.,.exact="addNewTag"
-           :type="inputType === 'taglist' ? 'text' : inputType" :list="fiName + '-list'"
-           :id="fiName" :name="fiName" :required="required" v-model="value"
-           :autofocus="autofocus" :autocomplete="autocomplete" :disabled="isDisabled"
-           class="fm-fi__input" :class="{ 'fm-fi__input--error': !isValid }">
+    <div v-if="['select', 'textarea', 'radio', 'checkbox', 'toggle'].indexOf(inputType) === -1"
+         :class="['fm-fi__input', 'fm-fi__input--text', { 'fm-fi__input--text-disabled': isDisabled }, { 'fm-fi__input--error': !isValid }]">
+      <input :placeholder="placeholder" @input="$emit('change-value', value)"
+             @keyup.enter.exact="addNewTag" @blur="addNewTag" @keyup.,.exact="addNewTag"
+             :type="inputType === 'taglist' ? 'text' : inputType" :list="fiName + '-list'"
+             :id="fiName" :name="fiName" :required="required" v-model="value"
+             :autofocus="autofocus" :autocomplete="autocomplete" :disabled="isDisabled"
+             class="fm-fi__input-text">
+      <div class="fm-fi__reset" @click="handleReset">
+        <ic-plus v-if="value" class="fm-fi__reset-icon">
+        </ic-plus>
+      </div>
+    </div>
     <datalist v-if="($slots.options && inputType === 'datalist') || datalistOptions.length" :id="fiName + '-list'">
       <slot name="options">
       </slot>
@@ -69,10 +75,11 @@
     import FmFormInputTag from "./FmFormInputTag";
     import FmFormInputToggle from "./FmFormInputToggle";
     import FmAvatar from "../FmAvatar";
+    import IcPlus from "../icons/IcPlus";
 
     export default {
         name: "FmFormInput",
-        components: {FmAvatar, FmFormInputToggle, FmFormInputTag, FmFormLabel},
+        components: {IcPlus, FmAvatar, FmFormInputToggle, FmFormInputTag, FmFormLabel},
         props: {
             label: {
                 type: String,
@@ -166,7 +173,7 @@
                 type: Number,
             },
             defaultValue: {
-                type: [String, Boolean, Array],
+                type: [String, Boolean, Array, Number],
             }
         },
         data() {
@@ -200,7 +207,7 @@
                 this.$emit('change-value', this.arrValue);
             }
             if (this.defaultValue) {
-                if (typeof this.defaultValue === 'string') {
+                if (typeof this.defaultValue === 'string' || typeof this.defaultValue === 'number') {
                     this.value = this.defaultValue;
                     this.$emit('change-value', this.value);
                 }
@@ -218,6 +225,14 @@
                 this.arrValue.push(this.value);
                 this.value = '';
                 this.$emit('change-value', this.arrValue);
+            },
+            handleReset() {
+                window.console.log('Resetting');
+                const valType = this.arrValue.length && !this.value ? 'arrValue' : 'value';
+                window.console.log('Val: ', valType, ' before : ', this[valType]);
+                this.value = '';
+                this.arrValue = [];
+                this.$emit('change-value', this[valType]);
             },
         },
     }
@@ -250,22 +265,54 @@
       flex-shrink: 0;
     }
 
-    &__input {
+    &__input, &__input-text {
       width: 100%;
       border: none;
       box-shadow: none;
       background-color: $white;
-      border-radius: .625rem;
-      border-bottom: 1px solid $lightGrey;
       padding: .5rem .5rem;
       font-weight: $medium;
+
+      &:disabled {
+        background-color: $lightGrey;
+      }
+    }
+
+    &__input {
+      border-radius: .625rem;
+      border-bottom: 1px solid $lightGrey;
 
       &:focus {
         border-bottom: 1px solid $main;
       }
 
-      &:disabled {
-        background-color: $lightGrey;
+      &--text {
+        padding: 0 .5rem 0;
+        display: flex;
+        align-items: center;
+
+        &:focus-within {
+          border-bottom: 1px solid $main;
+        }
+
+        &-disabled {
+          background-color: $lightGrey;
+        }
+      }
+
+      &-text {
+        border: none;
+        flex: 1;
+      }
+    }
+
+    &__reset {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+
+      &-icon {
+        transform: rotate(45deg);
       }
     }
 

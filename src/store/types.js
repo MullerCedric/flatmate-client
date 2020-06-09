@@ -95,6 +95,7 @@ export const RESET_EVENTS = 'Events/Reset';
 export const ORDER_CALENDAR = 'Events/OrderEventsForCalendar';
 export const SET_EVENTS_CATS = 'Events/SetEventsCategories';
 export const SET_NEW_EVENT = 'Events/SetNewEvent';
+export const REMOVE_EVENT = 'Events/RemoveEvent';
 
 // Actions
 export const FETCH_AND_ASSOCIATE_EVENTS = 'Events/fetchAndAssociateEvents';

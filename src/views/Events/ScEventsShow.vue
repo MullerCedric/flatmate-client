@@ -30,11 +30,11 @@
             </span>
           </div>
         </div>
-        <div>
+        <div class="sc-events-show__side-note">
           Cet événement est visible par l'ensemble de la colocation
         </div>
       </section>
-      <div v-if="!event.flat_id">
+      <div v-if="!event.flat_id" class="sc-events-show__side-note">
         Cet événement n'est visible que par vous
       </div>
     </div>
@@ -67,11 +67,11 @@
           </ic-bin>
           Supprimer
         </div>
-        <div class="fm-ic-btn">
+        <router-link tag="div" class="fm-ic-btn" :to="{name: 'eventsEdit', params: {id:event.id}, query: { selectedDate } }">
           <ic-edit :width="20" :height="20" class="fm-ic-btn__icon">
           </ic-edit>
           Modifier
-        </div>
+        </router-link>
       </fm-bottom-bar>
     </template>
   </fm-screen>
@@ -171,6 +171,12 @@
       &-val {
         flex: 1;
       }
+    }
+
+    &__side-note {
+      font-size: .875rem;
+      margin-top: .5rem;
+      line-height: 1.25;
     }
   }
 
