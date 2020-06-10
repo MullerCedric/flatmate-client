@@ -7,7 +7,7 @@
        role="img" class="icon">
     <title :id="iconName">{{ iconName }} icon</title>
     <g :id="`ic-${iconName}`" :stroke="iconColor">
-      <line x1='256' y1='112' x2='256' y2='400'
+      <line x1='256' y1='112' x2='256' y2='400' :class="{'hide': sign !== 'plus'}"
             stroke-linecap="round" stroke-linejoin="round" stroke-width="40" style="fill:none;"/>
       <line x1='400' y1='256' x2='112' y2='256'
             stroke-linecap="round" stroke-linejoin="round" stroke-width="40" style="fill:none;"/>
@@ -34,7 +34,11 @@
             iconColor: {
                 type: String,
                 default: 'currentColor'
-            }
+            },
+            sign: {
+                type: String,
+                default: 'plus',
+            },
         }
     }
 </script>
@@ -44,5 +48,9 @@
     display: inline-block;
     vertical-align: baseline;
     margin-bottom: -2px;
+  }
+
+  .hide {
+    opacity: 0;
   }
 </style>

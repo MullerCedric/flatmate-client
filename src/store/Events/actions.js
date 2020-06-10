@@ -109,5 +109,33 @@ export default {
                 window.console.error(error);
                 window.console.error(error.response.data);
             })
-    }
+    },
+    [types.FETCH_CONFIRMATIONS]({commit, rootState}, payload) {
+        const api_token = rootState.userStore.user.api_token;
+
+        return window.axios.get('/events/' + payload.event_id + '/confirmations', {
+            params: {api_token, event_repeat_instance: payload.event_repeat_instance},
+        })
+            .then((resp) => {
+                commit(types.SET_CONFIRMATIONS, resp.data);
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            })
+    },
+    [types.SAVE_CONFIRMATION]({commit, rootState}, payload) {
+        const api_token = rootState.userStore.user.api_token;
+
+        return window.axios.post('/events/' + payload.event_id + '/confirmations', payload, {
+            params: {api_token},
+        })
+            .then((resp) => {
+                commit(types.SET_CONFIRMATIONS, resp.data);
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            })
+    },
 };

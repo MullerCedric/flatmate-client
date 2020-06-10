@@ -94,5 +94,11 @@ export default {
             }
         }
         state.calendarEventsData = {...limitedEvents};
-    }
+    },
+    [types.SET_CONFIRMATIONS]: (state, payload) => {
+        if (!payload.length) return;
+        let confirmations = {...state.confirmations};
+        confirmations[payload[0].pivot.event_repeat_instance] = payload;
+        state.confirmations = {...confirmations};
+    },
 };

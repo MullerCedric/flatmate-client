@@ -4,9 +4,6 @@
       <h2 class="sc-events-show__label">
         {{ event.label }}
       </h2>
-      <div>
-        Confirmez votre participation !
-      </div>
       <div class="sc-events-show__section-content">
         <ic-clock class="sc-events-show__section-icon">
         </ic-clock>
@@ -15,29 +12,30 @@
           <div>au {{ displayEventDate }} à {{ displayEventEndTime }}</div>
         </div>
       </div>
-    </section>
-    <div>
-      <section v-if="event.flat_id">
-        <h2>
-          Participants
-        </h2>
-        <div class="sc-events-show__section-content">
-          <ic-person class="sc-events-show__section-icon">
-          </ic-person>
-          <div class="sc-events-show__section-val">
-            <span v-for="(user, index) in event.participants" :key="user.id">
-              {{ user.name }}{{ index + 1 !== event.participants.length ? ', ': '' }}
-            </span>
-          </div>
-        </div>
-        <div class="sc-events-show__side-note">
-          Cet événement est visible par l'ensemble de la colocation
-        </div>
-      </section>
       <div v-if="!event.flat_id" class="sc-events-show__side-note">
         Cet événement n'est visible que par vous
       </div>
-    </div>
+    </section>
+    <section v-if="event.flat_id">
+      <h2>
+        Participants
+      </h2>
+      <div class="sc-events-show__section-content">
+        <ic-person class="sc-events-show__section-icon">
+        </ic-person>
+        <div class="sc-events-show__section-val">
+            <span v-for="(user, index) in event.participants" :key="user.id">
+              {{ user.name }}{{ index + 1 !== event.participants.length ? ', ': '' }}
+            </span>
+        </div>
+      </div>
+      <fm-event-confirmations :event-id="event.id" :event-date="eventDate.toISOString()"
+                              :event-confirm-type="event.confirm" :user-id="currUser.id">
+      </fm-event-confirmations>
+      <div class="sc-events-show__side-note">
+        Cet événement est visible par l'ensemble de la colocation
+      </div>
+    </section>
     <section>
       <h2>
         Catégorie
@@ -90,12 +88,23 @@
     import FmBottomBar from "../../components/FmBottomBar";
     import IcEdit from "../../components/icons/IcEdit";
     import IcBin from "../../components/icons/IcBin";
+    import FmEventConfirmations from "../../components/FmEventConfirmations";
 
     moment.locale('fr');
 
     export default {
         name: "ScEventsShow",
-        components: {IcBin, IcEdit, FmBottomBar, IcClock, IcRepeat, IcBookmark, IcPerson, FmScreen},
+        components: {
+            FmEventConfirmations,
+            IcBin,
+            IcEdit,
+            FmBottomBar,
+            IcClock,
+            IcRepeat,
+            IcBookmark,
+            IcPerson,
+            FmScreen
+        },
         data() {
             return {
                 toolbarProps: {

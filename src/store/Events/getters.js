@@ -22,4 +22,7 @@ export default {
         }
         return null;
     },
+    [types.GET_CONFIRMATIONS]: state => payload => {
+        return state.confirmations[payload] || [];
+    },
 };
