@@ -96,4 +96,18 @@ export default {
                 window.console.error(error.response.data);
             })
     },
+    [types.DELETE_EVENT]({commit, rootState}, payload) {
+        const api_token = rootState.userStore.user.api_token;
+
+        return window.axios.delete('/events/' + payload, {
+            params: {api_token},
+        })
+            .then(() => {
+                commit(types.REMOVE_EVENT, payload);
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            })
+    }
 };

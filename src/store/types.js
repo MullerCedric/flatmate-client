@@ -101,3 +101,4 @@ export const REMOVE_EVENT = 'Events/RemoveEvent';
 export const FETCH_AND_ASSOCIATE_EVENTS = 'Events/fetchAndAssociateEvents';
 export const FETCH_EVENTS_CATS = 'Events/fetchEventsCategories';
 export const SAVE_EVENT = 'Events/SaveEvent';
+export const DELETE_EVENT = 'Events/DeleteEvent';

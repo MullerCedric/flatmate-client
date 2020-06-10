@@ -1,5 +1,5 @@
 <template>
-  <fm-screen :toolbarProps="toolbarProps" class="sc-events-show">
+  <fm-screen v-if="event" :toolbarProps="toolbarProps" class="sc-events-show">
     <section>
       <h2 class="sc-events-show__label">
         {{ event.label }}
@@ -62,12 +62,13 @@
 
     <template #tab>
       <fm-bottom-bar>
-        <div class="fm-ic-btn">
+        <div class="fm-ic-btn" @click="handleDelete">
           <ic-bin :width="20" :height="20" class="fm-ic-btn__icon">
           </ic-bin>
           Supprimer
         </div>
-        <router-link tag="div" class="fm-ic-btn" :to="{name: 'eventsEdit', params: {id:event.id}, query: { selectedDate } }">
+        <router-link tag="div" class="fm-ic-btn"
+                     :to="{name: 'eventsEdit', params: {id:event.id}, query: { selectedDate } }">
           <ic-edit :width="20" :height="20" class="fm-ic-btn__icon">
           </ic-edit>
           Modifier
@@ -143,7 +144,16 @@
                 return cat.color;
             },
         },
-        methods: {},
+        methods: {
+            handleDelete() {
+                if (window.confirm('Êtes-vous vraiment sûr de supprimer cet événement ? Cette action est définitive')) {
+                    this.$store.dispatch(types.DELETE_EVENT, this.event.id)
+                        .then(() => {
+                            this.$router.push({name: 'eventsCalendar'});
+                        });
+                }
+            }
+        },
     }
 </script>
 
