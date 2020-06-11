@@ -14,4 +14,10 @@ export default {
     [types.OPEN_SIDE_MENU]: (state) => {
         state.sideMenuIsVisible = true;
     },
+    [types.SHOW_LOADING_SCREEN]: (state) => {
+        state.showLoadingScreen = true;
+    },
+    [types.HIDE_LOADING_SCREEN]: (state) => {
+        state.showLoadingScreen = false;
+    },
 };

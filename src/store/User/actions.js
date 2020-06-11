@@ -6,9 +6,11 @@ export default {
         let userPromise = null;
         if (localStorage.getItem('userApiToken') && !state.user.api_token) {
             window.console.log('CONNECTING from existing storage token');
+            commit(types.SHOW_LOADING_SCREEN);
             userPromise = window.axios.get('/user', {params: {api_token}});
         } else if (payload) {
             window.console.log('CONNECTING from form');
+            commit(types.SHOW_LOADING_SCREEN);
             userPromise = window.axios.post('/user/auth', payload);
         } else if (state.user.api_token) {
             window.console.log('ALREADY CONNECTED');

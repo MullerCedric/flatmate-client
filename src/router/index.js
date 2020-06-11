@@ -19,16 +19,19 @@ router.beforeEach((to, from, next) => {
     if (to.meta.isForAuth) {
         window.console.info('Auth IS required');
         if (!apiToken) {
+            store.commit(types.HIDE_LOADING_SCREEN);
             next({name: 'log-in'});
             return;
         }
         store.dispatch(types.CONNECT).then(() => {
             if (!store.state.userStore.user.api_token) {
                 window.console.warn('Route réservée aux membres');
+                store.commit(types.HIDE_LOADING_SCREEN);
                 next({name: 'log-in'});
             } else {
                 store.dispatch(types.HYDRATE_APP).then(() => {
                     window.console.info('Navigation done');
+                    store.commit(types.HIDE_LOADING_SCREEN);
                     next();
                 }).catch(error => {
                     window.console.error(error);
@@ -43,12 +46,17 @@ router.beforeEach((to, from, next) => {
         window.console.info('Auth IS NOT required');
         if (apiToken) {
             window.console.warn('Route réservée aux invités');
+            store.commit(types.HIDE_LOADING_SCREEN);
             next({name: 'eventsCalendar'});
         } else {
             window.console.info('Navigation done');
+            store.commit(types.HIDE_LOADING_SCREEN);
             next();
         }
     }
+});
+router.afterEach(() => {
+    store.commit(types.HIDE_LOADING_SCREEN);
 });
 
 export default router;

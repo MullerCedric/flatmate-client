@@ -3,21 +3,53 @@
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no , viewport-fit=cover"
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no , viewport-fit=cover"
   />
   <link rel="icon" href="<%= BASE_URL %>favicon.ico"/>
   <title>Le Flatmate</title>
 </head>
 <body>
 <noscript>
-  <strong
-  >We're sorry but my-app doesn't work properly without JavaScript
-    enabled. Please enable it to continue.</strong
-  >
+  <strong>
+    We're sorry but Le Flatmate doesn't work properly without JavaScript
+    enabled. Please enable it to continue.
+  </strong>
 </noscript>
-<div id="app"></div>
-<!-- built files will be auto injected -->
+<div id="app" class="splash-screen">
+  <svg xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 512 268"
+       aria-labelledby="splash-screen">
+    <title>Splash screeen</title>
+    <g class="fm-logo" stroke="none">
+      <g id="ehxvgwsxk59r60_to" transform="translate(256,133.995000)">
+        <g id="ehxvgwsxk59r60_ts" transform="scale(1,1)">
+          <path id="ehxvgwsxk59r60"
+                d="M320.460000,236.013101L191.540000,236.013101C184.777898,236.026375,178.287628,233.352007,173.497658,228.578610C168.707689,223.805214,166.010598,217.324008,166,210.561467L166,210.561467L166,120.005651C165.999438,113.129112,168.788875,106.546627,173.730000,101.764479L238.190000,39.230463C248.119157,29.620715,263.880842,29.620715,273.810000,39.230463L338.270000,101.764479C343.211125,106.546627,346.000562,113.129112,346,120.005651L346,210.621471C345.944875,224.680577,334.518284,236.040787,320.460000,236.013101Z"
+                transform="translate(-256,-134.018152)" class="logo-main"/>
+        </g>
+      </g>
+    </g>
+  </svg>
+</div>
+<style type="text/css">
+  .splash-screen {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(241, 238, 247, 1);
+  }
+  .splash-screen svg {
+    margin-bottom: 1rem;
+    fill: rgba(242, 163, 34, 1);
+  }
+</style>
 </body>
 </html>

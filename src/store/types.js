@@ -11,6 +11,7 @@
  */
 // Getters
 export const GET_SIDE_MENU_STATE = 'App/GetSideMenuState';
+export const GET_LOADING_SCREEN_STATE = 'App/GetLoadingScreenState';
 
 // Mutations
 export const DISCONNECT = 'App/DisconnectByResettingStoreAndLocalStorage';
@@ -18,6 +19,8 @@ export const RESET_APP = 'App/Reset';
 export const TOGGLE_SIDE_MENU = 'App/ToggleSideMenu';
 export const CLOSE_SIDE_MENU = 'App/CloseSideMenu';
 export const OPEN_SIDE_MENU = 'App/OpenSideMenu';
+export const SHOW_LOADING_SCREEN = 'App/ShowLoadingScreen';
+export const HIDE_LOADING_SCREEN = 'App/HideLoadingScreen';
 
 // Actions
 export const HYDRATE_APP = 'App/HydrateAppData';
