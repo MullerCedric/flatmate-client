@@ -30,8 +30,10 @@
                 toolbarProps: {
                     title: 'Portefeuille',
                     type: 'wallet',
+                    showAvatar: true,
                     showSearch: true,
                     showMore: true,
+                    showBubble: true,
                 },
             }
         },

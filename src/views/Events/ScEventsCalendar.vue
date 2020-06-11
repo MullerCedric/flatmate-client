@@ -33,7 +33,9 @@
                 toolbarProps: {
                     title: 'Calendrier',
                     type: 'calendar',
+                    showAvatar: true,
                     showMore: true,
+                    showBubble: true,
                 },
                 calendarSelectedData: {},
                 calendarVisibleDates: {},

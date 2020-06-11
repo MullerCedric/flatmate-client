@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <ion-app>
-      <fm-side-menu v-if="isConnected" :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
-      </fm-side-menu>
-      <fm-loading-screen>
-      </fm-loading-screen>
       <router-view :key="$route.path" :class="['fm-view', {'fm-view--aside': sideMenuIsVisible}]">
       </router-view>
+      <fm-loading-screen>
+      </fm-loading-screen>
+      <fm-side-menu v-if="isConnected" :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
+      </fm-side-menu>
     </ion-app>
   </div>
 </template>
@@ -75,18 +75,18 @@
     transition: transform .3s ease-in-out;
 
     &--aside {
-      transform: translateX(87%);
+      transform: translateX(-89%);
     }
   }
 
   .fm-side-menu {
     position: absolute;
-    left: 0;
+    right: 0;
     top: 0;
     bottom: 0;
-    width: 85%;
+    width: 87%;
     z-index: 11;
-    transform: translateX(-100%);
+    transform: translateX(100%);
     transition: transform .3s ease-in-out;
 
     &--visible {

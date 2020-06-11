@@ -46,7 +46,6 @@
                     title: 'Discussion',
                     type: 'discussions',
                     showBack: true,
-                    showAvatar: false,
                     showSearch: true,
                     showMore: true,
                     container: null,

@@ -68,8 +68,8 @@
     }
 
     &--l {
-      width: 3rem;
-      height: 3rem;
+      width: 3.25rem;
+      height: 3.25rem;
       margin: .625rem;
     }
 

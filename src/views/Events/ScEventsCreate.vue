@@ -103,7 +103,6 @@
             return {
                 toolbarProps: {
                     showBack: true,
-                    showAvatar: false,
                     title: 'Ajouter un événement',
                     type: 'events',
                     showMore: true,

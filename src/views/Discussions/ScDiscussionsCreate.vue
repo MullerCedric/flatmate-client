@@ -37,7 +37,6 @@
             return {
                 toolbarProps: {
                     showBack: true,
-                    showAvatar: false,
                     title: 'Nouvelle discussion',
                     type: 'discussions',
                     showMore: true,

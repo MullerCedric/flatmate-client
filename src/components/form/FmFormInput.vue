@@ -227,9 +227,7 @@
                 this.$emit('change-value', this.arrValue);
             },
             handleReset() {
-                window.console.log('Resetting');
                 const valType = this.arrValue.length && !this.value ? 'arrValue' : 'value';
-                window.console.log('Val: ', valType, ' before : ', this[valType]);
                 this.value = '';
                 this.arrValue = [];
                 this.$emit('change-value', this[valType]);

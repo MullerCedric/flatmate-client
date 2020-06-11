@@ -2,7 +2,8 @@
   <div v-if="showToolbar" class="fm-toolbar">
     <div class="fm-toolbar__left">
       <div v-if="showBack" class="fm-toolbar__back" @click.stop="handleBack">
-        <ic-back></ic-back>
+        <ic-back>
+        </ic-back>
       </div>
       <div @click.stop="handleAvatar">
         <fm-avatar v-if="showAvatar" class="fm-toolbar__avatar" :user-name="userName">
@@ -14,16 +15,24 @@
     </div>
     <div class="fm-toolbar__right">
       <div v-if="showSearch" class="fm-toolbar__search" @click.stop="handleSearch">
-        <ic-search></ic-search>
+        <ic-search>
+        </ic-search>
       </div>
       <div v-if="showBell" class="fm-toolbar__bell" @click.stop="handleBell">
-        <ic-bell></ic-bell>
+        <ic-bell>
+        </ic-bell>
       </div>
       <div v-if="showSettings" class="fm-toolbar__settings" @click.stop="handleSettings">
-        <ic-settings></ic-settings>
+        <ic-settings>
+        </ic-settings>
       </div>
       <div v-if="showMore" class="fm-toolbar__more" @click.stop="handleMore">
-        <ic-more></ic-more>
+        <ic-more>
+        </ic-more>
+      </div>
+      <div v-if="showBubble" class="fm-toolbar__bubble" @click.stop="handleBubble">
+        <ic-bubble :is-filled="menuIsOpen">
+        </ic-bubble>
       </div>
     </div>
   </div>
@@ -37,11 +46,12 @@
     import IcBell from "./icons/IcBell";
     import IcSettings from "./icons/IcSettings";
     import IcMore from "./icons/IcMore";
+    import IcBubble from "./icons/IcBubble";
     import FmAvatar from "./FmAvatar";
 
     export default {
         name: "FmToolbar",
-        components: {FmAvatar, IcMore, IcSettings, IcBell, IcBack, IcSearch},
+        components: {FmAvatar, IcBubble, IcMore, IcSettings, IcBell, IcBack, IcSearch},
         props: {
             showToolbar: {
                 type: Boolean,
@@ -53,7 +63,7 @@
             },
             showAvatar: {
                 type: Boolean,
-                default: true,
+                default: false,
             },
             showTitle: {
                 type: Boolean,
@@ -76,6 +86,10 @@
                 default: false,
             },
             showMore: {
+                type: Boolean,
+                default: false,
+            },
+            showBubble: {
                 type: Boolean,
                 default: false,
             },
@@ -122,6 +136,9 @@
             };
         },
         computed: {
+            menuIsOpen() {
+                return this.$store.getters[types.GET_SIDE_MENU_STATE];
+            },
             userName() {
                 return this.$store.getters[types.GET_USER].name;
             },
@@ -136,7 +153,7 @@
             },
             handleAvatar() {
                 this.$emit('avatar-clicked');
-                this.toggleMenu();
+                this.$router.push({name: 'settingsProfile'});
             },
             handleTitle() {
                 this.$emit('title-clicked');
@@ -159,6 +176,10 @@
                 return this.$ionic.actionSheetController
                     .create(this.menus[this.visibleMenu])
                     .then(a => a.present())
+            },
+            handleBubble() {
+                this.$emit('bubble-clicked');
+                this.toggleMenu();
             },
         },
     }

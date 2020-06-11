@@ -31,7 +31,6 @@
                     title: 'Paramètres',
                     type: 'settings',
                     showBack: true,
-                    showAvatar: false,
                 },
                 formData: {},
                 isSending: false,

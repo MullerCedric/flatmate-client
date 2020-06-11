@@ -109,7 +109,6 @@
             return {
                 toolbarProps: {
                     showBack: true,
-                    showAvatar: false,
                     title: 'Détails',
                     type: 'events',
                 },

@@ -51,6 +51,8 @@
 
   .fm-side-menu-discussions-message {
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &--unread {
       font-weight: $bold;

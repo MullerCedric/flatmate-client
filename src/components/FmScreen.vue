@@ -1,7 +1,7 @@
 <template>
   <div class="fm-screen" @click="handleScreen">
     <fm-toolbar v-if="toolbarProps" v-bind="toolbarProps" @back-clicked="handleBack" @avatar-clicked="handleAvatar"
-                @title-clicked="handleTitle" @search-clicked="handleSearch"
+                @title-clicked="handleTitle" @search-clicked="handleSearch" @bubble-clicked="handleBubble"
                 @bell-clicked="handleBell" @settings-clicked="handleSettings" @more-clicked="handleMore">
     </fm-toolbar>
     <fm-screen-content :class="['fm-screen__content', contentPos ? 'fm-screen__content--' + contentPos : '']">
@@ -62,6 +62,9 @@
             },
             handleMore() {
                 this.$emit('more-clicked');
+            },
+            handleBubble() {
+                this.$emit('bubble-clicked');
             },
             closeMenu() {
                 if (this.$store.state.sideMenuIsVisible) {
