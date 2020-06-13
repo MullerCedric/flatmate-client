@@ -39,10 +39,12 @@
                 const minutes = this.normalize_time(result.getMinutes());
                 return hours + 'h' + minutes; //TODO handle events for more than 1 day
             },
+            category() {
+                return this.event.categories[0] || null;
+            },
             category_color() {
-                let cat = this.event.category;
-                if (!cat) return '#4a4750';
-                return cat.color;
+                if (!this.category) return '#4a4750';
+                return this.category.color;
             },
         },
         methods: {

@@ -22,7 +22,6 @@
             return {
                 toolbarProps: {
                     title: 'Notes',
-                    type: 'notes',
                     showAvatar: true,
                     showSearch: true,
                     showMore: true,

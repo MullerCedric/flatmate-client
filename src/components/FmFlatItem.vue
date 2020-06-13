@@ -1,8 +1,8 @@
 <template>
-  <div class="fm-side-menu-flat">
-    <fm-avatar class="fm-side-menu-flat__avatar" :user-name="flat.label || 'discu' + flat.id">
+  <div class="fm-flat-item" @click="$emit('flat-clicked', flat.id)">
+    <fm-avatar class="fm-flat-item__avatar" :user-name="flat.label || 'discu' + flat.id">
     </fm-avatar>
-    <div class="fm-side-menu-flat__content">
+    <div class="fm-flat-item__content">
       {{ label }}
     </div>
   </div>
@@ -10,8 +10,9 @@
 
 <script>
     import FmAvatar from "./FmAvatar";
+
     export default {
-        name: "FmSideMenuFlat",
+        name: "FmFlatItem",
         components: {FmAvatar},
         props: {
             flat: {
@@ -30,9 +31,10 @@
 <style lang="scss" scoped>
   @import "../assets/scss/settings";
 
-  .fm-side-menu-flat {
+  .fm-flat-item {
     display: flex;
     align-items: center;
+    text-align: left;
 
     &__content {
       flex: 1;

@@ -35,6 +35,7 @@ export const GET_USER = 'User/GetCurrentUser';
 // Mutations
 export const RESET_USER = 'User/Reset';
 export const SET_USER = 'User/SetUser';
+export const SET_USER_PROP = 'User/SetUserProp';
 
 // Actions
 export const CONNECT = 'User/Connect';
@@ -75,6 +76,7 @@ export const SET_FLATS = 'Flat/SetFlatsWithUsers';
 
 // Actions
 export const FETCH_FLATS = 'Flat/FetchFlatsWithUsers';
+export const SWITCH_FLAT = 'Flat/SwitchFlat';
 
 
 /*

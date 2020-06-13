@@ -40,7 +40,6 @@
             return {
                 toolbarProps: {
                     title: 'Paramètres',
-                    type: 'settings',
                     showBack: true,
                 },
                 formData: {

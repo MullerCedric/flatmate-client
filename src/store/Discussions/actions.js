@@ -6,10 +6,11 @@ export default {
         window.console.log('Fetching discussions');
 
         const api_token = rootState.userStore.user.api_token;
+        const flat_id = rootState.userStore.user.viewingFlat;
         if (!api_token) return Promise.reject('You must be logged in!');
 
         return window.axios.get('/discussions', {
-            params: {api_token, with: 'participants'}
+            params: {api_token, flat_id, with: 'participants'}
         })
             .then(resp => commit(types.SET_DISCUSSIONS, resp.data))
             .catch(error => {

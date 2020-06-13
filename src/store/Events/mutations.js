@@ -1,8 +1,10 @@
 import * as types from '../types';
 
 export default {
-    [types.RESET_EVENTS]: (state, payload) => {
-        state = payload;
+    [types.RESET_EVENTS]: (state) => {
+        state.calendarEventsData = {};
+        state.categories = [];
+        state.confirmations = [];
     },
     [types.ORDER_CALENDAR]: (state, payload) => {
         let limitedEvents = {};

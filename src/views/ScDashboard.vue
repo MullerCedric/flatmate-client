@@ -50,7 +50,6 @@
             return {
                 toolbarProps: {
                     title: 'Dashboard',
-                    type: 'dash',
                     showAvatar: true,
                     showBell: true,
                     showSettings: true,

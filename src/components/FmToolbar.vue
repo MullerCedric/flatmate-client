@@ -114,6 +114,12 @@
                                 },
                             },
                             {
+                                text: 'Colocations',
+                                handler: () => {
+                                    this.$router.push({name: 'flats'});
+                                },
+                            },
+                            {
                                 text: 'Mentions légales',
                                 handler: () => {
                                     this.$router.push({name: 'legalNotice'});

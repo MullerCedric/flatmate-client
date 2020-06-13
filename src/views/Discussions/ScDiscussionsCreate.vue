@@ -38,7 +38,6 @@
                 toolbarProps: {
                     showBack: true,
                     title: 'Nouvelle discussion',
-                    type: 'discussions',
                     showMore: true,
                 },
                 formData: {

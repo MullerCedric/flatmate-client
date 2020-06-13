@@ -4,7 +4,8 @@
                 @title-clicked="handleTitle" @search-clicked="handleSearch" @bubble-clicked="handleBubble"
                 @bell-clicked="handleBell" @settings-clicked="handleSettings" @more-clicked="handleMore">
     </fm-toolbar>
-    <fm-screen-content :class="['fm-screen__content', contentPos ? 'fm-screen__content--' + contentPos : '']">
+    <fm-screen-content :class="['fm-screen__content', contentPos ? 'fm-screen__content--' + contentPos : '']"
+                       :is-full-frame="isFullFrame">
       <slot></slot>
     </fm-screen-content>
     <slot name="tab">
@@ -35,6 +36,10 @@
                         'center'
                     ].indexOf(val) !== -1;
                 }
+            },
+            isFullFrame: {
+                type: Boolean,
+                default: false,
             },
         },
         methods: {

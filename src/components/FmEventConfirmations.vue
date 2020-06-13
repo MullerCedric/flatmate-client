@@ -1,10 +1,10 @@
 <template>
   <div>
-    <fm-alert v-if="promptToShow === 'before'" @button-click="sendConfirm"
+    <fm-alert v-if="promptToShow === 'before'" @button-clicked="sendConfirm"
               :buttons="[{value: 'refuse', label: 'Non'}, {value: 'accept', label: 'Oui', type: 'primary'}]">
       Participerez-vous à cet événement ?
     </fm-alert>
-    <fm-alert v-if="promptToShow === 'during'" @button-click="sendConfirm"
+    <fm-alert v-if="promptToShow === 'during'" @button-clicked="sendConfirm"
               :buttons="[{value: 'refuse', label: 'Non'}, {value: 'accept', label: 'Oui', type: 'primary'}]">
       Avez-vous participé à cet événement ?
     </fm-alert>

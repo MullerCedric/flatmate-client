@@ -104,7 +104,6 @@
                 toolbarProps: {
                     showBack: true,
                     title: 'Ajouter un événement',
-                    type: 'events',
                     showMore: true,
                 },
 
@@ -163,7 +162,7 @@
                 return this.event.hasOwnProperty('flat_id') ? !!this.event.flat_id : true;
             },
             eventCat() {
-                return parseInt(this.event.category_id, 10) || ''
+                return this.event.categories ? this.event.categories[0].id || '' : '';
             },
             eventConfirm() {
                 return this.event.confirm || '';

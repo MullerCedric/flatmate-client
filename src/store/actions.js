@@ -2,7 +2,7 @@ import * as types from './types';
 import * as db from './fakeData';
 
 export default {
-    [types.DISCONNECT]: ({commit}) => {
+    [types.RESET_ALL]: ({commit}) => {
         return new Promise(resolve => {
             commit(types.RESET_APP);
             commit(types.RESET_USER);
@@ -10,23 +10,26 @@ export default {
             commit(types.RESET_FLATS);
             commit(types.RESET_NOTIFICATIONS);
             commit(types.RESET_EVENTS);
-            if (localStorage.getItem('userApiToken')) {
-                localStorage.removeItem('userApiToken');
-            }
-            if (localStorage.getItem('userViewingFlat')) {
-                localStorage.removeItem('userViewingFlat');
-            }
             resolve();
-        }).then(() => {
-            window.console.log('store ok');
-        }).catch(e => {
-            window.console.log('store pas ok');
-            window.console.log(e);
+        });
+    },
+
+    [types.DISCONNECT]: ({dispatch}) => {
+        return new Promise(resolve => {
+            dispatch(types.RESET_ALL).then(() => {
+                if (localStorage.getItem('userApiToken')) {
+                    localStorage.removeItem('userApiToken');
+                }
+                if (localStorage.getItem('userViewingFlat')) {
+                    localStorage.removeItem('userViewingFlat');
+                }
+                resolve();
+            });
         });
     },
     [types.HYDRATE_APP]({commit, rootState}) {
         window.console.log('Hydrating');
-        if (!rootState.userStore.user && !localStorage.getItem('userApiToken')) {
+        if (!rootState.userStore.user.hasOwnProperty('api_token') && !localStorage.getItem('userApiToken')) {
             window.console.error('You must be logged in!');
             return Promise.reject('You must be logged in!');
         }

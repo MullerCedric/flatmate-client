@@ -44,7 +44,6 @@
             return {
                 toolbarProps: {
                     title: 'Discussion',
-                    type: 'discussions',
                     showBack: true,
                     showSearch: true,
                     showMore: true,

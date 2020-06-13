@@ -1,6 +1,6 @@
 <template>
   <button :class="['fm-form-button', state ? 'fm-form-button--' + state : '']" :disabled="disabled"
-          @click="$emit('click-button')">
+          @click="$emit('button-clicked')">
     <slot></slot>
   </button>
 </template>

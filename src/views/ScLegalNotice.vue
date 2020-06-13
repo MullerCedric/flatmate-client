@@ -41,7 +41,6 @@
             return {
                 toolbarProps: {
                     title: 'Mentions légales',
-                    type: 'settings',
                     showBack: true,
                 }
             }

@@ -1,0 +1,215 @@
+<template>
+  <div :class="['fm-flat-list', {'fm-flat-list--centered': !flats || !flats.length}]">
+    <template v-if="!flatsAreLoaded">
+      <ic-loading>
+      </ic-loading>
+      Chargement...
+    </template>
+    <template v-if="flatsAreLoaded">
+      <il-house v-if="!flats || flats.length <= 4" class="fm-flat-list__illu"
+                :style="illuWidth">
+      </il-house>
+      <div v-if="!flats.length">
+        <p class="fm-flat-list__headline">
+          Vous ne faites partie d'aucune colocation
+        </p>
+        <div class="fm-flat-list__buttons-outer">
+          <div class="fm-flat-list__buttons">
+            <fm-button size="l" type="secondary" @button-clicked="$router.push({name: 'flatsSearch'})"
+                       class="fm-flat-list__button">
+              <ic-search class="fm-flat-list__buttons-icon fm-flat-list__buttons-icon--search">
+              </ic-search>
+              Rejoindre
+            </fm-button>
+            <fm-button size="l" type="secondary" @button-clicked="$router.push({name: 'flatsCreate'})"
+                       class="fm-flat-list__button">
+              <ic-plus class="fm-flat-list__buttons-icon fm-flat-list__buttons-icon--plus">
+              </ic-plus>
+              Créer
+            </fm-button>
+          </div>
+        </div>
+      </div>
+
+      <template v-if="flats.length">
+        <div class="fm-flat-list__flats">
+          <fm-flat-item v-for="flat in flats" :key="flat.id" :flat="flat" @flat-clicked="selectFlat"
+                        :class="['fm-flat-list__flat', { 'fm-flat-list__flat--current': flat.id === currFlatId }]">
+          </fm-flat-item>
+        </div>
+
+        <div class="fm-flat-list__floating-buttons">
+          <div class="fm-flat-list__floating-button fm-flat-list__floating-button--main"
+               @click="$router.push({name: 'flatsCreate'})">
+            <ic-plus>
+            </ic-plus>
+          </div>
+          <div class="fm-flat-list__floating-button"
+               @click="$router.push({name: 'flatsSearch'})">
+            <ic-search>
+            </ic-search>
+          </div>
+        </div>
+      </template>
+    </template>
+  </div>
+</template>
+
+<script>
+    import * as types from "../store/types";
+
+    import FmFlatItem from "./FmFlatItem";
+    import IlHouse from "./illustrations/IlHouse";
+    import FmButton from "./FmButton";
+    import IcPlus from "./icons/IcPlus";
+    import IcSearch from "./icons/IcSearch";
+    import IcLoading from "./icons/IcLoading";
+
+    export default {
+        name: "FmFlatList",
+        components: {IcLoading, IcSearch, IcPlus, FmButton, IlHouse, FmFlatItem},
+        data() {
+            return {
+                flatsAreLoaded: false,
+            };
+        },
+        computed: {
+            flats() {
+                return this.$store.getters[types.GET_FLATS];
+            },
+            currFlatId() {
+                return this.$store.getters[types.GET_FLAT].id;
+            },
+            illuWidth() {
+                if (!this.flats || !this.flats.length) return;
+                return 'width: 20%;';
+            },
+        },
+        mounted() {
+            this.$store.dispatch(types.FETCH_FLATS).then(() => this.flatsAreLoaded = true);
+        },
+        methods: {
+            selectFlat(flatId) {
+                window.console.log('Selecting flat', flatId);
+                this.flatsAreLoaded = false;
+                this.$store.dispatch(types.SWITCH_FLAT, flatId)
+                    .then(() => {
+                        this.$store.dispatch(types.FETCH_FLATS).then(() => this.flatsAreLoaded = true);
+                        if (this.$route.name !== 'flats') this.$router.push({name: 'dashboard'});
+                        this.$store.commit(types.CLOSE_SIDE_MENU);
+                    });
+            },
+        },
+    }
+</script>
+
+<style lang="scss" scoped>
+  @import "../assets/scss/settings";
+
+  .fm-flat-list {
+    text-align: center;
+
+    &--centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 0 1.5rem;
+    }
+
+    &__illu {
+      width: 55%;
+      min-width: 4rem;
+      max-width: 15rem;
+    }
+
+    &__headline {
+      margin: 1.25rem 0;
+      font-size: 1.25rem;
+    }
+
+    &__buttons {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      &-outer {
+        display: inline-block;
+      }
+
+      &-icon {
+        margin-right: .625rem;
+        flex-shrink: 0;
+
+        &--plus {
+          margin: 0 .25rem 0 -.25rem;
+        }
+      }
+    }
+
+    &__button {
+      margin-top: 1rem;
+    }
+
+    &__flats {
+      margin-top: 1.5rem;
+    }
+
+    &__flat {
+      position: relative;
+      padding: .5rem 1.5rem;
+      margin-bottom: .5rem;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: .4375rem;
+        border-radius: .4375rem 0 0 .4375rem;
+        background-color: transparent;
+      }
+
+      &--current {
+        background-color: $lightMain;
+
+        &:after {
+          background-color: $main;
+        }
+      }
+    }
+
+    &__floating-buttons {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__floating-button {
+      padding: .5rem;
+      line-height: 1;
+      background-color: $darkGrey;
+      border-radius: 100%;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: content-box;
+      height: 24px;
+      width: 24px;
+
+      &:nth-child(n+2) {
+        margin-top: .75rem;
+      }
+
+      &--main {
+        background-color: $black;
+      }
+    }
+  }
+</style>

@@ -14,4 +14,18 @@ export default {
                 window.console.error(error.response.data);
             });
     },
+    [types.SWITCH_FLAT]({dispatch, commit}, to) {
+        return new Promise(resolve => {
+            commit(types.RESET_DISCUSSIONS);
+            commit(types.RESET_FLATS);
+            commit(types.RESET_NOTIFICATIONS);
+            commit(types.RESET_EVENTS);
+            commit(types.SET_USER_PROP, {
+                val: to,
+                key: 'viewingFlat',
+            });
+            localStorage.setItem('userViewingFlat', to);
+            dispatch(types.HYDRATE_APP).then(() => resolve());
+        });
+    },
 };

@@ -66,6 +66,42 @@ export default [
         },
     },
     {
+        path: "/flats",
+        name: "flats",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Flats/ScFlats.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
+    {
+        path: "/flats/create",
+        name: "flatsCreate",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Flats/ScFlatsCreate.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
+    {
+        path: "/flats/search",
+        name: "flatsSearch",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Flats/ScFlatsSearch.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
+    {
+        path: "/flats/:id(\\d+)",
+        name: "flatsShow",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Flats/ScFlatsShow.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
+    {
         path: "/settings/profile",
         name: "settingsProfile",
         component: () =>

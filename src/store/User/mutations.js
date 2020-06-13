@@ -10,4 +10,7 @@ export default {
         localStorage.setItem('userApiToken', payload.api_token);
         state.user = {...payload, viewingFlat};
     },
+    [types.SET_USER_PROP]: (state, payload) => {
+        state.user[payload.key] = payload.val;
+    },
 }

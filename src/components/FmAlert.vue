@@ -1,20 +1,23 @@
 <template>
   <div :class="['fm-alert', 'fm-alert--' + type]">
-    <slot></slot>
+    <slot>
+    </slot>
     <div v-if="this.$slots.footer || (buttons && buttons.length)" class="fm-alert__footer">
-      <slot name="footer"></slot>
-      <component v-for="button in buttons" :key="button.value" :is="button.tag || 'div'"
-                 @click="$emit('button-click', button.value)"
-                 :class="['fm-alert__button', 'fm-alert__button--' + button.type]">
-        {{ button.label }}
-      </component>
+      <slot name="footer">
+      </slot>
+      <fm-button v-for="button in buttons" :key="button.value" v-bind="button" class="fm-alert__button"
+                 @button-clicked="handleButton">
+      </fm-button>
     </div>
   </div>
 </template>
 
 <script>
+    import FmButton from "./FmButton";
+
     export default {
         name: "FmAlert",
+        components: {FmButton},
         props: {
             type: {
                 type: String,
@@ -24,7 +27,11 @@
                 type: Array,
             },
         },
-        computed: {},
+        methods: {
+            handleButton(value) {
+                this.$emit('button-clicked', value);
+            },
+        },
     }
 </script>
 
@@ -58,10 +65,10 @@
       background-color: $lightSuccess;
     }
 
-    &--none .fm-alert__button {
-      &--primary {
-        background-color: $black;
-        color: $white;
+    &--info, &--warn, &--danger, &--success {
+      & .fm-alert__button--primary {
+        background-color: $white;
+        color: $black;
       }
     }
 
@@ -74,17 +81,8 @@
     }
 
     &__button {
-      padding: .25rem .5rem;
-      border-radius: .5rem;
-      font-weight: $medium;
-
       &:nth-child(n + 2) {
         margin-left: 1rem;
-      }
-
-      &--primary {
-        padding: .25rem .75rem;
-        background-color: $white;
       }
     }
   }

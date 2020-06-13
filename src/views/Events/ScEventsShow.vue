@@ -43,7 +43,7 @@
       <div class="sc-events-show__section-content">
         <ic-bookmark :inside-color="category_color" class="sc-events-show__section-icon">
         </ic-bookmark>
-        <div class="sc-events-show__section-val">{{ event.category_id ? event.category.label : 'Aucune' }}</div>
+        <div class="sc-events-show__section-val">{{ category ? category.label : 'Aucune' }}</div>
       </div>
     </section>
     <section v-if="event.interval">
@@ -110,7 +110,6 @@
                 toolbarProps: {
                     showBack: true,
                     title: 'Détails',
-                    type: 'events',
                 },
                 selectedDate: this.$route.query.selectedDate,
             }
@@ -146,10 +145,12 @@
             displayEventStartDate() {
                 return this.eventStartDate.format('L');
             },
+            category() {
+                return this.event.categories[0] || null;
+            },
             category_color() {
-                let cat = this.event.category;
-                if (!cat) return 'none';
-                return cat.color;
+                if (!this.category) return 'none';
+                return this.category.color;
             },
         },
         methods: {
