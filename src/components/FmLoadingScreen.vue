@@ -31,10 +31,11 @@
 
 <style lang="scss" scoped>
   @import "../assets/scss/settings";
+  @import "../assets/scss/tools";
 
   .fm-loading-screen {
     position: absolute;
-    z-index: 100;
+    z-index: z('loading-screen');
     top: 0;
     bottom: 0;
     left: 0;

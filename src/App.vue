@@ -5,7 +5,8 @@
       </router-view>
       <fm-loading-screen>
       </fm-loading-screen>
-      <fm-side-menu v-if="isConnected" :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
+      <fm-side-menu v-if="isConnected && hasFlat"
+                    :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
       </fm-side-menu>
     </ion-app>
   </div>
@@ -24,8 +25,14 @@
             sideMenuIsVisible() {
                 return this.$store.getters[types.GET_SIDE_MENU_STATE] || false;
             },
+            currUser() {
+                return this.$store.getters[types.GET_USER]
+            },
             isConnected() {
-                return !!this.$store.getters[types.GET_USER].api_token;
+                return !!this.currUser.api_token;
+            },
+            hasFlat() {
+                return !!this.currUser.viewingFlat;
             },
         }
     };
@@ -33,6 +40,7 @@
 
 <style lang="scss">
   @import "assets/scss/_settings.scss";
+  @import "assets/scss/_tools.scss";
   @import "assets/scss/_reset.scss";
   @import "assets/scss/_base.scss";
 
@@ -85,7 +93,7 @@
     top: 0;
     bottom: 0;
     width: 87%;
-    z-index: 11;
+    z-index: z('side-menu');
     transform: translateX(100%);
     transition: transform .3s ease-in-out;
 

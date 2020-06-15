@@ -1,6 +1,6 @@
 <template>
   <div class="fm-flat-item" @click="$emit('flat-clicked', flat.id)">
-    <fm-avatar class="fm-flat-item__avatar" :user-name="flat.label || 'discu' + flat.id">
+    <fm-avatar class="fm-flat-item__avatar" :user-name="label" :img-url="flat.avatar">
     </fm-avatar>
     <div class="fm-flat-item__content">
       {{ label }}

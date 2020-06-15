@@ -11,6 +11,8 @@ export default {
         state.user = {...payload, viewingFlat};
     },
     [types.SET_USER_PROP]: (state, payload) => {
-        state.user[payload.key] = payload.val;
+        let user = {...state.user};
+        user[payload.key] = payload.val;
+        state.user = {...user};
     },
 }

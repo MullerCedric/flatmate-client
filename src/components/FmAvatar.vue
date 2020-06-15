@@ -1,6 +1,10 @@
 <template>
-  <div :class="['fm-avatar', 'fm-avatar--' + size]">
-    <img :src="urlSrc" alt="avatar">
+  <div :class="['fm-avatar', 'fm-avatar--' + size]" @click="$emit('avatar-clicked')">
+    <div class="fm-avatar__box">
+      <div class="fm-avatar__box-center">
+        <img :src="urlSrc" alt="avatar" class="fm-avatar__img">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -13,7 +17,7 @@
                 default: 'm',
                 validator: (val) => {
                     return [
-                        'xs', 's', 'm', 'l', 'xl'
+                        'xs', 's', 'm', 'l', 'xl', 'wide'
                     ].indexOf(val) !== -1;
                 },
             },
@@ -24,10 +28,19 @@
                 type: String,
                 default: 'undefined',
             },
+            prependBase: {
+                type: Boolean,
+                default: true,
+            },
         },
         computed: {
             urlSrc() {
-                return this.imgUrl || 'https://api.adorable.io/avatars/160/' + encodeURI(this.userName) + '.png';
+                if (this.imgUrl && this.imgUrl.trim()) {
+                    return this.prependBase ? process.env.VUE_APP_STORAGE_BASE + '/' + this.imgUrl
+                        : this.imgUrl;
+                } else {
+                    return 'https://eu.ui-avatars.com/api/?name=' + encodeURI(this.userName) + '&size=240&background=F2A322&color=ffffff';
+                }
             }
         },
     }
@@ -38,44 +51,65 @@
 
   .fm-avatar {
     flex-shrink: 0;
-    width: 2.5rem;
-    height: 2.5rem;
     overflow: hidden;
-    text-align: center;
+    width: 2.5rem;
+    height: auto;
     padding: 0;
     margin: .5rem;
     border-radius: 100%;
     box-shadow: 0 0 .125rem $shadow;
     background-color: $grey;
 
-    & img {
-      max-width: 100%;
+    &__box {
+      height: 0;
+      padding-top: 100%;
+      position: relative;
+
+      &-center {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &__img {
+      width: 100%;
       margin: 0;
       padding: 0;
       border: none;
+      line-height: 1;
     }
 
     &--xs {
       width: 1rem;
-      height: 1rem;
       margin: .25rem;
     }
 
     &--s {
       width: 1.75rem;
-      height: 1.75rem;
       margin: .375rem;
     }
 
     &--l {
       width: 3.25rem;
-      height: 3.25rem;
       margin: .625rem;
     }
 
     &--xl {
       width: 5rem;
-      height: 5rem;
+      margin: .75rem;
+    }
+
+    &--wide {
+      width: 35%;
+      min-width: 4rem;
+      max-width: 15rem;
+      line-height: .7;
       margin: .75rem;
     }
   }

@@ -1,13 +1,17 @@
 <template>
-  <div :class="['fm-alert', 'fm-alert--' + type]">
-    <slot>
-    </slot>
-    <div v-if="this.$slots.footer || (buttons && buttons.length)" class="fm-alert__footer">
-      <slot name="footer">
+  <div :class="['fm-alert__outer', { 'fm-alert__outer--floating': isFloating}]">
+    <div :class="['fm-alert', 'fm-alert--' + type]">
+      <slot>
       </slot>
-      <fm-button v-for="button in buttons" :key="button.value" v-bind="button" class="fm-alert__button"
-                 @button-clicked="handleButton">
-      </fm-button>
+      <div v-if="this.$slots.footer || (buttons && buttons.length)" class="fm-alert__footer">
+        <slot name="footer">
+        </slot>
+        <div class="fm-alert__footer-buttons">
+          <fm-button v-for="button in buttons" :key="button.value" v-bind="button" class="fm-alert__button"
+                     @button-clicked="handleButton">
+          </fm-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,10 +26,19 @@
             type: {
                 type: String,
                 default: 'none',
+                validator: (val) => {
+                    return [
+                        'none', 'info', 'warn', 'danger', 'success',
+                    ].indexOf(val) !== -1;
+                },
             },
             buttons: {
                 type: Array,
             },
+            isFloating: {
+                type: Boolean,
+                default: false,
+            }
         },
         methods: {
             handleButton(value) {
@@ -37,6 +50,7 @@
 
 <style lang="scss" scoped>
   @import "../assets/scss/settings";
+  @import "../assets/scss/tools";
 
   .fm-alert {
     margin: .5rem auto .75rem;
@@ -44,6 +58,31 @@
     border-radius: .75rem;
     background-color: $white;
     color: $alertBlack;
+
+    &__outer {
+      &--floating {
+        position: absolute;
+        z-index: z('confirm');
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+        background-color: $shadow;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .fm-alert {
+          background-color: $white;
+          padding: 1.125rem 1.25rem 1rem;
+          border-radius: 1rem;
+          width: 80%;
+          min-width: 13rem;
+          max-width: 18rem;
+        }
+      }
+    }
 
     &--info {
       border-color: $info;
@@ -73,11 +112,14 @@
     }
 
     &__footer {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
       padding: .75rem 0 0;
-      margin-bottom: -.25rem;
+
+      &-buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: -.25rem;
+      }
     }
 
     &__button {

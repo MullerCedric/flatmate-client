@@ -57,7 +57,9 @@
         <input v-if="inputType === 'checkbox'" :type="inputType" :id="el.id" :value="el.id" v-model="arrValue"
                @change="$emit('change-value', arrValue)" :disabled="isDisabled"/>
         <label :for="el.id" class="fm-fi__inputs-label">
-          <fm-avatar v-if="el.hasOwnProperty('avatar')" class="fm-fi__inputs-avatar" size="s">
+          <fm-avatar v-if="el.hasOwnProperty('avatar') && el.hasOwnProperty('userName')"
+                     :user-name="el.userName" :img-url="el.avatar"
+                     class="fm-fi__inputs-avatar" size="s">
           </fm-avatar>
           {{ el.label }}
           <div v-if="inputType === 'checkbox'" class="fm-fi__checkbox-box"

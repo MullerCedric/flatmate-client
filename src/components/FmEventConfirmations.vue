@@ -15,7 +15,8 @@
       <template v-if="confirmations.length >= 1">
         <div v-for="confirmation in confirmations" :key="confirmation.pivot.id"
              :class="['fm-event-confirmations__entry']">
-          <fm-avatar :user-name="confirmation.name" size="xs" class="fm-event-confirmations__avatar">
+          <fm-avatar :user-name="confirmation.name" :img-url="confirmation.avatar" size="xs"
+                     class="fm-event-confirmations__avatar">
           </fm-avatar>
           <template v-if="confirmation.id === userId">
             <span class="bold">Vous</span>

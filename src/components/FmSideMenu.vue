@@ -10,8 +10,8 @@
       </div>
       <div class="fm-side-menu__header-right">
         <div v-if="view === 0" @click="view = 1">
-          <ic-open>
-          </ic-open>
+          <ic-key>
+          </ic-key>
         </div>
       </div>
     </header>
@@ -24,13 +24,13 @@
 
 <script>
     import IcBack from "./icons/IcBack";
-    import IcOpen from "./icons/IcOpen";
+    import IcKey from "./icons/IcKey";
     import FmSideMenuDiscussions from "./FmSideMenuDiscussions";
     import FmSideMenuFlats from "./FmSideMenuFlats";
 
     export default {
         name: "FmSideMenu",
-        components: {FmSideMenuFlats, FmSideMenuDiscussions, IcOpen, IcBack},
+        components: {IcKey, FmSideMenuFlats, FmSideMenuDiscussions, IcBack},
         data() {
             return {
                 views: [

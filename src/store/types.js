@@ -39,6 +39,8 @@ export const SET_USER_PROP = 'User/SetUserProp';
 
 // Actions
 export const CONNECT = 'User/Connect';
+export const UPLOAD_AVATAR = 'User/UploadAvatar';
+export const PATCH_USER_PROP = 'User/PatchUserProp';
 
 /*
  * Discussions & messages

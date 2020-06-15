@@ -30,12 +30,12 @@
 </template>
 
 <script>
-    //import * as types from "../store/types";
+    //import * as types from "../../store/types";
 
-    import FmScreen from "../components/FmScreen";
+    import FmScreen from "../../components/FmScreen";
 
     export default {
-        name: "ScLegalNotice",
+        name: "ScSettingsLegalNotice",
         components: {FmScreen},
         data() {
             return {

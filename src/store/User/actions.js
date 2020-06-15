@@ -29,5 +29,45 @@ export default {
                 window.console.error(error);
                 window.console.error(error.response.data);
             })
-    }
+    [types.UPLOAD_AVATAR]({commit, state}, payload) {
+        const api_token = state.user.api_token;
+
+        return window.axios.post('/user/avatar', payload, {
+            params: {api_token},
+            headers: {'content-type': 'multipart/form-data'},
+        })
+            .then((resp) => {
+                commit(types.SET_USER_PROP, {
+                    val: resp.data,
+                    key: 'avatar',
+                });
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            });
+    },
+    [types.PATCH_USER_PROP]({commit, state}, payload) {
+        const api_token = state.user.api_token;
+
+        return window.axios.patch('/user', {profile: payload}, {
+            params: {api_token},
+        })
+            .then(() => {
+                for (const key in payload) {
+                    if (payload.hasOwnProperty(key)) {
+                        if (key !== 'old_password' && key !== 'password' && key !== 'password_confirmation') {
+                            commit(types.SET_USER_PROP, {
+                                val: payload[key],
+                                key,
+                            });
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            });
+    },
 };

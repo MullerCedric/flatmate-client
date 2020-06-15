@@ -6,7 +6,8 @@
         </ic-back>
       </div>
       <div @click.stop="handleAvatar">
-        <fm-avatar v-if="showAvatar" class="fm-toolbar__avatar" :user-name="userName">
+        <fm-avatar v-if="showAvatar" :user-name="user.name" :img-url="user.avatar"
+                   class="fm-toolbar__avatar">
         </fm-avatar>
       </div>
       <h1 v-if="showTitle" class="fm-toolbar__title" @click.stop="handleTitle">
@@ -97,56 +98,14 @@
         data() {
             return {
                 visibleMenu: 'settings',
-                menus: {
-                    settings: {
-                        header: 'Paramètres',
-                        buttons: [
-                            {
-                                text: 'Profil',
-                                handler: () => {
-                                    this.$router.push({name: 'settingsProfile'});
-                                },
-                            },
-                            {
-                                text: 'Notifications',
-                                handler: () => {
-                                    this.$router.push({name: 'settingsNotifications'});
-                                },
-                            },
-                            {
-                                text: 'Colocations',
-                                handler: () => {
-                                    this.$router.push({name: 'flats'});
-                                },
-                            },
-                            {
-                                text: 'Mentions légales',
-                                handler: () => {
-                                    this.$router.push({name: 'legalNotice'});
-                                },
-                            },
-                            {
-                                text: 'Déconnexion',
-                                role: 'destructive',
-                                handler: () => {
-                                    this.$store.dispatch(types.DISCONNECT).then(() => {
-                                        this.$router.push({name: 'log-in'});
-                                    }).catch(e => {
-                                        window.console.log(e);
-                                    });
-                                },
-                            },
-                        ],
-                    },
-                }
             };
         },
         computed: {
             menuIsOpen() {
                 return this.$store.getters[types.GET_SIDE_MENU_STATE];
             },
-            userName() {
-                return this.$store.getters[types.GET_USER].name;
+            user() {
+                return this.$store.getters[types.GET_USER];
             },
         },
         methods: {
@@ -171,9 +130,8 @@
                 this.$emit('bell-clicked');
             },
             handleSettings() {
-                this.visibleMenu = 'settings';
-                this.presentActionSheet();
                 this.$emit('settings-clicked');
+                this.$router.push({name: 'settings'});
             },
             handleMore() {
                 this.$emit('more-clicked');

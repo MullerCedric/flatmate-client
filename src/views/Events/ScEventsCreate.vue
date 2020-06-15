@@ -131,6 +131,7 @@
                 return this.$store.getters[types.GET_FLAT_USERS].length ? this.$store.getters[types.GET_FLAT_USERS].map((el) => {
                     return {
                         'avatar': el.avatar,
+                        'userName': el.name,
                         'color': el.color,
                         'label': el.id === this.currUser.id ? el.name + ' (moi)' : el.name,
                         'checked': (el.id === this.currUser.id || (this.event.participants && this.event.participants.find((user) => user.id === el.id))),

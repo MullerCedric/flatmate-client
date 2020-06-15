@@ -16,11 +16,11 @@
 </template>
 
 <script>
-    // import * as types from "../store/types";
+    // import * as types from "../../store/types";
 
-    import FmScreen from "../components/FmScreen";
-    import FmFormGroup from "../components/form/FmFormGroup";
-    import FmFormInput from "../components/form/FmFormInput";
+    import FmScreen from "../../components/FmScreen";
+    import FmFormGroup from "../../components/form/FmFormGroup";
+    import FmFormInput from "../../components/form/FmFormInput";
 
     export default {
         name: "ScSettingsNotifications",

@@ -23,3 +23,13 @@ $lightDanger: rgba(250, 200, 200, 1);
 $success:  rgba(110, 225, 140, 1);
 $lightSuccess:  rgba(190, 250, 200, 1);
 $alertBlack: rgba(0, 0, 0, .75);
+
+// Z-indexes, from the highest to the lowest
+$z-indexes: (
+        "loading-screen",
+        "confirm",
+        "overlay",
+        "side-menu",
+        "tab-bar",
+        "main-content"
+);

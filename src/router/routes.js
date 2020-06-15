@@ -23,6 +23,15 @@ export default [
 
     {
         path: "/",
+        name: "dashboard",
+        component: ScDashboard,
+        meta: {
+            isForAuth: true,
+        },
+    },
+
+    {
+        path: "/events",
         name: "eventsCalendar",
         component: ScEventsCalendar,
         meta: {
@@ -57,14 +66,6 @@ export default [
         },
     },
 
-    {
-        path: "/dashboard",
-        name: "dashboard",
-        component: ScDashboard,
-        meta: {
-            isForAuth: true,
-        },
-    },
     {
         path: "/flats",
         name: "flats",
@@ -101,11 +102,21 @@ export default [
             isForAuth: true,
         },
     },
+
+    {
+        path: "/settings",
+        name: "settings",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettings.vue"),
+        meta: {
+            isForAuth: true,
+        },
+    },
     {
         path: "/settings/profile",
         name: "settingsProfile",
         component: () =>
-            import(/* webpackChunkName: "register" */ "../views/ScSettingsProfile.vue"),
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsProfile.vue"),
         meta: {
             isForAuth: true,
         },
@@ -114,16 +125,16 @@ export default [
         path: "/settings/notifications",
         name: "settingsNotifications",
         component: () =>
-            import(/* webpackChunkName: "register" */ "../views/ScSettingsNotifications.vue"),
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsNotifications.vue"),
         meta: {
             isForAuth: true,
         },
     },
     {
-        path: "/legal-notice",
-        name: "legalNotice",
+        path: "/settings/legal-notice",
+        name: "settingsLegalNotice",
         component: () =>
-            import(/* webpackChunkName: "register" */ "../views/ScLegalNotice.vue"),
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsLegalNotice.vue"),
         meta: {
             isForAuth: true,
         },
