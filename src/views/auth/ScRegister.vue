@@ -1,5 +1,7 @@
 <template>
-  <fm-screen content-pos="center">
+  <fm-screen content-pos="center" class="sc-register">
+    <fm-logo animation-state="load" :showSlogan="true" class="sc-register__logo">
+    </fm-logo>
     <form @submit.prevent>
       <fm-form-input label="Nom" fi-name="name" :disabled="isSending" input-type="text"
                      placeholder="John" @change-value="formData.name = $event" :required="true">
@@ -10,14 +12,15 @@
       <fm-form-input label="Mot de passe" fi-name="password" :disabled="isSending" input-type="password"
                      placeholder="••••••••" @change-value="formData.password = $event" :required="true">
       </fm-form-input>
-      <fm-form-input label="Confirmer le mot de passe" fi-name="confirm-password" :disabled="isSending" input-type="password"
-                     placeholder="••••••••" @change-value="formData.confirmPassword = $event" :required="true">
+      <fm-form-input label="Confirmer le mot de passe" fi-name="confirm-password"
+                     :disabled="isSending" input-type="password" :required="true"
+                     placeholder="••••••••" @change-value="formData.password_confirmation = $event">
       </fm-form-input>
-      <fm-form-button>
+      <fm-form-button @button-clicked="sendForm" :disabled="isSending">
         Inscription
       </fm-form-button>
 
-      <router-link :to="{name: 'log-in'}" tag="div" class="sc-login__link">
+      <router-link :to="{name: 'log-in'}" tag="div" class="sc-register__link">
         Se connecter
       </router-link>
     </form>
@@ -25,36 +28,49 @@
 </template>
 
 <script>
-    //import * as types from "../../store/types";
+    import * as types from "../../store/types";
 
     import FmScreen from "../../components/FmScreen";
     import FmFormInput from "../../components/form/FmFormInput";
     import FmFormButton from "../../components/form/FmFormButton";
+    import FmLogo from "../../components/FmLogo";
 
     export default {
         name: "ScRegister",
-        components: {FmFormButton, FmFormInput, FmScreen},
+        components: {FmLogo, FmFormButton, FmFormInput, FmScreen},
         data() {
             return {
                 formData: {
                     name: '',
                     email: '',
                     password: '',
-                    confirmPassword: '',
+                    password_confirmation: '',
                 },
                 isSending: false,
             }
         },
         computed: {},
-        mounted() {
-            // this.$store.dispatch(types.HYDRATE_APP);
-        },
-        methods: {}
+        methods: {
+            sendForm() {
+                if (this.isSending) return;
+                this.isSending = true;
+                this.$store.dispatch(types.REGISTER, this.formData)
+                    .then(() => {
+                        this.isSending = false;
+                        this.$router.push({name: 'settingsUploadAvatar'});
+                    });
+            },
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-  .sc-login {
+  .sc-register {
+    &__logo {
+      max-width: 15rem;
+      align-self: center;
+    }
+
     &__link {
       text-align: center;
       margin-top: .75rem;

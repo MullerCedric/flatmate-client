@@ -20,4 +20,7 @@ export default {
     [types.HIDE_LOADING_SCREEN]: (state) => {
         state.showLoadingScreen = false;
     },
+    [types.PUT_REDIRECT_TO]: (state, payload) => {
+        state.redirectTo = payload;
+    },
 };

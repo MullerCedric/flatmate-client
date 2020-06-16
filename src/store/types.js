@@ -16,11 +16,13 @@ export const GET_LOADING_SCREEN_STATE = 'App/GetLoadingScreenState';
 // Mutations
 export const DISCONNECT = 'App/DisconnectByResettingStoreAndLocalStorage';
 export const RESET_APP = 'App/Reset';
+export const RESET_ALL = 'App/ResetAll';
 export const TOGGLE_SIDE_MENU = 'App/ToggleSideMenu';
 export const CLOSE_SIDE_MENU = 'App/CloseSideMenu';
 export const OPEN_SIDE_MENU = 'App/OpenSideMenu';
 export const SHOW_LOADING_SCREEN = 'App/ShowLoadingScreen';
 export const HIDE_LOADING_SCREEN = 'App/HideLoadingScreen';
+export const PUT_REDIRECT_TO = 'App/PutRedirectTo';
 
 // Actions
 export const HYDRATE_APP = 'App/HydrateAppData';
@@ -39,6 +41,7 @@ export const SET_USER_PROP = 'User/SetUserProp';
 
 // Actions
 export const CONNECT = 'User/Connect';
+export const REGISTER = 'User/Register';
 export const UPLOAD_AVATAR = 'User/UploadAvatar';
 export const PATCH_USER_PROP = 'User/PatchUserProp';
 
@@ -69,6 +72,7 @@ export const SAVE_MESSAGE = 'Discussions/SaveMessageForDiscussion';
 // Getters
 export const GET_FLATS = 'Flat/GetFlatsWithUsers';
 export const GET_FLAT = 'Flat/GetFlatWithUsers';
+export const GET_FLAT_FROM_ID = 'Flat/GetFlatFromId';
 export const GET_FLAT_USERS = 'Flat/GetFlatUsers';
 
 // Mutations
@@ -79,6 +83,8 @@ export const SET_FLATS = 'Flat/SetFlatsWithUsers';
 // Actions
 export const FETCH_FLATS = 'Flat/FetchFlatsWithUsers';
 export const SWITCH_FLAT = 'Flat/SwitchFlat';
+export const SAVE_FLAT = 'Flat/SaveFlat';
+export const JOIN_FLAT = 'Flat/JoinFlat';
 
 
 /*

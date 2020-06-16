@@ -28,7 +28,6 @@ export default {
         });
     },
     [types.HYDRATE_APP]({commit, rootState}) {
-        window.console.log('Hydrating');
         if (!rootState.userStore.user.hasOwnProperty('api_token') && !localStorage.getItem('userApiToken')) {
             window.console.error('You must be logged in!');
             return Promise.reject('You must be logged in!');
@@ -36,17 +35,20 @@ export default {
         if (rootState.flatStore.flat.hasOwnProperty('id')) return Promise.resolve();
 
         const api_token = rootState.userStore.user.api_token || localStorage.getItem('userApiToken');
-        const flatId = rootState.userStore.user.viewingFlat || localStorage.getItem('userViewingFlat');
+        const flatId = localStorage.getItem('userViewingFlat') || rootState.userStore.user.viewingFlat;
 
         // Fetching current flat info with members
-        const fetchingFlat = window.axios.get('/flats/' + flatId, {
-            params: {api_token, with: 'participants,creator'}
-        });
-        fetchingFlat.then(resp => commit(types.SET_FLAT, resp.data))
-            .catch(error => {
-                window.console.error(error);
-                window.console.error(error.response.data);
+        let fetchingFlat = null;
+        if (flatId && flatId !== "undefined") {
+            fetchingFlat = window.axios.get('/flats/' + flatId, {
+                params: {api_token, with: 'participants,creator'}
             });
+            fetchingFlat.then(resp => commit(types.SET_FLAT, resp.data))
+                .catch(error => {
+                    window.console.error(error);
+                    window.console.error(error.response.data);
+                });
+        }
 
         // Fetching user notifications (all flats)
         const fetchingNotifications = new Promise(resolve => {
@@ -65,9 +67,10 @@ export default {
         // Fetching user new messages for the current flat
         // TODO
 
-        return Promise.all([
-            fetchingFlat,
-            fetchingNotifications,
-        ]);
+        const allPromises = [];
+        if (flatId && flatId !== "undefined") allPromises.push(fetchingFlat);
+        allPromises.push(fetchingNotifications);
+
+        return Promise.all(allPromises);
     },
 };

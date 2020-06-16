@@ -25,7 +25,7 @@
              :autofocus="autofocus" :autocomplete="autocomplete" :disabled="isDisabled"
              class="fm-fi__input-text">
       <div class="fm-fi__reset" @click="handleReset">
-        <ic-plus v-if="value" class="fm-fi__reset-icon">
+        <ic-plus v-if="value && !isDisabled" class="fm-fi__reset-icon">
         </ic-plus>
       </div>
     </div>

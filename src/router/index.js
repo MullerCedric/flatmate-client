@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from './routes';
+
 import * as types from "../store/types";
 import store from "../store/store";
 
@@ -14,47 +15,55 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     const apiToken = store.state.userStore.user.api_token || localStorage.getItem('userApiToken');
-    window.console.info('Navigating to ' + to.name + ' from ' + from.name + '...');
 
-    if (to.meta.isForAuth) {
-        window.console.info('Auth IS required');
+    if (to.meta.middleware.indexOf('isAuth') !== -1) {
         if (!apiToken) {
-            store.commit(types.HIDE_LOADING_SCREEN);
-            next({name: 'log-in'});
+            store.commit(types.PUT_REDIRECT_TO, to.name);
+            next({name: 'register'});
             return;
         }
         store.dispatch(types.CONNECT).then(() => {
             if (!store.state.userStore.user.api_token) {
-                window.console.warn('Route réservée aux membres');
-                store.commit(types.HIDE_LOADING_SCREEN);
-                next({name: 'log-in'});
+                store.commit(types.PUT_REDIRECT_TO, to.name);
+                next({name: 'register'});
             } else {
                 store.dispatch(types.HYDRATE_APP).then(() => {
-                    window.console.info('Navigation done');
-                    store.commit(types.HIDE_LOADING_SCREEN);
-                    next();
+                    if (to.meta.middleware.indexOf('hasFlat') !== -1) {
+                        if (store.state.flatStore.flat.hasOwnProperty('id')) {
+                            return next();
+                        }
+                        store.commit(types.PUT_REDIRECT_TO, to.name);
+                        return next({
+                            name: 'flats'
+                        });
+                    }
+                    return next();
                 }).catch(error => {
                     window.console.error(error);
                     window.console.error(error.response.data);
+                    store.commit(types.PUT_REDIRECT_TO, to.name);
+                    return next(false);
                 });
             }
         }).catch(error => {
             window.console.error(error);
             window.console.error(error.response.data);
+            store.commit(types.PUT_REDIRECT_TO, to.name);
+            return next(false);
         });
     } else {
-        window.console.info('Auth IS NOT required');
+        if (to.meta.middleware.indexOf('isGuest') === -1) {
+            return next();
+        }
         if (apiToken) {
-            window.console.warn('Route réservée aux invités');
-            store.commit(types.HIDE_LOADING_SCREEN);
-            next({name: 'eventsCalendar'});
+            store.commit(types.PUT_REDIRECT_TO, to.name);
+            return next({name: 'dashboard'});
         } else {
-            window.console.info('Navigation done');
-            store.commit(types.HIDE_LOADING_SCREEN);
-            next();
+            return next();
         }
     }
 });
+
 router.afterEach(() => {
     store.commit(types.HIDE_LOADING_SCREEN);
 });

@@ -79,7 +79,7 @@
         <div class="fm-ic-btn" @click="sendForm">
           <component :is="isSending ? 'ic-loading' : 'ic-checkmark'" width="20" height="20" class="fm-ic-btn__icon">
           </component>
-          Ajouter l'événement
+          {{ $route.params.id ? 'Modifier l\'événement' : 'Ajouter l\'événement'}}
         </div>
       </fm-bottom-bar>
     </template>

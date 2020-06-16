@@ -17,7 +17,7 @@
       </fm-avatar>
       <div v-if="isInfoShowed" class="fm-message__info">
         {{ msgTime(message.created_at) }}
-        <ic-msg-status class="fm-message__status" v-if="isFromUser" :user-id="userId"
+        <ic-msg-status v-if="isFromUser" class="fm-message__status" :user-id="userId"
                        :nb-participants="nbParticipants" :read-by="readBy">
         </ic-msg-status>
       </div>

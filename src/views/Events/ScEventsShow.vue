@@ -30,6 +30,7 @@
         </div>
       </div>
       <fm-event-confirmations :event-id="event.id" :event-date="eventDate.toISOString()"
+                              :event-participants="event.participants"
                               :event-confirm-type="event.confirm" :user-id="currUser.id">
       </fm-event-confirmations>
       <div class="sc-events-show__side-note">

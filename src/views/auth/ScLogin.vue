@@ -1,5 +1,7 @@
 <template>
   <fm-screen content-pos="center">
+    <fm-logo animation-state="done" :showSlogan="false" class="sc-login__logo">
+    </fm-logo>
     <form @submit.prevent>
       <fm-form-input label="E-mail" fi-name="email" :disabled="isSending" input-type="email"
                      placeholder="john@gmail.com" @change-value="formData.email = $event" :required="true">
@@ -7,7 +9,7 @@
       <fm-form-input label="Mot de passe" fi-name="password" :disabled="isSending" input-type="password"
                      placeholder="••••••••" @change-value="formData.password = $event" :required="true">
       </fm-form-input>
-      <fm-form-button @click-button="sendForm" :disabled="isSending">
+      <fm-form-button @button-clicked="sendForm" :disabled="isSending">
         Connexion
       </fm-form-button>
 
@@ -24,10 +26,11 @@
     import FmScreen from "../../components/FmScreen";
     import FmFormInput from "../../components/form/FmFormInput";
     import FmFormButton from "../../components/form/FmFormButton";
+    import FmLogo from "../../components/FmLogo";
 
     export default {
         name: "ScLogin",
-        components: {FmFormButton, FmFormInput, FmScreen},
+        components: {FmLogo, FmFormButton, FmFormInput, FmScreen},
         data() {
             return {
                 formData: {
@@ -44,7 +47,7 @@
                 this.$store.dispatch(types.CONNECT, this.formData)
                     .then(() => {
                         this.isSending = false;
-                        this.$router.push({name: 'eventsCalendar'});
+                        this.$router.push({name: 'dashboard'});
                     });
             },
         },
@@ -53,6 +56,11 @@
 
 <style lang="scss" scoped>
   .sc-login {
+    &__logo {
+      max-width: 15rem;
+      align-self: center;
+    }
+
     &__link {
       text-align: center;
       margin-top: .75rem;

@@ -3,7 +3,6 @@ import * as types from '../types';
 export default {
     [types.FETCH_DISCUSSIONS]({commit, state, rootState}) {
         if (state.discussions.length) return Promise.resolve();
-        window.console.log('Fetching discussions');
 
         const api_token = rootState.userStore.user.api_token;
         const flat_id = rootState.userStore.user.viewingFlat;
@@ -62,7 +61,6 @@ export default {
             })
                 .then((resp) => {
                     commit(types.SET_NEW_DISCUSSION, resp.data);
-                    window.console.log('response', resp.data);
                     resolve(resp);
                 })
                 .catch(error => {
@@ -71,6 +69,5 @@ export default {
                     reject();
                 })
         });
-
     },
 };

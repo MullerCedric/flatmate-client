@@ -1,7 +1,7 @@
 <template>
   <div :class="['fm-side-menu-discussions-message', {'fm-side-menu-discussions-message--unread': isUnread}]">
     <ic-msg-status
-            v-if="message.from_id === userId || isUnread"
+            v-if="(message.from_id === userId || isUnread) && message.type === 'message'"
             :user-id="userId"
             :nb-participants="nbParticipants"
             :read-by="message.read_by">

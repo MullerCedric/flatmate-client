@@ -7,7 +7,7 @@
     </template>
     <template v-if="flatsAreLoaded">
       <il-house v-if="!flats || flats.length <= 4" class="fm-flat-list__illu"
-                :style="illuWidth">
+                :style="illuWidth" :is-light="hasFlats">
       </il-house>
       <div v-if="!flats.length">
         <p class="fm-flat-list__headline">
@@ -33,8 +33,9 @@
 
       <template v-if="flats.length">
         <div class="fm-flat-list__flats">
-          <fm-flat-item v-for="flat in flats" :key="flat.id" :flat="flat" @flat-clicked="selectFlat"
-                        :class="['fm-flat-list__flat', { 'fm-flat-list__flat--current': flat.id === currFlatId }]">
+          <fm-flat-item v-for="flat in flats" :key="flat.id" :flat="flat"
+                        @switch-clicked="selectFlat" @flat-clicked="showFlat"
+                        :is-selected="flat.id === currFlatId" :show-switch="flats.length > 1">
           </fm-flat-item>
         </div>
 
@@ -77,26 +78,37 @@
             flats() {
                 return this.$store.getters[types.GET_FLATS];
             },
+            currFlat() {
+                return this.$store.getters[types.GET_FLAT];
+            },
             currFlatId() {
-                return this.$store.getters[types.GET_FLAT].id;
+                return this.currFlat.id;
             },
             illuWidth() {
                 if (!this.flats || !this.flats.length) return;
                 return 'width: 20%;';
+            },
+            hasFlats() {
+                return !!(this.flats.length >= 1 && this.currFlatId);
             },
         },
         mounted() {
             this.$store.dispatch(types.FETCH_FLATS).then(() => this.flatsAreLoaded = true);
         },
         methods: {
+            showFlat(flatId) {
+                if (this.$route.name === 'flatsShow' && this.$route.params.id && this.$route.params.id === flatId) {
+                    return;
+                }
+                this.$store.commit(types.CLOSE_SIDE_MENU);
+                this.$router.push({name: 'flatsShow', params: {id: flatId}});
+            },
             selectFlat(flatId) {
-                window.console.log('Selecting flat', flatId);
+                if (flatId === this.currFlatId) return;
                 this.flatsAreLoaded = false;
                 this.$store.dispatch(types.SWITCH_FLAT, flatId)
                     .then(() => {
                         this.$store.dispatch(types.FETCH_FLATS).then(() => this.flatsAreLoaded = true);
-                        if (this.$route.name !== 'flats') this.$router.push({name: 'dashboard'});
-                        this.$store.commit(types.CLOSE_SIDE_MENU);
                     });
             },
         },
@@ -154,32 +166,6 @@
 
     &__flats {
       margin-top: 1.5rem;
-    }
-
-    &__flat {
-      position: relative;
-      padding: .5rem 1.5rem;
-      margin-bottom: .5rem;
-
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: .4375rem;
-        border-radius: .4375rem 0 0 .4375rem;
-        background-color: transparent;
-      }
-
-      &--current {
-        background-color: $lightMain;
-
-        &:after {
-          background-color: $main;
-        }
-      }
     }
 
     &__floating-buttons {

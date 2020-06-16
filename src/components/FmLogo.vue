@@ -1,11 +1,12 @@
 <template>
   <svg xmlns="http://www.w3.org/2000/svg"
-       viewBox="0 0 512 268"
+       :viewBox="viewBox"
        :aria-labelledby="iconName"
        role="img">
     <title :id="iconName">{{ iconName }}</title>
-    <g :id="`ic-${iconName}`" class="fm-logo" stroke="none">
-      <g id="ehxvgwsxk59r2_to" transform="translate(256,218.707979)">
+    <g :id="`ic-${iconName}`" stroke="none"
+       :class="['fm-logo', {'loaded-leave-active': animationState === 'load'}, {'animation-done': animationState === 'done'}]">
+      <g v-if="showSlogan" id="ehxvgwsxk59r2_to" transform="translate(256,218.707979)">
         <g id="ehxvgwsxk59r2" transform="translate(-256.010006,-186.000710)" opacity="0">
           <path id="ehxvgwsxk59r3"
                 d="M50.610000,171.060000L50.610000,178.360000L48.550000,178.360000L48.550000,159.270000L55.340000,159.270000C57.108722,159.148607,58.859228,159.690516,60.250000,160.790000C62.521228,163.264512,62.521228,167.065488,60.250000,169.540000C58.859228,170.639484,57.108722,171.181393,55.340000,171.060000ZM50.610000,169.060000L55.080000,169.060000C55.946435,169.092560,56.812100,168.977589,57.640000,168.720000C58.200132,168.550264,58.702119,168.228300,59.090000,167.790000C59.403466,167.421208,59.623046,166.982048,59.730000,166.510000C59.839084,166.061582,59.892818,165.601487,59.890000,165.140000C59.891734,164.678573,59.838016,164.218609,59.730000,163.770000C59.621541,163.301489,59.402040,162.865918,59.090000,162.500000C58.702119,162.061700,58.200132,161.739736,57.640000,161.570000C56.812100,161.312411,55.946435,161.197440,55.080000,161.230000L50.610000,161.230000Z"
@@ -205,7 +206,20 @@
                 type: String,
                 default: 'logo'
             },
-        }
+            animationState: {
+                type: String,
+                default: 'none',
+            },
+            showSlogan: {
+                type: Boolean,
+                default: true,
+            },
+        },
+        computed: {
+            viewBox() {
+                return this.showSlogan ? '0 0 512 268' : '0 0 512 160';
+            },
+        },
     }
 </script>
 
@@ -232,6 +246,10 @@
     animation: ehxvgwsxk59r2_to__to 3000ms linear 1 normal forwards
   }
 
+  .animation-done #ehxvgwsxk59r2_to {
+    transform: translate(256.010006px, 186.000710px);
+  }
+
   @keyframes ehxvgwsxk59r2_to__to {
     0% {
       transform: translate(256px, 218.707979px)
@@ -250,6 +268,10 @@
 
   .loaded-leave-active #ehxvgwsxk59r2 {
     animation: ehxvgwsxk59r2_c_o 3000ms linear 1 normal forwards
+  }
+
+  .animation-done #ehxvgwsxk59r2 {
+    opacity: 1;
   }
 
   @keyframes ehxvgwsxk59r2_c_o {
@@ -272,6 +294,10 @@
     animation: ehxvgwsxk59r48_to__to 3000ms linear 1 normal forwards
   }
 
+  .animation-done #ehxvgwsxk59r48_to {
+    transform: translate(244.955941px, 85.030598px);
+  }
+
   @keyframes ehxvgwsxk59r48_to__to {
     0% {
       transform: translate(259.639995px, 85.030602px)
@@ -290,6 +316,10 @@
 
   .loaded-leave-active #ehxvgwsxk59r48_ts {
     animation: ehxvgwsxk59r48_ts__ts 3000ms linear 1 normal forwards
+  }
+
+  .animation-done #ehxvgwsxk59r48_ts {
+    transform: scale(1, 1);
   }
 
   @keyframes ehxvgwsxk59r48_ts__ts {
@@ -312,6 +342,10 @@
     animation: ehxvgwsxk59r48_c_o 3000ms linear 1 normal forwards
   }
 
+  .animation-done #ehxvgwsxk59r48 {
+    opacity: 1;
+  }
+
   @keyframes ehxvgwsxk59r48_c_o {
     0% {
       opacity: 0
@@ -330,6 +364,10 @@
 
   .loaded-leave-active #ehxvgwsxk59r54_to {
     animation: ehxvgwsxk59r54_to__to 3000ms linear 1 normal forwards
+  }
+
+  .animation-done #ehxvgwsxk59r54_to {
+    transform: translate(192.950000px, 82.496253px);
   }
 
   @keyframes ehxvgwsxk59r54_to__to {
@@ -352,6 +390,10 @@
     animation: ehxvgwsxk59r54_ts__ts 3000ms linear 1 normal forwards
   }
 
+  .animation-done #ehxvgwsxk59r54_ts {
+    transform: scale(1, 1);
+  }
+
   @keyframes ehxvgwsxk59r54_ts__ts {
     0% {
       transform: scale(0.850000, 1)
@@ -372,6 +414,10 @@
     animation: ehxvgwsxk59r54_c_o 3000ms linear 1 normal forwards
   }
 
+  .animation-done #ehxvgwsxk59r54 {
+    opacity: 1;
+  }
+
   @keyframes ehxvgwsxk59r54_c_o {
     0% {
       opacity: 0
@@ -390,6 +436,10 @@
 
   .loaded-leave-active #ehxvgwsxk59r60_to {
     animation: ehxvgwsxk59r60_to__to 3000ms linear 1 normal forwards
+  }
+
+  .animation-done #ehxvgwsxk59r60_to {
+    transform: translate(221px, 89.556181px);
   }
 
   @keyframes ehxvgwsxk59r60_to__to {
@@ -414,6 +464,10 @@
 
   .loaded-leave-active #ehxvgwsxk59r60_ts {
     animation: ehxvgwsxk59r60_ts__ts 3000ms linear 1 normal forwards
+  }
+
+  .animation-done #ehxvgwsxk59r60_ts {
+    transform: scale(0.220000, 0.220000);
   }
 
   @keyframes ehxvgwsxk59r60_ts__ts {

@@ -85,6 +85,7 @@
                 this.$store.dispatch(types.UPLOAD_AVATAR, formData)
                     .then(() => {
                         this.isSending = false;
+                        this.$emit('avatar-uploaded');
                     });
             },
         }

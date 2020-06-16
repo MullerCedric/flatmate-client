@@ -8,7 +8,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "log-in" */ "../views/auth/ScLogin.vue"),
         meta: {
-            isForAuth: false,
+            middleware: [
+                "isGuest",
+            ],
         },
     },
     {
@@ -17,7 +19,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/auth/ScRegister.vue"),
         meta: {
-            isForAuth: false,
+            middleware: [
+                "isGuest",
+            ],
         },
     },
 
@@ -26,7 +30,9 @@ export default [
         name: "dashboard",
         component: ScDashboard,
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
 
@@ -35,7 +41,9 @@ export default [
         name: "eventsCalendar",
         component: ScEventsCalendar,
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
     {
@@ -44,7 +52,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Events/ScEventsCreate.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
     {
@@ -53,7 +63,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Events/ScEventsShow.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
     {
@@ -62,7 +74,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Events/ScEventsCreate.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
 
@@ -72,7 +86,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Flats/ScFlats.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
         },
     },
     {
@@ -81,7 +97,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Flats/ScFlatsCreate.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
         },
     },
     {
@@ -90,7 +108,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Flats/ScFlatsSearch.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
         },
     },
     {
@@ -99,7 +119,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Flats/ScFlatsShow.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
 
@@ -109,7 +131,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Settings/ScSettings.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
         },
     },
     {
@@ -118,7 +142,20 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsProfile.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
+        },
+    },
+    {
+        path: "/settings/upload-avatar",
+        name: "settingsUploadAvatar",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsPickAvatar.vue"),
+        meta: {
+            middleware: [
+                "isAuth",
+            ],
         },
     },
     {
@@ -127,7 +164,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsNotifications.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
         },
     },
     {
@@ -136,7 +175,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsLegalNotice.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth",
+            ],
         },
     },
 
@@ -146,7 +187,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Notes/ScNotes.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
 
@@ -156,7 +199,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Wallet/ScWallet.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
 
@@ -166,7 +211,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Discussions/ScDiscussionsCreate.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
     {
@@ -175,7 +222,9 @@ export default [
         component: () =>
             import(/* webpackChunkName: "register" */ "../views/Discussions/ScDiscussionsShow.vue"),
         meta: {
-            isForAuth: true,
+            middleware: [
+                "isAuth", "hasFlat",
+            ],
         },
     },
 ];

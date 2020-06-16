@@ -54,7 +54,8 @@
         </div>
       </template>
       <template v-else>
-        <div v-if="!hasAlreadySent" class="fm-event-confirmations__entry fm-event-confirmations__entry--closed">
+        <div v-if="!hasAlreadySent && isAParticipant"
+             class="fm-event-confirmations__entry fm-event-confirmations__entry--closed">
           Il n'est {{ eventConfirmType === 'during' ? 'pas encore' : 'plus' }} possible d'envoyer une confirmation pour
           cet événement
         </div>
@@ -93,6 +94,12 @@
                 type: String,
                 default: '',
             },
+            eventParticipants: {
+                type: Array,
+                default: () => {
+                    return [];
+                },
+            },
         },
         data() {
             return {
@@ -116,8 +123,12 @@
             areNotVisible() {
                 return this.eventConfirmType === 'during' && !this.hasPassed;
             },
+            isAParticipant() {
+                return !!this.eventParticipants.find((user) => user.id === this.userId);
+            },
             promptToShow() {
                 if (!this.confirmations || !this.confirmationsAreLoaded) return 'none';
+                if (!this.isAParticipant) return 'none';
                 if (this.eventConfirmType === 'before' && !this.hasAlreadySent
                     && moment().isBefore(this.momentDate)) {
                     return 'before';
