@@ -22,6 +22,8 @@ export default {
                 commit(types.SET_USER, resp.data);
             })
             .catch(error => {
+                localStorage.removeItem('userViewingFlat');
+                localStorage.removeItem('userApiToken');
                 window.console.error(error);
                 window.console.error(error.response.data);
             })
@@ -32,6 +34,8 @@ export default {
                 commit(types.SET_USER, resp.data);
             })
             .catch(error => {
+                localStorage.removeItem('userViewingFlat');
+                localStorage.removeItem('userApiToken');
                 window.console.error(error);
                 window.console.error(error.response.data);
             });
