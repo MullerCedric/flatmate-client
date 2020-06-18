@@ -2,16 +2,17 @@
   <div>
     <fm-alert v-if="promptToShow === 'before'" @button-clicked="sendConfirm"
               :buttons="[{value: 'refuse', label: 'Non'}, {value: 'accept', label: 'Oui', type: 'primary'}]">
-      Participerez-vous à cet événement ?
+      Participerez-vous à cet événement&nbsp;!
     </fm-alert>
     <fm-alert v-if="promptToShow === 'during'" @button-clicked="sendConfirm"
               :buttons="[{value: 'refuse', label: 'Non'}, {value: 'accept', label: 'Oui', type: 'primary'}]">
-      Avez-vous participé à cet événement ?
+      Avez-vous participé à cet événement&nbsp;!
     </fm-alert>
 
     <div v-if="areNotVisible">Une confirmation sera demandée au moment de l'événement</div>
     <fm-expandable v-if="!areNotVisible && (eventConfirmType === 'during' || eventConfirmType === 'before')"
                    :show-strip="true" tag="div" title="Confirmations de participations">
+
       <template v-if="confirmations.length >= 1">
         <div v-for="confirmation in confirmations" :key="confirmation.pivot.id"
              :class="['fm-event-confirmations__entry']">
@@ -40,6 +41,7 @@
           Aucune confirmation n'a été envoyée
         </div>
       </template>
+
       <template v-if="promptToShow === 'before' || promptToShow === 'during'">
         <div class="fm-event-confirmations__entry fm-event-confirmations__entry--new">
           Confirmez si
@@ -58,6 +60,10 @@
              class="fm-event-confirmations__entry fm-event-confirmations__entry--closed">
           Il n'est {{ eventConfirmType === 'during' ? 'pas encore' : 'plus' }} possible d'envoyer une confirmation pour
           cet événement
+        </div>
+        <div v-if="!isAParticipant"
+             class="fm-event-confirmations__entry fm-event-confirmations__entry--not-guest">
+          Vous ne faites pas partie des invités à cet événement. Vous ne pouvez donc pas envoyer de confirmation
         </div>
       </template>
     </fm-expandable>
@@ -100,6 +106,10 @@
                     return [];
                 },
             },
+            isAParticipant: {
+                type: Boolean,
+                default: false,
+            },
         },
         data() {
             return {
@@ -122,9 +132,6 @@
             },
             areNotVisible() {
                 return this.eventConfirmType === 'during' && !this.hasPassed;
-            },
-            isAParticipant() {
-                return !!this.eventParticipants.find((user) => user.id === this.userId);
             },
             promptToShow() {
                 if (!this.confirmations || !this.confirmationsAreLoaded) return 'none';

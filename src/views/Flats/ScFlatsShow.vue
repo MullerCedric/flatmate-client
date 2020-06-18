@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="sc-flats-show__side-note">
-        Donnez la clé ci-dessus à vos colocataires pour qu'ils puissent rejoindre la colocation sur le.flatmate !
+        Donnez la clé ci-dessus à vos colocataires pour qu'ils puissent rejoindre la colocation sur le.flatmate&nbsp;!
       </div>
     </section>
     <section>

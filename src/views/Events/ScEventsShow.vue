@@ -18,7 +18,7 @@
     </section>
     <section v-if="event.flat_id">
       <h2>
-        Participants
+        Colocataires invités à l'événement
       </h2>
       <div class="sc-events-show__section-content">
         <ic-person class="sc-events-show__section-icon">
@@ -30,7 +30,7 @@
         </div>
       </div>
       <fm-event-confirmations :event-id="event.id" :event-date="eventDate.toISOString()"
-                              :event-participants="event.participants"
+                              :event-participants="event.participants" :is-a-participant="isAParticipant"
                               :event-confirm-type="event.confirm" :user-id="currUser.id">
       </fm-event-confirmations>
       <div class="sc-events-show__side-note">
@@ -60,7 +60,7 @@
     </section>
 
     <template #tab>
-      <fm-bottom-bar>
+      <fm-bottom-bar v-if="isAParticipant">
         <div class="fm-ic-btn" @click="handleDelete">
           <ic-bin :width="20" :height="20" class="fm-ic-btn__icon">
           </ic-bin>
@@ -152,6 +152,9 @@
             category_color() {
                 if (!this.category) return 'none';
                 return this.category.color;
+            },
+            isAParticipant() {
+                return !!this.event.participants.find((user) => user.id === this.currUser.id);
             },
         },
         methods: {

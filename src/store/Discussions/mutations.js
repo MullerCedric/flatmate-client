@@ -37,13 +37,18 @@ export default {
             return (x.id === payload.discussion_id);
         });
         let discussions = [...state.discussions];
+        /*if (discussions[dI].messages.findIndex(x => {
+            return (x.id === payload.id);
+        })) {
+            return;
+        }*/
 
         discussions[dI].messages.unshift(payload);
         state['discussions'] = [...discussions];
     },
     [types.SET_NEW_DISCUSSION]: (state, payload) => {
         let discussions = [...state.discussions];
-        discussions.push(payload);
+        discussions.unshift(payload);
         state['discussions'] = [...discussions];
     },
 };

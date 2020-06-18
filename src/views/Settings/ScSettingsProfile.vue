@@ -12,7 +12,7 @@
         <div class="sc-settings-profile__link">
           <div class="sc-settings-profile__text">
             <div class="sc-settings-profile__name">
-              Nom
+              Prénom
             </div>
           </div>
           <div :class="['sc-settings-profile__value', { 'sc-settings-profile__value--sending': isSending }]">
@@ -20,7 +20,7 @@
           </div>
         </div>
       </template>
-      <fm-form-input label="Nom" fi-name="name" :disabled="isSending" :autofocus="true"
+      <fm-form-input label="Prénom" fi-name="name" :disabled="isSending" :autofocus="true"
                      placeholder="John" :default-value="user.name"
                      @change-value="formData.name = $event">
       </fm-form-input>

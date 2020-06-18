@@ -3,7 +3,7 @@
     <fm-logo animation-state="load" :showSlogan="true" class="sc-register__logo">
     </fm-logo>
     <form @submit.prevent>
-      <fm-form-input label="Nom" fi-name="name" :disabled="isSending" input-type="text"
+      <fm-form-input label="Prénom" fi-name="name" :disabled="isSending" input-type="text"
                      placeholder="John" @change-value="formData.name = $event" :required="true">
       </fm-form-input>
       <fm-form-input label="E-mail" fi-name="email" :disabled="isSending" input-type="email"
@@ -17,7 +17,13 @@
                      placeholder="••••••••" @change-value="formData.password_confirmation = $event">
       </fm-form-input>
       <fm-form-button @button-clicked="sendForm" :disabled="isSending">
-        Inscription
+        <template v-if="!isSending">
+          Inscription
+        </template>
+        <template v-else>
+          <ic-loading width="20" height="20">
+          </ic-loading>
+        </template>
       </fm-form-button>
 
       <router-link :to="{name: 'log-in'}" tag="div" class="sc-register__link">
@@ -34,10 +40,11 @@
     import FmFormInput from "../../components/form/FmFormInput";
     import FmFormButton from "../../components/form/FmFormButton";
     import FmLogo from "../../components/FmLogo";
+    import IcLoading from "../../components/icons/IcLoading";
 
     export default {
         name: "ScRegister",
-        components: {FmLogo, FmFormButton, FmFormInput, FmScreen},
+        components: {IcLoading, FmLogo, FmFormButton, FmFormInput, FmScreen},
         data() {
             return {
                 formData: {
@@ -68,6 +75,7 @@
   .sc-register {
     &__logo {
       max-width: 15rem;
+      min-height: 5rem;
       align-self: center;
     }
 

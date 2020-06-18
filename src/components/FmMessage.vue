@@ -42,8 +42,8 @@
         </fm-avatar>
       </div>
     </div>
-    <div v-if="!message.from_id">
-      ** {{ message.content }} **
+    <div v-if="!message.from_id" class="fm-message__log">
+      {{ message.content }}
     </div>
   </div>
 </template>
@@ -203,6 +203,14 @@
       &--me {
         display: none;
       }
+    }
+
+    &--log {
+      align-self: center;
+    }
+
+    &__log {
+      font-style: italic;
     }
   }
 </style>

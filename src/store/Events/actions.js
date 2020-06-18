@@ -2,10 +2,10 @@ import * as types from '../types';
 
 export default {
     [types.FETCH_AND_ASSOCIATE_EVENTS]({commit, state, rootState}, limits) {
-        // Abort if data already fetched and stored
         if (state.calendarEventsData.hasOwnProperty(limits.from)) return Promise.resolve();
-        const api_token = rootState.userStore.user.api_token;
-        const flat_id = rootState.userStore.user.viewingFlat;
+        const currUser = rootState.userStore.user;
+        const api_token = currUser.api_token;
+        const flat_id = currUser.viewingFlat;
 
         const oneOffEvents = window.axios.get('/events', {
             params: {
@@ -27,7 +27,6 @@ export default {
             }
         });
 
-        // When we got all our events, we store them in the same time
         return Promise.all([
             oneOffEvents,
             recurringEvents
@@ -35,8 +34,9 @@ export default {
             .then((resp) => {
                 commit(types.ORDER_CALENDAR, {
                     data: [resp[0].data, resp[1].data],
-                    limits
-                })
+                    limits,
+                    currUserId: currUser.id,
+                });
             })
             .catch(error => {
                 window.console.error(error);
@@ -89,7 +89,7 @@ export default {
                 if (formData.id) {
                     commit(types.REMOVE_EVENT, resp.data.id);
                 }
-                commit(types.SET_NEW_EVENT, resp.data);
+                commit(types.SET_NEW_EVENT, {data: resp.data, currUserId: currUser.id});
             })
             .catch(error => {
                 window.console.error(error);

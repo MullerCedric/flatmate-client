@@ -3,7 +3,6 @@ import * as types from './types';
 export default {
     [types.RESET_APP]: (state) => {
         state.sideMenuIsVisible = false;
-        state.count = 0;
     },
     [types.TOGGLE_SIDE_MENU]: (state) => {
         state.sideMenuIsVisible = !state.sideMenuIsVisible;
@@ -22,5 +21,8 @@ export default {
     },
     [types.PUT_REDIRECT_TO]: (state, payload) => {
         state.redirectTo = payload;
+    },
+    [types.INIT_ECHO]: (state, payload) => {
+        state.echo = payload;
     },
 };

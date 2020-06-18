@@ -1,32 +1,51 @@
 <template>
   <fm-screen :toolbarProps="toolbarProps">
+    <fm-expandable v-if="$route.params.id && isAParticipant" :show-strip="true" tag="div"
+                   title="Informations concernant la modification" class="sc-events-create__side-notes">
+      <div class="sc-events-create__side-note">
+        Vos modifications seront envoyées au reste des invités
+      </div>
+      <div class="sc-events-create__side-note">
+        Si vous modifiez la date de début, de fin ou l'interval, les confirmations déjà envoyées seront remises à zéro
+      </div>
+    </fm-expandable>
     <form @submit.prevent>
       <fm-form-group>
-        <fm-form-input label="Intitulé" :required="true" fi-name="label" :disabled="isSending"
+        <fm-form-input label="Intitulé" :required="true" fi-name="label" :disabled="isSending || !isAParticipant"
                        :default-value="eventLabel"
                        placeholder="Nettoyer la cuisine" @change-value="formData.label = $event">
         </fm-form-input>
         <fm-form-input label="Date et heure de début" :required="true" placeholder="aaaa-mm-jjThh:mm"
                        fi-name="start_date" input-type="datetime-local" :default-value="eventStartDate"
-                       @change-value="formData.start_date = $event" :disabled="isSending">
+                       @change-value="formData.start_date = $event" :disabled="isSending || !isAParticipant">
         </fm-form-input>
       </fm-form-group>
 
       <fm-form-group>
         <fm-form-input label="Partager avec la colocation" fi-name="shared" input-type="toggle"
-                       :default-value="eventShared" @change-value="formData.shared = $event" :disabled="isSending">
+                       :default-value="eventShared" @change-value="formData.shared = $event"
+                       :disabled="isSending || !isAParticipant">
           <template #tips>
             Désélectionnez cette option pour rendre l'événement privé
           </template>
         </fm-form-input>
-        <fm-form-input v-if="formData.shared" input-type="checkbox" label="Participants" fi-name="participants"
-                       @change-value="formData.participants = $event" :inputs="flatUsers" :disabled="isSending">
+        <fm-form-input v-if="formData.shared" input-type="checkbox" label="Colocataires à inviter"
+                       fi-name="participants"
+                       @change-value="formData.participants = $event" :inputs="flatUsers"
+                       :disabled="isSending || !isAParticipant">
+
+          <template #tips>
+            L'événement sera visible par tous mais destiné uniquement aux personnes sélectionnées
+          </template>
         </fm-form-input>
       </fm-form-group>
 
       <fm-form-group>
-        <fm-form-input input-type="select" label="Catégorie" fi-name="category" :default-value="eventCat"
-                       @change-value="formData.category = $event" :disabled="isSending">
+        <fm-form-input input-type="select" label="Catégorie (personnelle)" fi-name="category" :default-value="eventCat"
+                       @change-value="formData.category = $event" :disabled="isSending || !isAParticipant">
+          <template #tips>
+            Les catégories sont toujours personnelles, même si vous partagez l'événement avec votre colocation
+          </template>
           <template #options>
             <option value="">Aucune</option>
             <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.label }}</option>
@@ -37,7 +56,7 @@
       <fm-form-group>
         <fm-form-input label="Demander une confirmation" fi-name="confirm" input-type="toggle"
                        :default-value="!!eventConfirm"
-                       @change-value="formData.confirm = $event" :disabled="isSending">
+                       @change-value="formData.confirm = $event" :disabled="isSending || !isAParticipant">
           <template #tips>
             Utile pour savoir qui participera ou qui a fait ce qui lui était assigné
           </template>
@@ -47,22 +66,23 @@
                        fi-name="confirm-type" @change-value="formData.confirmType = $event" :inputs="[
           { label: 'Avant le début de l\'événement', id: 'before' },
           { label: 'Au moment de l\'événement', id: 'during' },
-      ]" :disabled="isSending">
+      ]" :disabled="isSending || !isAParticipant">
         </fm-form-input>
       </fm-form-group>
 
       <fm-form-group>
         <fm-form-input label="Récurrent" input-type="toggle" fi-name="recurring" :default-value="eventRecurring"
-                       @change-value="formData.recurring = $event" :disabled="isSending">
+                       @change-value="formData.recurring = $event" :disabled="isSending || !isAParticipant">
         </fm-form-input>
         <fm-form-input v-if="formData.recurring" input-type="number" label="Nombre de jours entre chaque répétition"
-                       fi-name="interval" @change-value="formData.interval = $event" :disabled="isSending"
+                       fi-name="interval" @change-value="formData.interval = $event"
+                       :disabled="isSending || !isAParticipant"
                        :default-value="eventRecurring ? eventInterval : 7">
         </fm-form-input>
         <fm-form-input v-if="formData.recurring" label="Date de fin de répétition" fi-name="end_date"
                        placeholder="aaaa-mm-jjThh:mm"
                        input-type="datetime-local" :default-value="eventEndDate"
-                       @change-value="formData.end_date = $event" :disabled="isSending">
+                       @change-value="formData.end_date = $event" :disabled="isSending || !isAParticipant">
           <template #tips>
             Laissez vide pour que l'événement se répète indéfiniment (ou jusqu'à la modification de celui-ci)
           </template>
@@ -95,10 +115,11 @@
     import FmBottomBar from "../../components/FmBottomBar";
     import IcLoading from "../../components/icons/IcLoading";
     import IcCheckmark from "../../components/icons/IcCheckmark";
+    import FmExpandable from "../../components/FmExpandable";
 
     export default {
         name: "ScEventsCreate",
-        components: {IcCheckmark, IcLoading, FmBottomBar, FmFormGroup, FmFormInput, FmScreen},
+        components: {FmExpandable, IcCheckmark, IcLoading, FmBottomBar, FmFormGroup, FmFormInput, FmScreen},
         data() {
             return {
                 toolbarProps: {
@@ -163,7 +184,7 @@
                 return this.event.hasOwnProperty('flat_id') ? !!this.event.flat_id : true;
             },
             eventCat() {
-                return this.event.categories ? this.event.categories[0].id || '' : '';
+                return this.event.categories && this.event.categories[0] ? this.event.categories[0].id || '' : '';
             },
             eventConfirm() {
                 return this.event.confirm || '';
@@ -183,6 +204,10 @@
                 date.setDate(date.getDate() + 7);
                 date = this.dateWithOffset(date);
                 return this.event.hasOwnProperty('end_date') ? this.eventEndDateString || '' : date.toISOString().slice(0, 16) || '';
+            },
+            isAParticipant() {
+                if (!this.event.hasOwnProperty('id')) return true;
+                return !!this.event.participants.find((user) => user.id === this.currUser.id);
             },
         },
         mounted() {
@@ -209,6 +234,22 @@
 </script>
 
 <style lang="scss" scoped>
+  .sc-events-create {
+    &__side-notes {
+      margin-bottom: 1rem;
+    }
+
+    &__side-note {
+      font-size: .875em;
+      margin-bottom: .25rem;
+      margin-top: .25rem;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+  }
+
   .fm-ic-btn {
     display: flex;
     align-items: center;

@@ -1,6 +1,6 @@
 <template>
   <fm-screen :toolbarProps="toolbarProps">
-    <sc-wallet-slide></sc-wallet-slide>
+    <p>Prochainement...</p>
 
     <template #tab>
       <fm-tab-bar>
@@ -20,11 +20,10 @@
 
     import FmScreen from "../../components/FmScreen";
     import FmTabBar from "../../components/FmTabBar";
-    import ScWalletSlide from "./ScWalletSlide";
 
     export default {
         name: "ScWallet",
-        components: {FmTabBar, ScWalletSlide, FmScreen},
+        components: {FmTabBar, FmScreen},
         data() {
             return {
                 toolbarProps: {

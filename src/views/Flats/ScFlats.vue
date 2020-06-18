@@ -1,5 +1,5 @@
 <template>
-  <fm-screen :toolbarProps="toolbarProps" :is-full-frame="true">
+  <fm-screen :toolbarProps="toolbarValues || toolbarProps" :is-full-frame="true">
     <fm-flat-list>
     </fm-flat-list>
   </fm-screen>
@@ -17,7 +17,7 @@
             return {
                 toolbarProps: {
                     title: 'Colocations',
-                    showBack: false,
+                    showBack: true,
                 },
             }
         },
@@ -47,11 +47,8 @@
             },
         },
         mounted() {
-            this.toolbarProps = this.toolbarValues;
+            this.toolbarProps = {...this.toolbarValues};
         },
-        updated() {
-            this.toolbarProps = this.toolbarValues;
-        }
     }
 </script>
 

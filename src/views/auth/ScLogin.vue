@@ -58,6 +58,7 @@
   .sc-login {
     &__logo {
       max-width: 15rem;
+      min-height: 5rem;
       align-self: center;
     }
 

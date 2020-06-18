@@ -15,13 +15,13 @@
         </p>
         <div class="fm-flat-list__buttons-outer">
           <div class="fm-flat-list__buttons">
-            <fm-button size="l" type="secondary" @button-clicked="$router.push({name: 'flatsSearch'})"
+            <fm-button size="l" type="secondary" @button-clicked="goTo('flatsSearch')"
                        class="fm-flat-list__button">
               <ic-search class="fm-flat-list__buttons-icon fm-flat-list__buttons-icon--search">
               </ic-search>
               Rejoindre
             </fm-button>
-            <fm-button size="l" type="secondary" @button-clicked="$router.push({name: 'flatsCreate'})"
+            <fm-button size="l" type="secondary" @button-clicked="goTo('flatsCreate')"
                        class="fm-flat-list__button">
               <ic-plus class="fm-flat-list__buttons-icon fm-flat-list__buttons-icon--plus">
               </ic-plus>
@@ -41,15 +41,21 @@
 
         <div class="fm-flat-list__floating-buttons">
           <div class="fm-flat-list__floating-button fm-flat-list__floating-button--main"
-               @click="$router.push({name: 'flatsCreate'})">
+               @click="goTo('flatsCreate')">
             <ic-plus>
             </ic-plus>
           </div>
           <div class="fm-flat-list__floating-button"
-               @click="$router.push({name: 'flatsSearch'})">
+               @click="goTo('flatsSearch')">
             <ic-search>
             </ic-search>
           </div>
+        </div>
+
+        <div v-if="flats.length === 1" class="fm-flat-list__side-note">
+          <span class="fm-flat-list__side-note--title">Le saviez-vous ?</span> Vous pouvez switcher entre plusieurs
+          colocations&nbsp;! Ainsi, si vous êtes fréquemment à
+          plusieurs endroits, vous pouvez utiliser le.flatmate pour chaque endroit afin de rester au courant de tout&nbsp;!
         </div>
       </template>
     </template>
@@ -110,6 +116,10 @@
                     .then(() => {
                         this.$store.dispatch(types.FETCH_FLATS).then(() => this.flatsAreLoaded = true);
                     });
+            },
+            goTo(routeName) {
+                this.$store.commit(types.CLOSE_SIDE_MENU);
+                this.$router.push({name: routeName});
             },
         },
     }
@@ -195,6 +205,16 @@
 
       &--main {
         background-color: $black;
+      }
+    }
+
+    &__side-note {
+      font-size: .875rem;
+      margin: 2rem 1.5rem 0;
+      text-align: left;
+
+      &--title {
+        font-weight: $medium;
       }
     }
   }

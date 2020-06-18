@@ -74,6 +74,9 @@
                 if (!this.discussion) return 1;
                 return this.discussion.participants ? this.discussion.participants.length : 1;
             },
+            echo() {
+                return this.$store.getters[types.GET_ECHO];
+            },
         },
         mounted() {
             this.container = window.document.querySelector(".fm-screen__content");
@@ -88,14 +91,16 @@
                 this.lazyload()
             };
 
-            const EchoVue = new Echo({
-                broadcaster: 'pusher',
-                key: '1364c0804863ac3396da',
-                cluster: 'eu',
-                encrypted: true,
-                authEndpoint: process.env.VUE_APP_BROADCAST_BASE + '?api_token=' + this.$store.getters[types.GET_USER].api_token,
-            });
-            EchoVue
+            if (!this.echo) {
+                this.$store.commit(types.INIT_ECHO, new Echo({
+                    broadcaster: 'pusher',
+                    key: '1364c0804863ac3396da',
+                    cluster: 'eu',
+                    encrypted: true,
+                    authEndpoint: process.env.VUE_APP_BROADCAST_BASE + '?api_token=' + this.$store.getters[types.GET_USER].api_token,
+                }));
+            }
+            this.echo
                 .join('chatroom')
                 .here(users => {
                     window.console.log(users.length + ' online users');
@@ -123,6 +128,9 @@
                         return user.name;
                     }).join(', ');
             }
+        },
+        beforeDestroy() {
+            this.echo.leave('chatroom');
         },
         methods: {
             scrollToEnd() {

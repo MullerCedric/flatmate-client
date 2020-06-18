@@ -9,10 +9,10 @@
         <div>{{ views[view].title }}</div>
       </div>
       <div class="fm-side-menu__header-right">
-        <div v-if="view === 0" @click="view = 1">
+        <!--<div v-if="view === 0" @click="view = 1">
           <ic-key>
           </ic-key>
-        </div>
+        </div>-->
       </div>
     </header>
     <main class="fm-side-menu__main">

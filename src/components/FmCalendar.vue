@@ -26,7 +26,8 @@
            @click="selectPrevDate((daysInPrevMonth + 1) - firstDayPos + n)"
            class="fm-calendar__date fm-calendar__date--blurred"
            :class="{
-               'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n))
+               'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n)),
+               'fm-calendar__date--has-own-event': hasOwnEvents(getTimestampForTheDay(n))
       }">
         {{ (daysInPrevMonth + 1) - firstDayPos + n }}
       </div>
@@ -37,7 +38,8 @@
            class="fm-calendar__date" :class="{
             'fm-calendar__date--selected' : n === selectedDate.getDate(),
             'fm-calendar__date--today' : isToday(n),
-            'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n, firstDayPos - 1))
+            'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n, firstDayPos - 1)),
+               'fm-calendar__date--has-own-event': hasOwnEvents(getTimestampForTheDay(n, firstDayPos - 1))
         }">
         {{ n }}
       </div>
@@ -47,7 +49,8 @@
            @click="selectNextDate(n)"
            class="fm-calendar__date fm-calendar__date--blurred"
            :class="{
-               'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n, daysInSelectedMonth + firstDayPos - 1))
+               'fm-calendar__date--has-event': hasEvents(getTimestampForTheDay(n, daysInSelectedMonth + firstDayPos - 1)),
+               'fm-calendar__date--has-own-event': hasOwnEvents(getTimestampForTheDay(n, daysInSelectedMonth + firstDayPos - 1))
       }">
         {{ n }}
       </div>
@@ -245,6 +248,13 @@
                 if (!this.events.hasOwnProperty(timestamp)) return false;
                 return !!this.events[timestamp].length;
             },
+            hasOwnEvents(timestamp) {
+                if (!this.events.hasOwnProperty(timestamp)) return false;
+
+                return !!this.events[timestamp].find((event => {
+                    return event.isAParticipant;
+                }));
+            },
             emitSelected() {
                 this.$emit('selectedDateChange', {
                     selectedDate: new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate()),
@@ -334,6 +344,10 @@
         &:not(.fm-calendar__date--today):not(.fm-calendar__date--selected):not(.fm-calendar__date--blurred) {
           opacity: .63;
         }
+      }
+
+      &--has-own-event:after {
+        background-color: $main;
       }
 
       &--today {

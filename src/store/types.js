@@ -12,6 +12,7 @@
 // Getters
 export const GET_SIDE_MENU_STATE = 'App/GetSideMenuState';
 export const GET_LOADING_SCREEN_STATE = 'App/GetLoadingScreenState';
+export const GET_ECHO = 'App/GetLaravelEcho';
 
 // Mutations
 export const DISCONNECT = 'App/DisconnectByResettingStoreAndLocalStorage';
@@ -23,6 +24,7 @@ export const OPEN_SIDE_MENU = 'App/OpenSideMenu';
 export const SHOW_LOADING_SCREEN = 'App/ShowLoadingScreen';
 export const HIDE_LOADING_SCREEN = 'App/HideLoadingScreen';
 export const PUT_REDIRECT_TO = 'App/PutRedirectTo';
+export const INIT_ECHO = 'App/InitLaravelEcho';
 
 // Actions
 export const HYDRATE_APP = 'App/HydrateAppData';

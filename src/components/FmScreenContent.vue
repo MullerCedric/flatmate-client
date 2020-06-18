@@ -18,9 +18,10 @@
 
 <style lang="scss" scoped>
   .fm-screen__content {
-    padding: .5rem 1.5rem 1.75rem;
+    padding: .5rem 1.5rem .5rem;
     max-height: 100%;
     overflow: auto;
+    margin-bottom: 1.25rem;
 
     &--full-frame {
       padding: .5rem 0 1.75rem;

@@ -1,6 +1,6 @@
 <template>
   <div class="fm-screen" @click="handleScreen">
-    <fm-toolbar v-if="toolbarProps" v-bind="toolbarProps" @back-clicked="handleBack" @avatar-clicked="handleAvatar"
+    <fm-toolbar v-if="toolbarProps" v-bind="tbProps" @back-clicked="handleBack" @avatar-clicked="handleAvatar"
                 @title-clicked="handleTitle" @search-clicked="handleSearch" @bubble-clicked="handleBubble"
                 @bell-clicked="handleBell" @settings-clicked="handleSettings" @more-clicked="handleMore">
     </fm-toolbar>
@@ -40,6 +40,11 @@
             isFullFrame: {
                 type: Boolean,
                 default: false,
+            },
+        },
+        computed: {
+            tbProps() {
+                return {...this.toolbarProps};
             },
         },
         methods: {
