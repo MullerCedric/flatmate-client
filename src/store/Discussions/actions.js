@@ -66,8 +66,20 @@ export default {
                 .catch(error => {
                     window.console.error(error);
                     window.console.error(error.response.data);
-                    reject();
-                })
+                    reject(error);
+                });
         });
+    },
+    [types.READ_MESSAGE]({rootState}, msgId) {
+        const api_token = rootState.userStore.user.api_token;
+        window.console.log('Reading message ' + msgId + 'by user with token ' + api_token);
+
+        return window.axios.post('/messages/' + msgId + '/read', null, {
+            params: {api_token},
+        })
+            .catch(error => {
+                window.console.error(error);
+                window.console.error(error.response.data);
+            });
     },
 };

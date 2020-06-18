@@ -25,21 +25,26 @@
         {{ message.content }}
       </div>
       <div v-if="isInfoShowed" class="fm-message__info">
-        <span v-if="readBy.length <= 1">
+        <template v-if="readBy.length <= 1">
           <span v-if="nbParticipants === 1">
             Vous seul voyez ce message
           </span>
           <span v-else>
-            Non lu
+            Envoyé
           </span>
-        </span>
-        <span v-if="readBy.length > 1">
-          Vu par
-        </span>
-        <fm-avatar size="xs" v-for="user in readBy" :key="user.id" :title="user.name"
-                   :user-name="user.name" :img-url="user.avatar"
-                   :class="['fm-message__readby', {'fm-message__readby--me': user.id === userId}]">
-        </fm-avatar>
+        </template>
+        <template v-else>
+          <template v-if="readBy.length === nbParticipants">
+            <span>Vu par tout le monde</span>
+          </template>
+          <template v-else>
+            <span>Vu par</span>
+            <fm-avatar size="xs" v-for="user in readBy" :key="user.id" :title="user.name"
+                       :user-name="user.name" :img-url="user.avatar"
+                       :class="['fm-message__readby', {'fm-message__readby--hide': user.id === userId}]">
+            </fm-avatar>
+          </template>
+        </template>
       </div>
     </div>
     <div v-if="!message.from_id" class="fm-message__log">
@@ -200,7 +205,7 @@
       display: inline-block;
       vertical-align: middle;
 
-      &--me {
+      &--hide {
         display: none;
       }
     }

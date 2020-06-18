@@ -30,7 +30,7 @@ export default {
         } else {
             discussions.push(payload)
         }
-        state['discussions'] = [...discussions];
+        state.discussions = [...discussions];
     },
     [types.SET_NEW_MESSAGE]: (state, payload) => {
         const dI = state.discussions.findIndex(x => {
@@ -39,11 +39,24 @@ export default {
         let discussions = [...state.discussions];
 
         discussions[dI].messages.unshift(payload);
-        state['discussions'] = [...discussions];
+        discussions[dI].latestMessage = payload;
+        state.discussions = [...discussions];
     },
     [types.SET_NEW_DISCUSSION]: (state, payload) => {
         let discussions = [...state.discussions];
         discussions.unshift(payload);
-        state['discussions'] = [...discussions];
+        state.discussions = [...discussions];
+    },
+    [types.UPDATE_MESSAGE]: (state, payload) => {
+        const dI = state.discussions.findIndex(x => {
+            return (x.id === payload.discussion_id);
+        });
+        let discussions = [...state.discussions];
+        if(!discussions[dI].messages) return;
+        const mI = discussions[dI].messages.findIndex(x => {
+            return (x.id === payload.id);
+        });
+        discussions[dI].messages[mI] = {...payload};
+        state.discussions = [...discussions];
     },
 };

@@ -28,7 +28,6 @@
 </template>
 
 <script>
-    import Echo from 'laravel-echo';
     import * as types from "../../store/types";
 
     import FmScreen from "../../components/FmScreen";
@@ -55,6 +54,7 @@
                 message: '',
                 showingInfoForMessage: 0,
                 hadMessages: false,
+                channel: null,
             }
         },
         computed: {
@@ -77,6 +77,9 @@
             echo() {
                 return this.$store.getters[types.GET_ECHO];
             },
+            echoChannelName() {
+                return 'discussion.' + this.$route.params.id;
+            },
         },
         mounted() {
             this.container = window.document.querySelector(".fm-screen__content");
@@ -88,38 +91,27 @@
             this.lazyload();
 
             this.container.onscroll = () => {
-                this.lazyload()
+                this.lazyload();
             };
 
-            if (!this.echo) {
-                this.$store.commit(types.INIT_ECHO, new Echo({
-                    broadcaster: 'pusher',
-                    key: '1364c0804863ac3396da',
-                    cluster: 'eu',
-                    encrypted: true,
-                    authEndpoint: process.env.VUE_APP_BROADCAST_BASE + '?api_token=' + this.$store.getters[types.GET_USER].api_token,
-                }));
+            if (this.echo) {
+                this.channel = this.echo.join(this.echoChannelName);
+                this.channel
+                    .listen('.message.created', e => {
+                        if (e.message.discussion_id === parseInt(this.$route.params.id, 10)
+                            && e.message.from_id !== this.userId) {
+                            this.$store.commit(types.SET_NEW_MESSAGE, e.message);
+                            this.$store.dispatch(types.READ_MESSAGE, e.message.id);
+                            this.$nextTick(() => {
+                                this.scrollToEnd();
+                            })
+                        }
+                    })
+                    .listen('.message.read', e => {
+                        window.console.log('Someone read the message : ', e.message);
+                        this.$store.commit(types.UPDATE_MESSAGE, e.message);
+                    });
             }
-            this.echo
-                .join('chatroom')
-                .here(users => {
-                    window.console.log(users.length + ' online users');
-                })
-                .joining(user => {
-                    window.console.log(user.name + ' is now online');
-                })
-                .leaving(user => {
-                    window.console.log(user.name + ' is now offline');
-                })
-                .listen('.message.created', e => {
-                    if (e.message.discussion_id === parseInt(this.$route.params.id, 10)
-                        && e.message.from_id !== this.userId) {
-                        this.$store.commit(types.SET_NEW_MESSAGE, e.message);
-                        this.$nextTick(() => {
-                            this.scrollToEnd();
-                        })
-                    }
-                });
         },
         updated() {
             if (this.discussion) {
@@ -130,7 +122,9 @@
             }
         },
         beforeDestroy() {
-            this.echo.leave('chatroom');
+            window.console.log('leaving');
+            this.channel.stopListening('.message.created');
+            this.echo.leave(this.echoChannelName);
         },
         methods: {
             scrollToEnd() {

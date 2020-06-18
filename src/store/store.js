@@ -15,17 +15,9 @@ import notificationsStore from './Notifications/store';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        count: 0,
-        ...state,
-    },
+    state,
     getters,
-    mutations: {
-        increment(state) {
-            state.count++
-        },
-        ...mutations,
-    },
+    mutations,
     actions,
     modules: {
         userStore,
