@@ -47,7 +47,7 @@
 
 <script>
     export default {
-        name: "IlHouse",
+        name: "IllHouse",
         props: {
             iconName: {
                 type: String,

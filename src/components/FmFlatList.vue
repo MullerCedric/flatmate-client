@@ -6,9 +6,9 @@
       Chargement...
     </template>
     <template v-if="flatsAreLoaded">
-      <il-house v-if="!flats || flats.length <= 4" class="fm-flat-list__illu"
+      <ill-house v-if="!flats || flats.length <= 4" class="fm-flat-list__illu"
                 :style="illuWidth" :is-light="hasFlats">
-      </il-house>
+      </ill-house>
       <div v-if="!flats.length">
         <p class="fm-flat-list__headline">
           Vous ne faites partie d'aucune colocation
@@ -66,7 +66,7 @@
     import * as types from "../store/types";
 
     import FmFlatItem from "./FmFlatItem";
-    import IlHouse from "./illustrations/IlHouse";
+    import IllHouse from "./illustrations/IllHouse";
     import FmButton from "./FmButton";
     import IcPlus from "./icons/IcPlus";
     import IcSearch from "./icons/IcSearch";
@@ -74,7 +74,7 @@
 
     export default {
         name: "FmFlatList",
-        components: {IcLoading, IcSearch, IcPlus, FmButton, IlHouse, FmFlatItem},
+        components: {IcLoading, IcSearch, IcPlus, FmButton, IllHouse, FmFlatItem},
         data() {
             return {
                 flatsAreLoaded: false,

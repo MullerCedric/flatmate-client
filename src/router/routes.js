@@ -25,6 +25,19 @@ export default [
         },
     },
 
+
+    {
+        path: "/onboard",
+        name: "onboard",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/ScOnboard.vue"),
+        meta: {
+            middleware: [
+                "isGuest",
+            ],
+        },
+    },
+
     {
         path: "/",
         name: "dashboard",

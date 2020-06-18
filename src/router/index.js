@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
     if (to.meta.middleware.indexOf('isAuth') !== -1) {
         if (!apiToken) {
             store.commit(types.PUT_REDIRECT_TO, to.name);
-            next({name: 'register'});
+            next({name: 'onboard'});
             return;
         }
         store.dispatch(types.CONNECT).then(() => {
