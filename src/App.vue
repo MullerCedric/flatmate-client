@@ -5,7 +5,7 @@
       </router-view>
       <fm-loading-screen>
       </fm-loading-screen>
-      <fm-side-menu v-if="isConnected && hasFlat && echoIsInit"
+      <fm-side-menu v-if="isConnected && hasFlat && echoIsInit" :key="viewingFlat"
                     :class="['fm-side-menu', {'fm-side-menu--visible': sideMenuIsVisible}]">
       </fm-side-menu>
     </ion-app>
@@ -31,8 +31,11 @@
             isConnected() {
                 return !!this.currUser.api_token;
             },
+            viewingFlat() {
+                return this.currUser.viewingFlat;
+            },
             hasFlat() {
-                return !!this.currUser.viewingFlat;
+                return !!this.viewingFlat;
             },
             echoIsInit() {
                 return this.$store.getters[types.GET_ECHO] || false;

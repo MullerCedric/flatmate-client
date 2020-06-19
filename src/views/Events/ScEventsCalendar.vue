@@ -82,7 +82,9 @@
         },
         beforeDestroy() {
             this.channel.stopListening('.event.created');
-            this.echo.leave(this.echoChannelName);
+            if (this.echo) {
+                this.echo.leave(this.echoChannelName);
+            }
         },
         methods: {
             calendarSelectedChange(event) {

@@ -60,7 +60,9 @@
         },
         beforeDestroy() {
             this.channel.stopListening('.discussion.created');
-            this.echo.leave(this.echoChannelName);
+            if (this.echo) {
+                this.echo.leave(this.echoChannelName);
+            }
         },
         methods: {
             closeMenu() {

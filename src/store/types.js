@@ -25,6 +25,7 @@ export const SHOW_LOADING_SCREEN = 'App/ShowLoadingScreen';
 export const HIDE_LOADING_SCREEN = 'App/HideLoadingScreen';
 export const PUT_REDIRECT_TO = 'App/PutRedirectTo';
 export const INIT_ECHO = 'App/InitLaravelEcho';
+export const DISCONNECT_ECHO = 'App/DisconnectLaravelEcho';
 
 // Actions
 export const HYDRATE_APP = 'App/HydrateAppData';

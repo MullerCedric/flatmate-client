@@ -56,6 +56,7 @@
                 showingInfoForMessage: 0,
                 hadMessages: false,
                 channel: null,
+                canUpdate: true,
             }
         },
         computed: {
@@ -166,7 +167,9 @@
             handleNewMessage(message) {
                 if (message.discussion_id === parseInt(this.$route.params.id, 10)
                     && message.from_id !== this.userId) {
-                    // this.$store.dispatch(types.READ_MESSAGE, message.id);
+                    if (!this.canUpdate) {
+                        this.$store.dispatch(types.READ_MESSAGE, message.id);
+                    }
                     this.$nextTick(() => {
                         this.scrollToEnd();
                     })
@@ -178,12 +181,17 @@
                 }
             },
             handleSendingNewPusherMessages() {
-                if (this.discussion && this.discussion.messages) {
+                if (this.discussion && this.discussion.messages && this.canUpdate) {
+                    this.canUpdate = false;
                     for (let i = 0; i <= this.discussion.messages.length - 1 && this.discussion.messages[i].hasToBeSent; i++) {
                         if (this.discussion.messages[i].discussion_id === parseInt(this.$route.params.id, 10)) {
+                            window.console.log('sending read info');
                             this.$store.dispatch(types.READ_MESSAGE, this.discussion.messages[i].id);
                         }
                     }
+                    setTimeout(() => {
+                        this.canUpdate = true;
+                    }, 135);
                 }
             },
         },

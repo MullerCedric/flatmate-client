@@ -70,7 +70,9 @@
         beforeDestroy() {
             this.channel.stopListening('.message.created');
             this.channel.stopListening('.message.read');
-            this.echo.leave(this.echoChannelName);
+            if (this.echo) {
+                this.echo.leave(this.echoChannelName);
+            }
         },
         methods: {
             formatLabel(discussion) {

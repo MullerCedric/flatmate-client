@@ -25,4 +25,8 @@ export default {
     [types.INIT_ECHO]: (state, payload) => {
         state.echo = payload;
     },
+    [types.DISCONNECT_ECHO]: (state) => {
+        state.echo.disconnect();
+        // state.echo = null;
+    }
 };

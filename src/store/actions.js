@@ -11,6 +11,7 @@ export default {
             commit(types.RESET_FLATS);
             commit(types.RESET_NOTIFICATIONS);
             commit(types.RESET_EVENTS);
+            commit(types.DISCONNECT_ECHO);
             resolve();
         });
     },
