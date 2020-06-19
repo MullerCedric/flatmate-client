@@ -39,6 +39,7 @@
                 calendarSelectedData: {},
                 calendarVisibleDates: {},
                 selectedIsoString: '',
+                channel: null,
             }
         },
         computed: {
@@ -49,9 +50,39 @@
                 if (!this.calendarSelectedData.selectedDate) return [];
                 return this.calendarEventsData[this.calendarSelectedData.selectedDate.getTime()] || [];
             },
+            currUser() {
+                return this.$store.getters[types.GET_USER];
+            },
+            flatId() {
+                return this.currUser.viewingFlat
+            },
+            echo() {
+                return this.$store.getters[types.GET_ECHO];
+            },
+            echoChannelName() {
+                return 'events';
+            },
+        },
+        mounted() {
+            if (this.echo) {
+                this.channel = this.echo.join(this.echoChannelName);
+                this.channel
+                    .listen('.event.created', e => {
+                        if (e.event.flat_id && e.event.flat_id === parseInt(this.flatId, 10)) {
+                            if (this.$store.getters[types.GET_EVENT](e.event.id)) {
+                                this.$store.commit(types.REMOVE_EVENT, e.event.id);
+                            }
+                            this.$store.commit(types.SET_NEW_EVENT, {data: e.event, currUserId: this.currUser.id});
+                        }
+                    })
+            }
         },
         updated() {
             this.updateSelectedIso();
+        },
+        beforeDestroy() {
+            this.channel.stopListening('.event.created');
+            this.echo.leave(this.echoChannelName);
         },
         methods: {
             calendarSelectedChange(event) {
