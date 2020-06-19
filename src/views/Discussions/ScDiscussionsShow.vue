@@ -185,7 +185,6 @@
                     this.canUpdate = false;
                     for (let i = 0; i <= this.discussion.messages.length - 1 && this.discussion.messages[i].hasToBeSent; i++) {
                         if (this.discussion.messages[i].discussion_id === parseInt(this.$route.params.id, 10)) {
-                            window.console.log('sending read info');
                             this.$store.dispatch(types.READ_MESSAGE, this.discussion.messages[i].id);
                         }
                     }

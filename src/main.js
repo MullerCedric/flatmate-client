@@ -9,6 +9,7 @@ import router from "./router";
 import store from './store/store';
 
 import (/* webpackPreload: true */ 'typeface-maven-pro/index.css');
+import (/* webpackPreload: true */ './assets/fonts/BLOKKNeue-Regular/blokkfont.css');
 
 window.Pusher = require('pusher-js');
 

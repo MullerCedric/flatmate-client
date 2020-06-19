@@ -3,29 +3,20 @@
     <fm-preview>
       <fm-form-group>
         <fm-form-input label="Recevoir des notifications push" fi-name="push" input-type="toggle"
-                       :default-value="true" :disabled="isSending">
-        </fm-form-input>
-        <fm-form-input label="Activer notifications" fi-name="push2" input-type="toggle"
-                       :default-value="true" :disabled="isSending">
-        </fm-form-input>
-        <fm-form-input label="Un autre réglage" fi-name="push3" input-type="toggle"
                        :default-value="false" :disabled="isSending">
         </fm-form-input>
-        <fm-form-input label="Recevoir des notifications push!!" fi-name="push4" input-type="toggle"
+        <fm-form-input label="Activer notifications" fi-name="push2" input-type="toggle"
+                       :default-value="false" :disabled="isSending">
+        </fm-form-input>
+        <fm-form-input label="Un autre réglage" fi-name="push3" input-type="toggle"
                        :default-value="true" :disabled="isSending">
         </fm-form-input>
       </fm-form-group>
       <fm-form-group>
         <fm-form-input label="Recevoir des notifications push" fi-name="push" input-type="toggle"
-                       :default-value="false" :disabled="isSending">
-        </fm-form-input>
-        <fm-form-input label="Activer notifications" fi-name="push2" input-type="toggle"
                        :default-value="true" :disabled="isSending">
         </fm-form-input>
-        <fm-form-input label="Un autre réglage" fi-name="push3" input-type="toggle"
-                       :default-value="false" :disabled="isSending">
-        </fm-form-input>
-        <fm-form-input label="Recevoir des notifications push!!" fi-name="push4" input-type="toggle"
+        <fm-form-input label="Activer notifications" fi-name="push2" input-type="toggle"
                        :default-value="true" :disabled="isSending">
         </fm-form-input>
       </fm-form-group>
@@ -42,7 +33,7 @@
     import FmPreview from "../../components/FmPreview";
 
     export default {
-        name: "ScSettingsNotifications",
+        name: "ScSettingsDataStorage",
         components: {FmPreview, FmFormInput, FmFormGroup, FmScreen},
         data() {
             return {

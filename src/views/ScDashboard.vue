@@ -21,6 +21,9 @@
             {{ currFlat.key }}
           </div>
         </div>
+        <div class="sc-dashboard__side-note">
+          Retrouvez votre clé à tout moment dans les paramètres de l'application
+        </div>
       </section>
     </template>
 
@@ -29,6 +32,20 @@
         Événements
       </h2>
       <p>Aucun événement n'est prévu prochainement...</p>
+    </section>
+
+    <section>
+      <h2>
+        Notes épinglées
+      </h2>
+      <fm-block :is-pinned="true">
+        <div class="sc-notes__title">Un ami sera là mardi</div>
+        <div class="sc-notes__sub-title">Écrit le 25/05/2020</div>
+      </fm-block>
+      <fm-block :is-pinned="true">
+        <div class="sc-notes__title">Mot de passe WI-FI</div>
+        <div class="sc-notes__sub-title">Écrit le 04/02/2020</div>
+      </fm-block>
     </section>
 
     <template #tab>
@@ -45,10 +62,11 @@
     import FmTabBar from "../components/FmTabBar";
     import IcLoading from "../components/icons/IcLoading";
     import IcKey from "../components/icons/IcKey";
+    import FmBlock from "../components/FmBlock";
 
     export default {
         name: "ScDashboard",
-        components: {IcKey, IcLoading, FmTabBar, FmScreen},
+        components: {FmBlock, IcKey, IcLoading, FmTabBar, FmScreen},
         data() {
             return {
                 toolbarProps: {
@@ -116,8 +134,18 @@
 
     &__side-note {
       font-size: .875rem;
-      margin: 0 0 .75rem;
+      margin: .5rem 0 .75rem;
       line-height: 1.25;
+    }
+  }
+
+  .sc-notes {
+    &__title {
+      font-weight: $bold;
+    }
+
+    &__sub-title {
+      font-size: .875rem;
     }
   }
 </style>

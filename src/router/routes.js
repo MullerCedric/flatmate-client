@@ -183,6 +183,28 @@ export default [
         },
     },
     {
+        path: "/settings/data-storage",
+        name: "settingsDataStorage",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsDataStorage.vue"),
+        meta: {
+            middleware: [
+                "isAuth",
+            ],
+        },
+    },
+    {
+        path: "/settings/help",
+        name: "settingsHelp",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "../views/Settings/ScSettingsHelp.vue"),
+        meta: {
+            middleware: [
+                "isAuth",
+            ],
+        },
+    },
+    {
         path: "/settings/legal-notice",
         name: "settingsLegalNotice",
         component: () =>

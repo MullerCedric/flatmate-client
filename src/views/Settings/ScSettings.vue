@@ -36,7 +36,7 @@
       <ic-back class="sc-settings__forward">
       </ic-back>
     </router-link>
-    <div class="sc-settings__link">
+    <router-link tag="div" :to="{ name: 'settingsDataStorage'}" class="sc-settings__link">
       <ic-database class="sc-settings__icon">
       </ic-database>
       <div class="sc-settings__text">
@@ -46,8 +46,8 @@
       </div>
       <ic-back class="sc-settings__forward">
       </ic-back>
-    </div>
-    <router-link tag="div" :to="{ name: 'settingsLegalNotice'}" class="sc-settings__link">
+    </router-link>
+    <router-link tag="div" :to="{ name: 'settingsHelp'}" class="sc-settings__link">
       <ic-help class="sc-settings__icon">
       </ic-help>
       <div class="sc-settings__text">

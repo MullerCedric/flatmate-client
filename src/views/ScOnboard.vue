@@ -1,13 +1,19 @@
 <template>
   <fm-screen content-pos="center" :is-full-frame="true" class="sc-onboard">
-    <h1 class="sc-onboard__title">
-      Découvrez le.flatmate
-    </h1>
     <router-link v-if="active + 1 < length" :to="{name: 'register'}" class="sc-onboard__link sc-onboard__link-skip">
       Passer
     </router-link>
 
     <ion-slides class="sc-onboard-slider" id="sc-onboard-slider" @ionSlideDidChange="updateIndex">
+      <ion-slide class="sc-onboard__slide">
+        <div class="sc-onboard__slide-inner">
+          <h1 class="sc-onboard__title">
+            Découvrez...
+          </h1>
+          <fm-logo animation-state="done" :showSlogan="true" class="sc-onboard__illu sc-onboard__illu--logo">
+          </fm-logo>
+        </div>
+      </ion-slide>
       <ion-slide class="sc-onboard__slide">
         <div class="sc-onboard__slide-inner">
           <ill-calendar class="sc-onboard__illu">
@@ -91,10 +97,11 @@
     import IllWallet from "../components/illustrations/IllWallet";
     import IllChat from "../components/illustrations/IllChat";
     import FmFormButton from "../components/form/FmFormButton";
+    import FmLogo from "../components/FmLogo";
 
     export default {
         name: "ScOnboard",
-        components: {FmFormButton, IllChat, IllWallet, IllList, IllCalendar, IcBack, FmScreen},
+        components: {FmLogo, FmFormButton, IllChat, IllWallet, IllList, IllCalendar, IcBack, FmScreen},
         data() {
             return {
                 slider: null,
@@ -128,7 +135,8 @@
     text-align: center;
 
     &__title {
-      opacity: 0;
+      font-size: 2rem;
+      font-weight: $medium;
     }
 
     &__slider {
@@ -139,6 +147,7 @@
       width: 100vw !important;
 
       &-inner {
+        width: 100%;
         padding: 1.5rem;
       }
     }
@@ -161,6 +170,11 @@
       min-width: 4rem;
       max-width: 15rem;
       margin-bottom: .5rem;
+
+      &--logo {
+        width: 100%;
+        max-width: 20rem;
+      }
     }
 
     &__sub-title {
