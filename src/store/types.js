@@ -30,6 +30,11 @@ export const INIT_ECHO = 'App/InitLaravelEcho';
 export const HYDRATE_APP = 'App/HydrateAppData';
 
 
+// Event Bus
+export const EB_NEW_MESSAGE = 'EventBus/NewMessage';
+export const EB_MESSAGE_READING = 'EventBus/MessageReading';
+
+
 /*
  * User
  */
@@ -61,6 +66,8 @@ export const SET_MESSAGES = 'Discussions/SetMessagesForDiscussion';
 export const SET_NEW_DISCUSSION = 'Discussions/SetNewDiscussion';
 export const SET_NEW_MESSAGE = 'Discussions/SetNewMessageForDiscussion';
 export const UPDATE_MESSAGE = 'Discussions/UpdateMessage';
+export const SET_LATEST_MESSAGE = 'Discussions/SetLatestMessage';
+export const SET_SENDING_STATUS = 'Discussions/SetSendingStatus'; // To track pusher-added messages
 
 // Actions
 export const FETCH_DISCUSSIONS = 'Discussions/FetchDiscussionsWithLastMessageAndParticipants';

@@ -70,13 +70,14 @@ export default {
                 });
         });
     },
-    [types.READ_MESSAGE]({rootState}, msgId) {
+    [types.READ_MESSAGE]({commit, rootState}, msgId) {
         const api_token = rootState.userStore.user.api_token;
-        window.console.log('Reading message ' + msgId + 'by user with token ' + api_token);
-
         return window.axios.post('/messages/' + msgId + '/read', null, {
             params: {api_token},
         })
+            .then(resp => {
+                commit(types.UPDATE_MESSAGE, resp.data);
+            })
             .catch(error => {
                 window.console.error(error);
                 window.console.error(error.response.data);

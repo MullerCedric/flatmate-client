@@ -29,6 +29,7 @@
 
 <script>
     import * as types from "../../store/types";
+    import EventBus from "../../event-bus";
 
     import FmScreen from "../../components/FmScreen";
     import FmBottomBar from "../../components/FmBottomBar";
@@ -94,24 +95,9 @@
                 this.lazyload();
             };
 
-            if (this.echo) {
-                this.channel = this.echo.join(this.echoChannelName);
-                this.channel
-                    .listen('.message.created', e => {
-                        if (e.message.discussion_id === parseInt(this.$route.params.id, 10)
-                            && e.message.from_id !== this.userId) {
-                            this.$store.commit(types.SET_NEW_MESSAGE, e.message);
-                            this.$store.dispatch(types.READ_MESSAGE, e.message.id);
-                            this.$nextTick(() => {
-                                this.scrollToEnd();
-                            })
-                        }
-                    })
-                    .listen('.message.read', e => {
-                        window.console.log('Someone read the message : ', e.message);
-                        this.$store.commit(types.UPDATE_MESSAGE, e.message);
-                    });
-            }
+            EventBus.$on(types.EB_NEW_MESSAGE, this.handleNewMessage);
+            EventBus.$on(types.EB_MESSAGE_READING, this.handleMessageReading);
+            this.handleSendingNewPusherMessages();
         },
         updated() {
             if (this.discussion) {
@@ -119,12 +105,12 @@
                     this.discussion.label : this.discussion.participants.map((user) => {
                         return user.name;
                     }).join(', ');
+                this.handleSendingNewPusherMessages();
             }
         },
         beforeDestroy() {
-            window.console.log('leaving');
-            this.channel.stopListening('.message.created');
-            this.echo.leave(this.echoChannelName);
+            EventBus.$off(types.EB_NEW_MESSAGE, this.handleNewMessage);
+            EventBus.$off(types.EB_MESSAGE_READING, this.handleMessageReading);
         },
         methods: {
             scrollToEnd() {
@@ -176,6 +162,29 @@
             },
             toggleSelection(id) {
                 this.showingInfoForMessage = this.showingInfoForMessage === id ? 0 : id;
+            },
+            handleNewMessage(message) {
+                if (message.discussion_id === parseInt(this.$route.params.id, 10)
+                    && message.from_id !== this.userId) {
+                    // this.$store.dispatch(types.READ_MESSAGE, message.id);
+                    this.$nextTick(() => {
+                        this.scrollToEnd();
+                    })
+                }
+            },
+            handleMessageReading(message) {
+                if (message.discussion_id === parseInt(this.$route.params.id, 10)) {
+                    this.$store.commit(types.UPDATE_MESSAGE, message);
+                }
+            },
+            handleSendingNewPusherMessages() {
+                if (this.discussion && this.discussion.messages) {
+                    for (let i = 0; i <= this.discussion.messages.length - 1 && this.discussion.messages[i].hasToBeSent; i++) {
+                        if (this.discussion.messages[i].discussion_id === parseInt(this.$route.params.id, 10)) {
+                            this.$store.dispatch(types.READ_MESSAGE, this.discussion.messages[i].id);
+                        }
+                    }
+                }
             },
         },
     }

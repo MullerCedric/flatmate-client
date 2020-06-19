@@ -38,8 +38,12 @@ export default {
         });
         let discussions = [...state.discussions];
 
+        if (!discussions[dI].messages) return;
         discussions[dI].messages.unshift(payload);
         discussions[dI].latestMessage = payload;
+        discussions.sort((a) => {
+            return a.latestMessage.id === payload.id ? -1 : 1;
+        });
         state.discussions = [...discussions];
     },
     [types.SET_NEW_DISCUSSION]: (state, payload) => {
@@ -52,11 +56,25 @@ export default {
             return (x.id === payload.discussion_id);
         });
         let discussions = [...state.discussions];
-        if(!discussions[dI].messages) return;
+        if (!discussions[dI].messages) return;
         const mI = discussions[dI].messages.findIndex(x => {
             return (x.id === payload.id);
         });
         discussions[dI].messages[mI] = {...payload};
+        state.discussions = [...discussions];
+    },
+    [types.SET_LATEST_MESSAGE]: (state, payload) => {
+        const dI = state.discussions.findIndex(x => {
+            return (x.id === payload.discussion_id);
+        });
+        let discussions = [...state.discussions];
+        const isNewMessage = discussions[dI].latestMessage.id !== payload.id;
+        discussions[dI].latestMessage = payload;
+        if (isNewMessage) {
+            discussions.sort((a) => {
+                return a.latestMessage.id === payload.id ? -1 : 1;
+            });
+        }
         state.discussions = [...discussions];
     },
 };
